@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 
 import styled from 'styled-components'
 
-import appConfig, { useLocale, isMultilingual } from 'lib/app-config'
+import appConfig, { useLocale, showMultilingualSwitcher } from 'lib/app-config'
 
 const Outer = styled.div`
   display: inline-flex;
@@ -33,7 +33,7 @@ export default function LocaleSwitcher() {
     router.push(`/${e.target.value}`)
   }
 
-  if (!isMultilingual) {
+  if (!showMultilingualSwitcher) {
     return null
   }
 
