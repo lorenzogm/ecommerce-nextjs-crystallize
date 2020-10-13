@@ -16,11 +16,9 @@ export function getStaticProps() {
   return { props: {} }
 }
 
-export const getStaticPaths = !isMultilingual
-  ? undefined
-  : () => {
-      return {
-        paths: appConfig.locales.map((l) => `/${l.urlPrefix}/checkout`),
-        fallback: false,
-      }
-    }
+export const getStaticPaths = () => {
+  return {
+    paths: appConfig.locales.map((l) => `/${l.urlPrefix}/checkout`),
+    fallback: false,
+  }
+}

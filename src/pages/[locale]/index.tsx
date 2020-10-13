@@ -65,11 +65,9 @@ export async function getStaticProps({ params = {}, preview }) {
   }
 }
 
-export const getStaticPaths = !isMultilingual
-  ? undefined
-  : async () => {
-      return {
-        paths: appConfig.locales.map((l) => `/${l.urlPrefix}`),
-        fallback: false,
-      }
-    }
+export const getStaticPaths = async () => {
+  return {
+    paths: appConfig.locales.map((l) => `/${l.urlPrefix}`),
+    fallback: false,
+  }
+}
