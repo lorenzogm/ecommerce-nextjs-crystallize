@@ -1,29 +1,20 @@
 {
-   "locales": [
-      {
-         "isDefault": true,
-         "displayName": "en",
-         "urlPrefix": "en",
-         "appLanguage": "en-US",
-         "crystallizeCatalogueLanguage": "en",
-         "defaultCurrency": "USD"
-      },
-      {
-         "displayName": "es",
-         "urlPrefix": "es",
-         "appLanguage": "en-US",
-         "crystallizeCatalogueLanguage": "es",
-         "defaultCurrency": "USD"
-      },
-      {
-         "displayName": "de",
-         "urlPrefix": "de",
-         "appLanguage": "en-US",
-         "crystallizeCatalogueLanguage": "de",
-         "defaultCurrency": "USD"
-      }
-   ],
-   "paymentProviders": [
-      "stripe"
-   ]
+  "locales": [
+    {
+      "isDefault": true,
+      "displayName": "en",
+      "urlPrefix": "en",
+      "appLanguage": "en-US",
+      "crystallizeCatalogueLanguage": "en",
+      "defaultCurrency": "USD"
+    },
+    {
+      "displayName": "es",
+      "urlPrefix": "es",
+      "appLanguage": "en-US",
+      "crystallizeCatalogueLanguage": "es",
+      "defaultCurrency": "USD"
+    }
+  ],
+  "paymentProviders": ["stripe"]
 }
