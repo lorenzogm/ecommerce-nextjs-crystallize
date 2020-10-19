@@ -6,15 +6,15 @@
       "urlPrefix": "en",
       "appLanguage": "en-US",
       "crystallizeCatalogueLanguage": "en",
-      "defaultCurrency": "USD"
+      "defaultCurrency": "EUR"
     },
     {
       "displayName": "es",
       "urlPrefix": "es",
-      "appLanguage": "en-US",
+      "appLanguage": "es-ES",
       "crystallizeCatalogueLanguage": "es",
-      "defaultCurrency": "USD"
+      "defaultCurrency": "EUR"
     }
   ],
-  "paymentProviders": ["stripe"]
+  "paymentProviders": []
 }
