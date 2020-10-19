@@ -6,24 +6,7 @@
       "urlPrefix": "es",
       "appLanguage": "es-ES",
       "crystallizeCatalogueLanguage": "es",
-      "defaultCurrency": "EUR",
-      "mainNavigation": [
-        {
-          "type": "folder",
-          "name": "Mujer y Hombre",
-          "path": "/mujer-y-hombre"
-        },
-        {
-          "type": "folder",
-          "name": "Peques",
-          "path": "/peques"
-        },
-        {
-          "type": "folder",
-          "name": "Bebés",
-          "path": "/bebes"
-        }
-      ]
+      "defaultCurrency": "EUR"
     }
   ],
   "paymentProviders": []
