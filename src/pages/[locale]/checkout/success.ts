@@ -4,9 +4,7 @@ import dynamic from 'next/dynamic'
 const CheckoutSuccessTemplate = dynamic(
   () =>
     import(
-      `themes/${
-        process.env.NEXT_PUBLIC_THEME || 'crystallize'
-      }/templates/CheckoutSuccessTemplate/CheckoutSuccessTemplate`
+      `themes/${process.env.NEXT_PUBLIC_THEME || 'dindim'}/templates/CheckoutSuccessTemplate/CheckoutSuccessTemplate`
     ),
 )
 
