@@ -45,6 +45,7 @@
     "@sendgrid/mail": "^7.2.3",
     "@stripe/react-stripe-js": "^1.1.2",
     "@stripe/stripe-js": "^1.8.0",
+    "@types/styled-components": "^5.1.4",
     "accept-language": "^3.0.18",
     "dashjs": "^3.1.1",
     "i18next": "^19.5.4",
