@@ -8,12 +8,7 @@ import GlobalStyle from 'themes/crystallize/ui/global'
 import Aside from './aside'
 import Header from './header'
 import Footer from './footer'
-import {
-  Main,
-  LoadingWrapper,
-  SpinnerWrapper,
-  LoadingTextWrapper,
-} from './styles'
+import { Main, LoadingWrapper, SpinnerWrapper, LoadingTextWrapper } from './styles'
 
 function Loader({ children }) {
   return (
@@ -28,21 +23,12 @@ function Loader({ children }) {
   )
 }
 
-export default function Layout({
-  children,
-  title,
-  description,
-  simple,
-  loading,
-  preview,
-}) {
+export default function Layout({ children, title, description, simple, loading, preview }) {
   return (
     <>
       <Head>
         <title key="title">{title || ''}</title>
-        {description && (
-          <meta key="description" name="description" content={description} />
-        )}
+        {description && <meta key="description" name="description" content={description} />}
       </Head>
       <GlobalStyle />
 

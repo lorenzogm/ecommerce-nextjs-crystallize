@@ -9,15 +9,7 @@ import { useT } from 'lib/i18n'
 import BurgerButton from './burger-button'
 import BasketButton from './basket-button'
 import LocaleSwitcher from './locale-switcher'
-import {
-  Outer,
-  Nav,
-  Logo,
-  NavActions,
-  NavList,
-  NavListItem,
-  PreviewBar,
-} from './styles'
+import { Outer, Nav, Logo, NavActions, NavList, NavListItem, PreviewBar } from './styles'
 
 export default function Header({ simple, preview }) {
   const t = useT()
@@ -31,11 +23,7 @@ export default function Header({ simple, preview }) {
     <>
       {preview && (
         <PreviewBar>
-          You are in preview mode (
-          <a href={`/api/preview?leave=${encodeURIComponent(router.asPath)}`}>
-            leave
-          </a>
-          )
+          You are in preview mode (<a href={`/api/preview?leave=${encodeURIComponent(router.asPath)}`}>leave</a>)
         </PreviewBar>
       )}
       <Outer simple={simple}>
@@ -59,15 +47,19 @@ export default function Header({ simple, preview }) {
         </Nav>
         <NavActions open={navOpen}>
           <LocaleSwitcher />
-          {auth.isLoggedIn ? (
-            <button type="button" onClick={auth.logout}>
-              Logout
-            </button>
-          ) : (
-            <Link href="/login">
-              <a>{t('customer.login.title')}</a>
-            </Link>
-          )}
+          {process.env.NEXT_PUBLIC_ENABLE_LOGIN === 'true' ? (
+            <>
+              {auth.isLoggedIn ? (
+                <button type="button" onClick={auth.logout}>
+                  Logout
+                </button>
+              ) : (
+                <Link href="/login">
+                  <a>{t('customer.login.title')}</a>
+                </Link>
+              )}
+            </>
+          ) : null}
         </NavActions>
         {!simple && <BasketButton />}
         <BurgerButton active={navOpen} onClick={() => setNavOpen(!navOpen)} />
