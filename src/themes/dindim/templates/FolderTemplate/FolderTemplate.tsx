@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Outer, Header, H1 } from 'themes/crystallize/ui'
-import Layout from 'themes/crystallize/components/layout'
+import PageLayout from 'themes/dindim/foundations/PageLayout/PageLayout'
 import Grid, { GridItem } from 'themes/crystallize/components/grid'
 import ShapeComponents from 'themes/crystallize/components/shape/components'
 import ItemMicroformat from 'themes/crystallize/components/item-microformat'
@@ -17,7 +17,7 @@ export default function FolderTemplate({ folder, preview }) {
   const rest = folder.components?.filter((c) => c.type !== 'gridRelations')
 
   return (
-    <Layout title={folder.name} preview={preview}>
+    <PageLayout title={folder.name} preview={preview}>
       <Outer>
         <Header centerContent>
           <H1>{folder.name}</H1>
@@ -28,9 +28,7 @@ export default function FolderTemplate({ folder, preview }) {
               <Grid
                 key={index}
                 model={grid}
-                cellComponent={({ cell }) => (
-                  <GridItem data={cell.item} gridCell={cell} />
-                )}
+                cellComponent={({ cell }) => <GridItem data={cell.item} gridCell={cell} />}
               />
             ))
           : children && (
@@ -41,6 +39,6 @@ export default function FolderTemplate({ folder, preview }) {
               </List>
             )}
       </Outer>
-    </Layout>
+    </PageLayout>
   )
 }
