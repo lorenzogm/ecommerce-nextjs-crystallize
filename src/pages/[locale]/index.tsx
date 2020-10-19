@@ -3,21 +3,15 @@ import dynamic from 'next/dynamic'
 
 import { simplyFetchFromGraph } from 'lib/graph'
 import fragments from 'lib/graph/fragments'
-import appConfig, { getLocaleFromContext, isMultilingual } from 'lib/app-config'
+import appConfig, { getLocaleFromContext } from 'lib/app-config'
+import { GetStaticPaths } from 'next'
 
 const HomeTemplate = dynamic(
-  () =>
-    import(
-      `themes/${
-        process.env.NEXT_PUBLIC_THEME || 'crystallize'
-      }/templates/HomeTemplate/HomeTemplate`
-    ),
+  () => import(`themes/${process.env.NEXT_PUBLIC_THEME || 'crystallize'}/templates/HomeTemplate/HomeTemplate`),
 )
 
 export default function IndexPage({ catalogue, preview }) {
-  const [grid] =
-    catalogue?.components?.find((c) => c.type === 'gridRelations')?.content
-      ?.grids || []
+  const [grid] = catalogue?.components?.find((c) => c.type === 'gridRelations')?.content?.grids || []
 
   return <HomeTemplate grid={grid} preview={preview} />
 }
@@ -65,11 +59,9 @@ export async function getStaticProps({ params = {}, preview }) {
   }
 }
 
-export const getStaticPaths = !isMultilingual
-  ? undefined
-  : async () => {
-      return {
-        paths: appConfig.locales.map((l) => `/${l.urlPrefix}`),
-        fallback: false,
-      }
-    }
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: appConfig.locales.map((l) => `/${l.urlPrefix}`),
+    fallback: false,
+  }
+}

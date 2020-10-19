@@ -1,32 +1,32 @@
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router'
 
-import appConfigRaw from '../../app.config.json';
+import appConfigRaw from '../../app.config.json'
 
 // Validate locales
 if (!appConfigRaw.locales) {
-  throw new Error('app.config.js: locales is not defined');
+  throw new Error('app.config.js: locales is not defined')
 }
 if (appConfigRaw.locales.filter((l) => l.isDefault).length > 1) {
-  throw new Error('app.config.js: cannot have more than one default locale');
+  throw new Error('app.config.js: cannot have more than one default locale')
 }
 
 const appConfig = {
   ...appConfigRaw,
   locales: appConfigRaw.locales.map((locale) => ({
     ...locale,
-    urlPrefix: locale.urlPrefix.replace(/\//g, '')
-  }))
-};
+    urlPrefix: locale.urlPrefix.replace(/\//g, ''),
+  })),
+}
 
-export const {locales} = appConfig;
+export const { locales } = appConfig
 
-export const defaultLocale = appConfig.locales.find((l) => l.isDefault);
+export const defaultLocale = appConfig.locales.find((l) => l.isDefault)
 
 // Get the current locale
 export function useLocale() {
-  const router = useRouter();
+  const router = useRouter()
 
-  return getLocaleFromContext(router);
+  return getLocaleFromContext(router)
 }
 
 /**
@@ -34,26 +34,16 @@ export function useLocale() {
  * /en/my-product
  * /de/mein-produkt
  */
-export const isMultilingual =
-  appConfig.locales.length > 1 || appConfig.locales[0]?.urlPrefix.length > 0;
+export const isMultilingual = appConfig.locales.length > 1
 
-export function getLocaleFromContext({ locale, query, asPath } = {}) {
-  function validLocale(urlPrefix) {
-    return (
-      appConfig.locales.find((l) => l.urlPrefix === urlPrefix) || defaultLocale
-    );
+export function getLocaleFromContext() {
+  let localeCode = 'es'
+  if (process.browser) {
+    const [, localeCodeFromUrl] = window.location.pathname.split('/')
+    localeCode = localeCodeFromUrl
   }
 
-  if (locale) {
-    return validLocale(locale);
-  }
-
-  if (query?.locale) {
-    return validLocale(query.locale);
-  }
-
-  // Fallback to using the first part of the asPath
-  return validLocale(asPath?.split('/').filter(Boolean)[0]);
+  return appConfig.locales.find((l) => l.urlPrefix === localeCode) || defaultLocale
 }
 
-export default appConfig;
+export default appConfig

@@ -1,21 +1,26 @@
+import { AppProps } from 'next/dist/next-server/lib/router/router'
+
 import MetaTags from 'components/elements/MetaTags/MetaTags'
 import { AuthProvider } from 'contexts/auth-context'
 import { SettingsProvider } from 'contexts/settings-context'
 import { BasketProvider } from 'contexts/BasketContext/BasketContext'
-import { simplyFetchFromGraph } from 'lib/graph'
-import { getLocaleFromContext, defaultLocale } from 'lib/app-config'
+import { getLocaleFromContext } from 'lib/app-config'
 import { I18nextProvider } from 'lib/i18n'
 
-function MyApp({ Component, pageProps, commonData }) {
-  const { tenant, mainNavigation, locale, localeResource } = commonData
+import localeResourceEn from 'locales/en-US'
+import localeResourceEs from 'locales/es-ES'
+
+export default function MyApp({ Component, pageProps }: AppProps) {
+  const locale = getLocaleFromContext()
+
   return (
     <>
       <MetaTags />
-      <I18nextProvider locale={locale} localeResource={localeResource}>
-        <SettingsProvider
-          currency={tenant.defaults.currency}
-          mainNavigation={mainNavigation}
-        >
+      <I18nextProvider
+        locale={locale}
+        localeResource={locale?.displayName === 'en' ? localeResourceEn : localeResourceEs}
+      >
+        <SettingsProvider currency={locale?.defaultCurrency} mainNavigation={locale?.mainNavigation}>
           <AuthProvider>
             <BasketProvider>
               <Component {...pageProps} />
@@ -26,72 +31,3 @@ function MyApp({ Component, pageProps, commonData }) {
     </>
   )
 }
-
-MyApp.getInitialProps = async function ({ ctx }) {
-  try {
-    const locale = getLocaleFromContext(ctx)
-
-    const localeResource = await import(`../locales/${locale.appLanguage}`)
-
-    /**
-     * Get shared data for all pages
-     * - Tenant settings
-     * - Main navigation
-     */
-    const {
-      data: {
-        tenant,
-        mainNavigation: { children: mainNavigation },
-      },
-    } = await simplyFetchFromGraph({
-      query: `
-        query COMMON_DATA($language: String!) {
-          mainNavigation: catalogue(language: $language, path: "/") {
-            children {
-              type
-              name
-              path
-            }
-          }
-
-          tenant(language: $language) {
-            name
-            defaults {
-              currency
-            }
-          }
-        }
-      `,
-      variables: {
-        language: locale.crystallizeCatalogueLanguage,
-      },
-    })
-
-    return {
-      commonData: {
-        localeResource: localeResource.default,
-        locale,
-        tenant,
-        mainNavigation: mainNavigation?.filter((i) => !i.name.startsWith('_')),
-      },
-    }
-  } catch (error) {
-    console.error(error)
-    console.warn('Could not fetch common page data')
-
-    // Fallback values
-    return {
-      commonData: {
-        mainNavigation: [],
-        locale: defaultLocale,
-        tenant: {
-          defaults: {
-            currency: 'usd',
-          },
-        },
-      },
-    }
-  }
-}
-
-export default MyApp

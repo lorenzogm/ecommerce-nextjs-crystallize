@@ -6,6 +6,11 @@ module.exports = {
         destination: '/',
         permanent: true,
       },
+      {
+        source: '/en',
+        destination: '/es',
+        permanent: true,
+      },
     ]
   },
   typescript: {

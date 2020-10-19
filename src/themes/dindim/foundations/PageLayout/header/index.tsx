@@ -5,6 +5,7 @@ import { useAuth } from 'contexts/auth-context'
 import { useSettings } from 'contexts/settings-context'
 import Link from 'themes/crystallize/components/link'
 import { useT } from 'lib/i18n'
+import { isMultilingual } from 'lib/app-config'
 
 import BurgerButton from './burger-button'
 import BasketButton from './basket-button'
@@ -46,7 +47,7 @@ export default function Header({ simple, preview }) {
           </NavList>
         </Nav>
         <NavActions open={navOpen}>
-          <LocaleSwitcher />
+          {isMultilingual ? <LocaleSwitcher /> : null}
           {process.env.NEXT_PUBLIC_ENABLE_LOGIN === 'true' ? (
             <>
               {auth.isLoggedIn ? (

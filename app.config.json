@@ -2,18 +2,28 @@
   "locales": [
     {
       "isDefault": true,
-      "displayName": "en",
-      "urlPrefix": "en",
-      "appLanguage": "en-US",
-      "crystallizeCatalogueLanguage": "en",
-      "defaultCurrency": "EUR"
-    },
-    {
       "displayName": "es",
       "urlPrefix": "es",
       "appLanguage": "es-ES",
       "crystallizeCatalogueLanguage": "es",
-      "defaultCurrency": "EUR"
+      "defaultCurrency": "EUR",
+      "mainNavigation": [
+        {
+          "type": "folder",
+          "name": "Mujer y Hombre",
+          "path": "/mujer-y-hombre"
+        },
+        {
+          "type": "folder",
+          "name": "Peques",
+          "path": "/peques"
+        },
+        {
+          "type": "folder",
+          "name": "Bebés",
+          "path": "/bebes"
+        }
+      ]
     }
   ],
   "paymentProviders": []

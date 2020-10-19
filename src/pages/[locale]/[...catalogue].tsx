@@ -13,22 +13,12 @@ import Head from 'next/head'
 import DefaultErrorPage from 'next/error'
 
 import { simplyFetchFromGraph } from 'lib/graph'
-import appConfig, {
-  getLocaleFromContext,
-  isMultilingual,
-  defaultLocale,
-} from 'lib/app-config'
+import appConfig, { getLocaleFromContext, isMultilingual, defaultLocale } from 'lib/app-config'
 import Layout from 'themes/crystallize/components/layout'
 
-import DocPage, {
-  getData as getDataDoc,
-} from 'components/pages/DocumentPage/DocumentPage'
-import FolderPage, {
-  getData as getDataFolder,
-} from 'components/pages/FolderPage/FolderPage'
-import ProdPage, {
-  getData as getDataProd,
-} from 'components/pages/ProductPage/ProductPage'
+import DocPage, { getData as getDataDoc } from 'components/pages/DocumentPage/DocumentPage'
+import FolderPage, { getData as getDataFolder } from 'components/pages/FolderPage/FolderPage'
+import ProdPage, { getData as getDataProd } from 'components/pages/ProductPage/ProductPage'
 
 const typesMap = {
   document: {
@@ -84,6 +74,7 @@ export async function getStaticProps({ params, preview }) {
       revalidate: 1,
     }
   } catch (error) {
+    console.log(error)
     console.warn(`Could not get data for ${asPath}`)
   }
 
@@ -105,11 +96,7 @@ export async function getStaticPaths() {
   async function handleLocale(locale) {
     function handleItem({ path, name, children }) {
       if (path !== '/index' && !name?.startsWith('_')) {
-        if (isMultilingual) {
-          paths.push(`/${locale.urlPrefix}${path}`)
-        } else {
-          paths.push(path)
-        }
+        paths.push(`/${locale.urlPrefix}${path}`)
       }
 
       children?.forEach(handleItem)
@@ -156,13 +143,12 @@ export async function getStaticPaths() {
 
       allCatalogueItems.data.catalogue.children.forEach(handleItem)
     } catch (error) {
-      console.error(
-        'Could not get all catalogue items for ',
-        JSON.stringify(locale, null, 3),
-      )
+      console.error('Could not get all catalogue items for ', JSON.stringify(locale, null, 3))
       console.log(error)
     }
   }
+
+  console.log({ paths })
 
   return {
     paths,

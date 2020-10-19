@@ -1,16 +1,12 @@
-import appConfig, { isMultilingual } from 'lib/app-config'
+import appConfig from 'lib/app-config'
 import { sendMagicLink } from 'lib/rest-api'
 import { useAuth } from 'contexts/auth-context'
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
+import { GetStaticPaths } from 'next'
 
 const LoginTemplate = dynamic(
-  () =>
-    import(
-      `themes/${
-        process.env.NEXT_PUBLIC_THEME || 'crystallize'
-      }/templates/LoginTemplate/LoginTemplate`
-    ),
+  () => import(`themes/${process.env.NEXT_PUBLIC_THEME || 'crystallize'}/templates/LoginTemplate/LoginTemplate`),
 )
 
 export default function LoginPage() {
@@ -38,10 +34,7 @@ export default function LoginPage() {
 
       setUserData({ ...userData, loading: false, message })
     } catch (error) {
-      console.error(
-        'You have an error in your code or there are Network issues.',
-        error,
-      )
+      console.error('You have an error in your code or there are Network issues.', error)
 
       const { response } = error
       setUserData({
@@ -52,25 +45,16 @@ export default function LoginPage() {
     }
   }
 
-  return (
-    <LoginTemplate
-      auth={auth}
-      handleSubmit={handleSubmit}
-      userData={userData}
-      setUserData={setUserData}
-    />
-  )
+  return <LoginTemplate auth={auth} handleSubmit={handleSubmit} userData={userData} setUserData={setUserData} />
 }
 
 export function getStaticProps() {
   return { props: {} }
 }
 
-export const getStaticPaths = !isMultilingual
-  ? undefined
-  : async () => {
-      return {
-        paths: appConfig.locales.map((l) => `/${l.urlPrefix}/login`),
-        fallback: false,
-      }
-    }
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: appConfig.locales.map((l) => `/${l.urlPrefix}/login`),
+    fallback: false,
+  }
+}

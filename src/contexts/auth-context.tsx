@@ -1,44 +1,47 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react'
 
-import { authenticate } from 'lib/rest-api';
-import { logout } from 'lib/auth';
+import { authenticate } from 'lib/rest-api'
+import { logout } from 'lib/auth'
 
-export const AuthContext = React.createContext();
+export const AuthContext = React.createContext()
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => useContext(AuthContext)
 
 export function AuthProvider({ children }) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   useEffect(() => {
     async function checkIfLoggedIn() {
       try {
-        const response = await authenticate();
+        const response = await authenticate()
 
-        const loggedIn = !!response.loggedIn;
-        setIsLoggedIn(loggedIn);
-        window.isLoggedIn = loggedIn;
+        const loggedIn = !!response.loggedIn
+        setIsLoggedIn(loggedIn)
+        window.isLoggedIn = loggedIn
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.log(error);
+        console.log(error)
       }
     }
-    checkIfLoggedIn();
-  }, []);
+
+    if (process.env.NEXT_PUBLIC_ENABLE_LOGIN === 'true') {
+      checkIfLoggedIn()
+    }
+  }, [])
 
   function doLogout() {
-    logout();
-    setIsLoggedIn(false);
+    logout()
+    setIsLoggedIn(false)
   }
 
   return (
     <AuthContext.Provider
       value={{
         isLoggedIn,
-        logout: doLogout
+        logout: doLogout,
       }}
     >
       {children}
     </AuthContext.Provider>
-  );
+  )
 }

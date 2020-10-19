@@ -1,4 +1,5 @@
-import appConfig, { isMultilingual } from 'lib/app-config'
+import appConfig from 'lib/app-config'
+import { GetStaticPaths } from 'next'
 import dynamic from 'next/dynamic'
 
 const CheckoutSuccessTemplate = dynamic(
@@ -11,11 +12,9 @@ export function getStaticProps() {
   return { props: {} }
 }
 
-export const getStaticPaths = !isMultilingual
-  ? undefined
-  : () => {
-      return {
-        paths: appConfig.locales.map((l) => `/${l.urlPrefix}/checkout/success`),
-        fallback: false,
-      }
-    }
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: appConfig.locales.map((l) => `/${l.urlPrefix}/checkout/success`),
+    fallback: false,
+  }
+}
