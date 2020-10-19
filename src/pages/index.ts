@@ -25,6 +25,5 @@ import { locales, defaultLocale } from 'lib/app-config'
 // }
 
 export default function MultilingualRedirect() {
-  console.log('MultilingualRedirect')
   return '...'
 }
