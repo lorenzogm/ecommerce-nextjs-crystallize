@@ -3,7 +3,7 @@ import Img from '@crystallize/react-image'
 import ContentTransformer from 'themes/crystallize/ui/content-transformer'
 
 import { screen } from 'themes/crystallize/ui'
-import Layout from 'themes/crystallize/components/layout'
+import PageLayout from 'themes/dindim/foundations/PageLayout/PageLayout'
 import ShapeComponents from 'themes/crystallize/components/shape/components'
 
 import Topics from 'themes/crystallize/components/topics'
@@ -25,34 +25,24 @@ import {
 
 export default function ProductTemplate({ product, preview }) {
   // Set the selected variant to the default
-  const [selectedVariant, setSelectedVariant] = useState(
-    product.variants.find((v) => v.isDefault),
-  )
+  const [selectedVariant, setSelectedVariant] = useState(product.variants.find((v) => v.isDefault))
 
   function onVariantChange(variant) {
     setSelectedVariant(variant)
   }
 
   const summaryComponent = product.components.find((c) => c.name === 'Summary')
-  const descriptionComponent = product.components.find(
-    (c) => c.name === 'Description',
-  )
+  const descriptionComponent = product.components.find((c) => c.name === 'Description')
   const specs = product.components.find((c) => c.name === 'Specs')
-  const componentsRest = product.components?.filter(
-    (c) => !['Summary', 'Description', 'Specs'].includes(c.name),
-  )
+  const componentsRest = product.components?.filter((c) => !['Summary', 'Description', 'Specs'].includes(c.name))
 
   return (
-    <Layout title={product.name} preview={preview}>
+    <PageLayout title={product.name} preview={preview}>
       <Outer>
         <Sections>
           <Media>
             <MediaInner>
-              <Img
-                {...selectedVariant.image}
-                sizes={`(max-width: ${screen.sm}px) 400px, 60vw`}
-                alt={product.name}
-              />
+              <Img {...selectedVariant.image} sizes={`(max-width: ${screen.sm}px) 400px, 60vw`} alt={product.name} />
             </MediaInner>
           </Media>
           <Info>
@@ -77,10 +67,7 @@ export default function ProductTemplate({ product, preview }) {
         <Content>
           {descriptionComponent && (
             <Description>
-              <ShapeComponents
-                className="description"
-                components={[descriptionComponent]}
-              />
+              <ShapeComponents className="description" components={[descriptionComponent]} />
             </Description>
           )}
           {specs && (
@@ -94,6 +81,6 @@ export default function ProductTemplate({ product, preview }) {
 
         <ShapeComponents components={componentsRest} />
       </Outer>
-    </Layout>
+    </PageLayout>
   )
 }

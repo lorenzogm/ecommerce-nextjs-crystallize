@@ -29,9 +29,13 @@ export default function BuyButton({ product, selectedVariant }) {
           <CurrencyValue value={selectedVariant.price} />
         </strong>
       </Price>
-      <Button width="200px" onClick={buy}>
-        {t('product.addToBasket')}
-      </Button>
+      {process.env.NEXT_PUBLIC_ENABLE_CHECKOUT === 'true' ? (
+        <Button width="200px" onClick={buy}>
+          {t('product.addToBasket')}
+        </Button>
+      ) : (
+        <p>{t("The campaing is not opened, so it's not possible to buy products at the moment.")}</p>
+      )}
     </ProductFooter>
   )
 }

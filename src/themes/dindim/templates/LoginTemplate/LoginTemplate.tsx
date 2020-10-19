@@ -1,21 +1,16 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-import Layout from 'themes/crystallize/components/layout'
+import PageLayout from 'themes/dindim/foundations/PageLayout/PageLayout'
 import { H1, Button } from 'themes/crystallize/ui'
 import { useT } from 'lib/i18n'
 
 import { LoginStyle, Outer, Fields } from './LoginTemplate.styles'
 
-export default function LoginTemplate({
-  auth,
-  handleSubmit,
-  userData,
-  setUserData,
-}) {
+export default function LoginTemplate({ auth, handleSubmit, userData, setUserData }) {
   const t = useT()
 
   return (
-    <Layout title={t('customer.login.title')}>
+    <PageLayout title={t('customer.login.title')}>
       <Outer>
         {auth.isLoggedIn ? (
           <div>
@@ -33,28 +28,18 @@ export default function LoginTemplate({
                   name="email"
                   placeholder={t('customer.email')}
                   required
-                  onChange={(event) =>
-                    setUserData({ ...userData, email: event.target.value })
-                  }
+                  onChange={(event) => setUserData({ ...userData, email: event.target.value })}
                 />
-                <Button
-                  state={userData.loading ? 'loading' : null}
-                  type="submit"
-                  value="Submit"
-                >
+                <Button state={userData.loading ? 'loading' : null} type="submit" value="Submit">
                   {t('customer.login.sendMagicLink')}
                 </Button>
               </Fields>
             </form>
             {userData.message ? <p>{userData.message}</p> : ''}
-            {userData.error ? (
-              <p>{t('customer.login.emailAddressInvalid')}</p>
-            ) : (
-              ''
-            )}
+            {userData.error ? <p>{t('customer.login.emailAddressInvalid')}</p> : ''}
           </LoginStyle>
         )}
       </Outer>
-    </Layout>
+    </PageLayout>
   )
 }

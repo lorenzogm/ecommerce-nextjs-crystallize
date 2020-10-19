@@ -1,50 +1,153 @@
 import React from 'react'
+import { useForm } from 'react-hook-form'
 
 import { useBasket } from 'contexts/BasketContext/BasketContext'
-import Layout from 'themes/crystallize/components/layout'
+import PageLayout from 'themes/dindim/foundations/PageLayout/PageLayout'
 import OrderItems from 'themes/crystallize/components/order-items'
-import { Totals } from 'themes/crystallize/elements/BasketTotals/BasketTotals'
 import { useT } from 'lib/i18n'
+import Button from 'themes/dindim/foundations/Button/Button'
+import InputText from 'themes/dindim/foundations/InputText/InputText'
+import PageSection from 'themes/dindim/foundations/PageSection/PageSection'
+import PageSectionHeader from 'themes/dindim/foundations/PageSectionHeader/PageSectionHeader'
+import Form from 'themes/dindim/foundations/Form/Form'
+import PageRow from 'themes/dindim/foundations/PageRow/PageRow'
+import PageColumn from 'themes/dindim/foundations/PageColumn/PageColumn'
+import DescriptionList from 'themes/dindim/foundations/DescriptionList/DescriptionList'
+import DescriptionListTerm from 'themes/dindim/foundations/DescriptionListTerm/DescriptionListTerm'
+import DescriptionListDetails from 'themes/dindim/foundations/DescriptionListDetails/DescriptionListDetails'
+import InputRadio from 'themes/dindim/foundations/InputRadio/InputRadio'
+import PreOrderSystemSummary from 'themes/dindim/elements/PreOrderSystemSummary/PreOrderSystemSummary'
 
-import Payment from './Payment'
-import {
-  Outer,
-  Inner,
-  SectionHeader,
-  Container,
-} from './CheckoutTemplate.styles'
+import { Outer, Row } from './CheckoutTemplate.styles'
+import useOnSubmit from './useOnSubmit'
 
 export default function CheckoutTemplate() {
   const basket = useBasket()
   const t = useT()
 
+  const defaultValues = {
+    email: '',
+    firstName: '',
+    lastName: '',
+    street: '',
+    zip: '',
+    city: '',
+    country: '',
+    deliveryMethod: undefined,
+  }
+
+  const useFormMethods = useForm({ defaultValues })
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  const { getValues } = useFormMethods
+  const { deliveryMethod } = getValues()
+  const deliveryPrice = deliveryMethod === DeliveryMethod.DELIVERY ? 9 : 0
+  const { onSubmit } = useOnSubmit({ deliveryPrice })
+
+  if (process.env.NEXT_PUBLIC_ENABLE_CHECKOUT !== 'true') {
+    return null
+  }
+
   if (basket.status !== 'ready') {
     return <Outer center>{t('basket.loading')}</Outer>
   }
 
-  const { cart } = basket
-
-  if (!cart?.length) {
+  if (!basket.cart?.length) {
     return <Outer center>{t('basket.empty', { context: 'inCheckout' })}</Outer>
   }
 
   return (
-    <Layout title={t('checkout.title')} simple>
-      <Outer>
-        <Inner>
-          <Container>
-            <SectionHeader>{t('checkout.title')}</SectionHeader>
-            <Payment />
-          </Container>
-          <Container>
-            <SectionHeader>{t('basket.title')}</SectionHeader>
-            <OrderItems cart={cart} />
-            <div style={{ padding: '0 15px' }}>
-              <Totals />
-            </div>
-          </Container>
-        </Inner>
-      </Outer>
-    </Layout>
+    <PageLayout
+      title={t('Checkout')}
+      description={t('Review your products, provide your details and place your order.')}
+      simple
+    >
+      <PageRow>
+        <PageColumn width="50%">
+          <PreOrderSystemSummary />
+
+          <PageSection>
+            <PageSectionHeader>{t('Your bag')}</PageSectionHeader>
+            <OrderItems cart={basket.cart} />
+            {/* <Payment /> */}
+          </PageSection>
+        </PageColumn>
+
+        <PageColumn width="50%">
+          <Form useFormMethods={useFormMethods} onSubmit={onSubmit}>
+            <PageSection>
+              <PageSectionHeader>{t('Total')}</PageSectionHeader>
+              <DescriptionList>
+                <DescriptionListTerm>{t('Subtotal (VAT included)')}</DescriptionListTerm>
+                <DescriptionListDetails>{t('common.price', { value: basket.total.gross })}</DescriptionListDetails>
+
+                <DescriptionListTerm>{t('Delivery')}</DescriptionListTerm>
+                <DescriptionListDetails>
+                  {deliveryPrice === 0 ? t('Free') : t('common.price', { value: deliveryPrice })}
+                </DescriptionListDetails>
+
+                <DescriptionListTerm>{t('Total')}</DescriptionListTerm>
+                <DescriptionListDetails>
+                  {t('common.price', { value: basket.total.gross + deliveryPrice })}
+                </DescriptionListDetails>
+              </DescriptionList>
+            </PageSection>
+
+            <PageSection>
+              <PageSectionHeader>{t('Delivery')}</PageSectionHeader>
+              <p>
+                {t(
+                  'We are a small shop! If you know us and we have discussed how to give you the products, choose pickup to save delivery costs!',
+                )}
+              </p>
+
+              <InputRadio
+                name="deliveryMethod"
+                label={t('')}
+                options={[
+                  { label: t('Pickup'), value: DeliveryMethod.PICKUP },
+                  { label: t('Delivery'), value: DeliveryMethod.DELIVERY },
+                ]}
+              />
+            </PageSection>
+
+            {deliveryMethod ? (
+              <PageSection>
+                <PageSectionHeader>{t('Contact Details')}</PageSectionHeader>
+
+                <Row>
+                  <InputText type="email" name="email" label={t('Email')} required />
+                </Row>
+                <Row>
+                  <InputText name="firstName" label={t('First name')} required />
+                  <InputText name="lastName" label={t('Last name')} required />
+                </Row>
+                {deliveryMethod === DeliveryMethod.DELIVERY ? (
+                  <>
+                    <Row style={{ marginTop: '1rem' }}>
+                      <InputText name="street" label={t('Street')} required />
+                    </Row>
+                    <Row>
+                      <InputText name="postalCode" label={t('Postal Code')} required />
+                      <InputText name="city" label={t('City')} required />
+                    </Row>
+                    <Row>
+                      <InputText name="country" label={t('Country')} required />
+                    </Row>
+                  </>
+                ) : null}
+                <Button type="submit" variant="primary">
+                  {t('Place Order')}
+                </Button>
+              </PageSection>
+            ) : null}
+          </Form>
+        </PageColumn>
+      </PageRow>
+    </PageLayout>
   )
+}
+
+enum DeliveryMethod {
+  PICKUP = 'PICKUP',
+  DELIVERY = 'DELIVERY',
 }

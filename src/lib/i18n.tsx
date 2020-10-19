@@ -1,45 +1,43 @@
-import { createContext, useContext } from 'react';
-import i18n from 'i18next';
+import { createContext, useContext } from 'react'
+import i18n from 'i18next'
 
-const I18NextContext = createContext();
+const I18NextContext = createContext()
 
 export const useT = () => {
-  const c = useContext(I18NextContext);
+  const c = useContext(I18NextContext)
 
-  return (val, options) => c.t(val, options);
-};
+  return (val, options) => c.t(val, options)
+}
 
 export function I18nextProvider({ locale, localeResource, children }) {
-  const lng = locale.appLanguage;
+  const lng = locale.appLanguage
 
   const currencyFormatter = new Intl.NumberFormat(locale, {
     style: 'currency',
-    currency: locale.defaultCurrency
-  });
+    currency: locale.defaultCurrency,
+  })
 
   i18n.init({
     resources: {
-      [lng]: localeResource
+      [lng]: localeResource,
     },
     lng,
 
     interpolation: {
       escapeValue: false, // react already safe from xss
-      format (value, format) {
+      format(value, format) {
         if (format === 'uppercase') {
-          return value.toUpperCase();
+          return value.toUpperCase()
         }
 
         if (format === 'currency') {
-          return currencyFormatter.format(value);
+          return currencyFormatter.format(value)
         }
 
-        return value;
-      }
-    }
-  });
+        return value
+      },
+    },
+  })
 
-  return (
-    <I18NextContext.Provider value={i18n}>{children}</I18NextContext.Provider>
-  );
+  return <I18NextContext.Provider value={i18n}>{children}</I18NextContext.Provider>
 }

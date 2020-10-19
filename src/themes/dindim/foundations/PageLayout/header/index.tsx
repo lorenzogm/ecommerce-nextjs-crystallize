@@ -61,7 +61,7 @@ export default function Header({ simple, preview }) {
             </>
           ) : null}
         </NavActions>
-        {!simple && <BasketButton />}
+        {process.env.NEXT_PUBLIC_ENABLE_CHECKOUT === 'true' && !simple ? <BasketButton /> : null}
         <BurgerButton active={navOpen} onClick={() => setNavOpen(!navOpen)} />
       </Outer>
     </>
