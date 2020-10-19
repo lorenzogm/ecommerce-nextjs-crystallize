@@ -2,10 +2,7 @@ import appConfig, { isMultilingual } from 'lib/app-config'
 import dynamic from 'next/dynamic'
 
 const CheckoutSuccessTemplate = dynamic(
-  () =>
-    import(
-      `themes/${process.env.NEXT_PUBLIC_THEME || 'dindim'}/templates/CheckoutSuccessTemplate/CheckoutSuccessTemplate`
-    ),
+  () => import(`themes/dindim/templates/CheckoutSuccessTemplate/CheckoutSuccessTemplate`),
 )
 
 export default CheckoutSuccessTemplate
