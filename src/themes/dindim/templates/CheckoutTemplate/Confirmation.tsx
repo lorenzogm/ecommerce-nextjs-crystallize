@@ -9,7 +9,7 @@ import { H1, H3, Outer, Header } from 'themes/crystallize/ui'
 import { useT } from 'lib/i18n'
 import { CurrencyValue } from 'themes/crystallize/components/currency-value'
 
-import BillingDetails from './billing-details'
+import BillingDetails from './BillingDetails'
 
 const CustomHeader = styled(Header)`
   margin-bottom: 0;

@@ -10,9 +10,6 @@ import { useT } from 'lib/i18n'
 import { useBasket } from 'contexts/BasketContext/BasketContext'
 
 import {
-  Input,
-  InputGroup,
-  Label,
   PaymentSelector,
   PaymentProviders,
   PaymentButton,
@@ -22,26 +19,14 @@ import {
 
 const StripeCheckout = dynamic(() => import('./stripe'))
 
-const Row = styled.div`
-  display: flex;
-  margin-bottom: 10px;
-`
-
 const Inner = styled.div``
 
-export default function Payment() {
+export default function Payment({ state }) {
   const t = useT()
   const locale = useLocale()
   const router = useRouter()
   const { cart, actions, metadata } = useBasket()
   const [selectedPaymentProvider, setSelectedPaymentProvider] = useState(null)
-  const [state, setState] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-  })
-
-  const { firstName, lastName, email } = state
 
   // Define the shared payment model for all payment providers
   const paymentModel = {
@@ -50,12 +35,12 @@ export default function Payment() {
     cart,
     metadata,
     customer: {
-      firstName,
-      lastName,
+      firstName: state.firstName,
+      lastName: state.lastName,
       addresses: [
         {
           type: 'billing',
-          email,
+          email: state.email,
         },
       ],
     },
@@ -80,10 +65,7 @@ export default function Payment() {
                   `/${locale.urlPrefix}/confirmation/stripe/${orderId}`,
                 )
               } else {
-                router.push(
-                  '/confirmation/stripe/[orderId]',
-                  `/confirmation/stripe/${orderId}`,
-                )
+                router.push('/confirmation/stripe/[orderId]', `/confirmation/stripe/${orderId}`)
               }
               scrollTo(0, 0)
             }}
@@ -95,56 +77,16 @@ export default function Payment() {
 
   return (
     <Inner>
-      <form noValidate>
-        <Row>
-          <InputGroup>
-            <Label htmlFor="firstname">{t('customer.firstName')}</Label>
-            <Input
-              name="firstname"
-              type="text"
-              value={firstName}
-              onChange={(e) =>
-                setState({ ...state, firstName: e.target.value })
-              }
-              required
-            />
-          </InputGroup>
-          <InputGroup>
-            <Label htmlFor="lastname">{t('customer.lastName')}</Label>
-            <Input
-              name="lastname"
-              type="text"
-              value={lastName}
-              onChange={(e) => setState({ ...state, lastName: e.target.value })}
-              required
-            />
-          </InputGroup>
-        </Row>
-        <Row>
-          <InputGroup>
-            <Label htmlFor="email">{t('customer.email')}</Label>
-            <Input
-              name="email"
-              type="email"
-              value={email}
-              onChange={(e) => setState({ ...state, email: e.target.value })}
-              required
-            />
-          </InputGroup>
-        </Row>
-      </form>
-
       <div>
-        <SectionHeader>{t('checkout.choosePaymentMethod')}</SectionHeader>
-        {appConfig.paymentProviders.length === 0 ? (
-          <i>{t('checkout.noPaymentProvidersConfigured')}</i>
-        ) : (
+        <SectionHeader>{t('Payment')}</SectionHeader>
+        <p>
+          {t("The payment method is via wire transfer. We'll provide you the bank account in the confirmation email")}
+        </p>
+        {appConfig.paymentProviders.length > 0 ? (
           <PaymentProviders>
             <PaymentSelector>
               {appConfig.paymentProviders.map((paymentProviderFromConfig) => {
-                const paymentProvider = paymentProviders.find(
-                  (p) => p.name === paymentProviderFromConfig,
-                )
+                const paymentProvider = paymentProviders.find((p) => p.name === paymentProviderFromConfig)
                 if (!paymentProvider) {
                   return (
                     <small>
@@ -161,9 +103,7 @@ export default function Payment() {
                     color={paymentProvider.color}
                     type="button"
                     selected={selectedPaymentProvider === paymentProvider.name}
-                    onClick={() =>
-                      setSelectedPaymentProvider(paymentProvider.name)
-                    }
+                    onClick={() => setSelectedPaymentProvider(paymentProvider.name)}
                   >
                     <img
                       src={paymentProvider.logo}
@@ -176,11 +116,9 @@ export default function Payment() {
               })}
             </PaymentSelector>
 
-            {paymentProviders
-              .find((p) => p.name === selectedPaymentProvider)
-              ?.render()}
+            {paymentProviders.find((p) => p.name === selectedPaymentProvider)?.render()}
           </PaymentProviders>
-        )}
+        ) : null}
       </div>
     </Inner>
   )

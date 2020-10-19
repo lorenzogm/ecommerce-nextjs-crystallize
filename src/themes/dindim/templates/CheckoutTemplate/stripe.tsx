@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { loadStripe } from '@stripe/stripe-js'
-import {
-  CardElement,
-  Elements,
-  useStripe,
-  useElements,
-} from '@stripe/react-stripe-js'
+import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js'
 
 import { doPost } from 'lib/rest-api/helpers'
 import { Button } from 'themes/crystallize/ui'
@@ -15,15 +10,12 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
 
 // Persist by create order in Crystallize
 async function persistOrder({ paymentIntent, paymentModel }) {
-  const { data } = await doPost(
-    '/api/payment-providers/stripe/order-persistence',
-    {
-      body: JSON.stringify({
-        paymentIntentId: paymentIntent.id,
-        paymentModel,
-      }),
-    },
-  )
+  const { data } = await doPost('/api/payment-providers/stripe/order-persistence', {
+    body: JSON.stringify({
+      paymentIntentId: paymentIntent.id,
+      paymentModel,
+    }),
+  })
 
   return data.orders.create.id
 }
@@ -49,17 +41,14 @@ function Form({ clientSecret, paymentModel, onSuccess }) {
 
       const { customer } = paymentModel
 
-      const { error, paymentIntent } = await stripe.confirmCardPayment(
-        clientSecret,
-        {
-          payment_method: {
-            card: elements.getElement(CardElement),
-            billing_details: {
-              name: `${customer.firstName} ${customer.lastName}`,
-            },
+      const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: elements.getElement(CardElement),
+          billing_details: {
+            name: `${customer.firstName} ${customer.lastName}`,
           },
         },
-      )
+      })
       if (error) {
         setStatus({ error })
       } else {
@@ -86,11 +75,7 @@ function Form({ clientSecret, paymentModel, onSuccess }) {
     <form onSubmit={handleSubmit}>
       <CardElement />
       <div style={{ marginTop: 25 }}>
-        <Button
-          type="submit"
-          state={status === 'confirming' ? 'loading' : null}
-          disabled={status === 'confirming'}
-        >
+        <Button type="submit" state={status === 'confirming' ? 'loading' : null} disabled={status === 'confirming'}>
           {t('checkout.payNow')}
         </Button>
       </div>
@@ -103,14 +88,11 @@ export default function StripeWrapper({ paymentModel, ...props }) {
 
   useEffect(() => {
     async function getClientSecret() {
-      const { client_secret } = await doPost(
-        '/api/payment-providers/stripe/create-payment-intent',
-        {
-          body: JSON.stringify({
-            paymentModel,
-          }),
-        },
-      )
+      const { client_secret } = await doPost('/api/payment-providers/stripe/create-payment-intent', {
+        body: JSON.stringify({
+          paymentModel,
+        }),
+      })
 
       setClientSecret(client_secret)
     }
@@ -120,11 +102,7 @@ export default function StripeWrapper({ paymentModel, ...props }) {
 
   return (
     <Elements locale="en" stripe={stripePromise}>
-      <Form
-        {...props}
-        paymentModel={paymentModel}
-        clientSecret={clientSecret}
-      />
+      <Form {...props} paymentModel={paymentModel} clientSecret={clientSecret} />
     </Elements>
   )
 }
