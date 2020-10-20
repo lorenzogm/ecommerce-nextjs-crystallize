@@ -62,7 +62,7 @@ export default function CheckoutTemplate() {
       simple
     >
       <PageRow>
-        <PageColumn width="50%">
+        <PageColumn md="6">
           <PreOrderSystemSummary />
 
           <PageSection>
@@ -72,7 +72,7 @@ export default function CheckoutTemplate() {
           </PageSection>
         </PageColumn>
 
-        <PageColumn width="50%">
+        <PageColumn md="6">
           <Form useFormMethods={useFormMethods} onSubmit={onSubmit}>
             <PageSection>
               <PageSectionHeader>{t('Total')}</PageSectionHeader>
@@ -114,25 +114,37 @@ export default function CheckoutTemplate() {
               <PageSection>
                 <PageSectionHeader>{t('Contact Details')}</PageSectionHeader>
 
-                <Row>
-                  <InputText type="email" name="email" label={t('Email')} required />
-                </Row>
-                <Row>
-                  <InputText name="firstName" label={t('First name')} required />
-                  <InputText name="lastName" label={t('Last name')} required />
-                </Row>
+                <PageRow>
+                  <PageColumn>
+                    <InputText type="email" name="email" label={t('Email')} required />
+                  </PageColumn>
+                </PageRow>
+                <PageRow>
+                  <PageColumn md="6">
+                    <InputText name="firstName" label={t('First name')} required />
+                  </PageColumn>
+                  <PageColumn md="6">
+                    <InputText name="lastName" label={t('Last name')} required />
+                  </PageColumn>
+                </PageRow>
                 {deliveryMethod === DeliveryMethod.DELIVERY ? (
                   <>
-                    <Row style={{ marginTop: '1rem' }}>
+                    <PageRow>
                       <InputText name="street" label={t('Street')} required />
-                    </Row>
-                    <Row>
-                      <InputText name="postalCode" label={t('Postal Code')} required />
-                      <InputText name="city" label={t('City')} required />
-                    </Row>
-                    <Row>
-                      <InputText name="country" label={t('Country')} required />
-                    </Row>
+                    </PageRow>
+                    <PageRow>
+                      <PageColumn md="6">
+                        <InputText name="postalCode" label={t('Postal Code')} required />
+                      </PageColumn>
+                      <PageColumn md="6">
+                        <InputText name="city" label={t('City')} required />
+                      </PageColumn>
+                    </PageRow>
+                    <PageRow>
+                      <PageColumn>
+                        <InputText name="country" label={t('Country')} required />
+                      </PageColumn>
+                    </PageRow>
                   </>
                 ) : null}
                 <Button type="submit" variant="primary">
