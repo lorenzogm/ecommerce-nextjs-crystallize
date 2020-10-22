@@ -55,7 +55,8 @@ typings/
 .yarn-integrity
 
 # local dotenv environment variables file
-.env*.local
+.env*
+!.env.example
 
 # Next build output
 .next
