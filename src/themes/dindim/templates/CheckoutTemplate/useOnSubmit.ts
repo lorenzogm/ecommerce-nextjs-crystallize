@@ -63,7 +63,10 @@ export default function useOnSubmit({ deliveryPrice }: UseOnSubmit) {
         body: JSON.stringify({
           order,
         }),
-      }).then(() => router.push('/checkout/success'))
+      }).then(() => {
+        basket.actions.empty()
+        router.push('/es/checkout/success')
+      })
     }
   }, [])
 

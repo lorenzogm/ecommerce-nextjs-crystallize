@@ -52,7 +52,15 @@ export default function CheckoutTemplate() {
   }
 
   if (!basket.cart?.length) {
-    return <Outer center>{t('basket.empty', { context: 'inCheckout' })}</Outer>
+    return (
+      <PageLayout title={t('Checkout')}>
+        <PageRow>
+          <PageColumn style={{ margin: '0 auto' }} width="50%">
+            <PageSection style={{ textAlign: 'center' }}>{t('basket.empty', { context: 'inCheckout' })}</PageSection>
+          </PageColumn>
+        </PageRow>
+      </PageLayout>
+    )
   }
 
   return (
