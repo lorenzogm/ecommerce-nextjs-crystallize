@@ -48,6 +48,7 @@
     "@stripe/react-stripe-js": "^1.1.2",
     "@stripe/stripe-js": "^1.8.0",
     "@types/styled-components": "^5.1.4",
+    "@videojs/vhs-utils": "^2.2.1",
     "accept-language": "^3.0.18",
     "dashjs": "^3.1.1",
     "i18next": "^19.8.2",
