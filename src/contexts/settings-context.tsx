@@ -1,27 +1,12 @@
 import React, { useState, useContext } from 'react'
+import dynamic from 'next/dynamic'
 
-const mainNavigation = [
-  {
-    type: 'folder',
-    name: 'Grandes',
-    path: '/grandes',
-  },
-  {
-    type: 'folder',
-    name: 'Peques',
-    path: '/peques',
-  },
-  {
-    type: 'folder',
-    name: 'Bebés',
-    path: '/bebes',
-  },
-  {
-    type: 'folder',
-    name: 'Accesorios',
-    path: '/accesorios',
-  },
-]
+const mainNavigation = dynamic(
+  () =>
+    import(
+      `themes/${process.env.NEXT_PUBLIC_THEME || 'crystallize'}/templates/MainNavigationTemplate/MainNavigationTemplate`
+    ),
+)
 
 // A simple context for handling the current settings
 export const SettingsContext = React.createContext({
