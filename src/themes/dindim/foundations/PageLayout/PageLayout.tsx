@@ -35,8 +35,6 @@ export default function PageLayout({
   const imageFinal = imageUrl || '/static/logo-square.png'
   const url = 'https://dindim.es/'
 
-  console.log(imageUrl, imageFinal)
-
   return (
     <>
       <Head>
