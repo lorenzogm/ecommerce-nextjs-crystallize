@@ -1,5 +1,3 @@
-import appConfig from 'lib/app-config'
-import { GetStaticPaths } from 'next'
 import dynamic from 'next/dynamic'
 
 const CheckoutTemplate = dynamic(
@@ -7,14 +5,3 @@ const CheckoutTemplate = dynamic(
 )
 
 export default CheckoutTemplate
-
-export function getStaticProps() {
-  return { props: {} }
-}
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: appConfig.locales.map((l) => `/${l.urlPrefix}/checkout`),
-    fallback: false,
-  }
-}

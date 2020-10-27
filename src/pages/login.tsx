@@ -1,9 +1,7 @@
-import appConfig from 'lib/app-config'
 import { sendMagicLink } from 'lib/rest-api'
 import { useAuth } from 'contexts/auth-context'
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
-import { GetStaticPaths } from 'next'
 
 const LoginTemplate = dynamic(
   () => import(`themes/${process.env.NEXT_PUBLIC_THEME || 'crystallize'}/templates/LoginTemplate/LoginTemplate`),
@@ -46,15 +44,4 @@ export default function LoginPage() {
   }
 
   return <LoginTemplate auth={auth} handleSubmit={handleSubmit} userData={userData} setUserData={setUserData} />
-}
-
-export function getStaticProps() {
-  return { props: {} }
-}
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: appConfig.locales.map((l) => `/${l.urlPrefix}/login`),
-    fallback: false,
-  }
 }
