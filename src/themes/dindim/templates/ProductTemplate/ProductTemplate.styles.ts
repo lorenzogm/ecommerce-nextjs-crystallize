@@ -20,7 +20,6 @@ export const Loader = styled.div`
 export const Sections = styled.div`
   display: flex;
   align-items: center;
-  background: var(--color-box-background);
   padding: 50px;
   flex-direction: row-reverse;
   justify-content: center;
