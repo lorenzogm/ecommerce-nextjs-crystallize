@@ -6,11 +6,12 @@ import Link from 'themes/crystallize/components/link'
 import { useT } from 'lib/i18n'
 import { isMultilingual } from 'lib/app-config'
 import Navigation from 'themes/dindim/elements/Navigation/Navigation'
+import LogoWithName from 'themes/dindim/foundations/LogoWithName/LogoWithName'
 
 import BurgerButton from './burger-button'
 import BasketButton from './basket-button'
 import LocaleSwitcher from './locale-switcher'
-import { Outer, Logo, NavActions, PreviewBar } from './styles'
+import { Outer, NavActions, PreviewBar } from './styles'
 
 export default function Header({ simple, preview }) {
   const t = useT()
@@ -29,9 +30,7 @@ export default function Header({ simple, preview }) {
       <Outer simple={simple}>
         <Link href="/">
           <a>
-            <Logo>
-              <img src="/static/shop-logo.svg" alt="" />
-            </Logo>
+            <LogoWithName />
           </a>
         </Link>
         <Navigation navOpen={navOpen} setNavOpen={setNavOpen} />
