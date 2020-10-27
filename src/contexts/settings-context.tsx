@@ -2,10 +2,7 @@ import React, { useState, useContext } from 'react'
 import dynamic from 'next/dynamic'
 
 const mainNavigation = dynamic(
-  () =>
-    import(
-      `themes/${process.env.NEXT_PUBLIC_THEME || 'crystallize'}/templates/MainNavigationTemplate/MainNavigationTemplate`
-    ),
+  () => import(`themes/${process.env.NEXT_PUBLIC_THEME || 'crystallize'}/templates/config/mainNavigation`),
 )
 
 // A simple context for handling the current settings
