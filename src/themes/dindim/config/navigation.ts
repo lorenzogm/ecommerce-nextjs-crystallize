@@ -1,4 +1,4 @@
-const mainNavigation = [
+const navigation = [
   {
     type: 'folder',
     name: 'Grandes',
@@ -21,4 +21,4 @@ const mainNavigation = [
   },
 ]
 
-export default mainNavigation
+export default navigation
