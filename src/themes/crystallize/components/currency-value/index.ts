@@ -1,7 +1,7 @@
-import { useT } from 'lib/i18n';
+import { useT } from 'lib/i18n'
 
 export const CurrencyValue = ({ value }) => {
-  const t = useT();
+  const t = useT()
 
-  return t('common.price', { value });
-};
+  return t('{{value, currency}}', { value })
+}

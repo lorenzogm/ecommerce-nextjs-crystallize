@@ -7,8 +7,7 @@ import { BasketProvider } from 'contexts/BasketContext/BasketContext'
 import { getLocaleFromContext } from 'lib/app-config'
 import { I18nextProvider } from 'lib/i18n'
 
-import localeResourceEn from 'locales/en-US'
-import localeResourceEs from 'locales/es-ES'
+import localeResourceEs from 'locales/es.json'
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const locale = getLocaleFromContext()
@@ -16,10 +15,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <MetaTags />
-      <I18nextProvider
-        locale={locale}
-        localeResource={locale?.displayName === 'en' ? localeResourceEn : localeResourceEs}
-      >
+      <I18nextProvider locale={locale} localeResource={localeResourceEs}>
         <SettingsProvider currency={locale?.defaultCurrency}>
           <AuthProvider>
             <BasketProvider>

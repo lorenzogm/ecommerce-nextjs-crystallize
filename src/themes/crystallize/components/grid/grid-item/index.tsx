@@ -25,16 +25,14 @@ export default function GridItem({ data, gridCell }) {
     image = images?.content?.images?.[0]
     text = <Title>{name}</Title>
   } else {
-    const { price, image: i } = variants
-      ? variants.find((variant) => variant.isDefault)
-      : defaultVariant
+    const { price, image: i } = variants ? variants.find((variant) => variant.isDefault) : defaultVariant
 
     image = i
     text = (
       <div>
-        <Price>{t('common.price', { value: price })}</Price>
+        <Price>{t('{{value, currency}}', { value: price })}</Price>
         <Title>{name}</Title>
-        <Button>{t('product.buy')}</Button>
+        <Button>{t('Buy')}</Button>
       </div>
     )
   }
@@ -48,13 +46,7 @@ export default function GridItem({ data, gridCell }) {
       <Outer className={cellSize} type={type}>
         <Text>{text}</Text>
         <ImageWrapper>
-          {image && (
-            <Img
-              {...image}
-              alt={name}
-              sizes={`(min-width ${screen.md}px) ${imageMdWidth}px, 100vw`}
-            />
-          )}
+          {image && <Img {...image} alt={name} sizes={`(min-width ${screen.md}px) ${imageMdWidth}px, 100vw`} />}
         </ImageWrapper>
       </Outer>
     </Link>

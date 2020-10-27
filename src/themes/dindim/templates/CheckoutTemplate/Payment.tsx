@@ -83,7 +83,7 @@ export default function Payment({ state }) {
                 if (!paymentProvider) {
                   return (
                     <small>
-                      {t('checkout.paymentProviderNotConfigured', {
+                      {t('Payment provider {{name}} is not configured', {
                         name: paymentProviderFromConfig,
                       })}
                     </small>
@@ -100,7 +100,7 @@ export default function Payment({ state }) {
                   >
                     <img
                       src={paymentProvider.logo}
-                      alt={t('checkout.paymentProviderLogoAlt', {
+                      alt={t('Logo for {{name}}', {
                         name: paymentProvider.name,
                       })}
                     />

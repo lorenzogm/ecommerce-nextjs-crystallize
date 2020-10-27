@@ -31,7 +31,7 @@ export default function BuyButton({ product, selectedVariant }) {
       </Price>
       {process.env.NEXT_PUBLIC_ENABLE_CHECKOUT === 'true' ? (
         <Button width="200px" onClick={buy}>
-          {t('product.addToBasket')}
+          {t('Add to basket')}
         </Button>
       ) : (
         <p>{t("The campaing is not opened, so it's not possible to buy products at the moment.")}</p>

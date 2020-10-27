@@ -10,16 +10,9 @@ export default function HomeTemplate({ grid, preview }) {
   const t = useT()
 
   return (
-    <Layout title={t('frontpage.title')} preview={preview}>
+    <Layout title={t('Home')} preview={preview}>
       <Outer>
-        {grid && (
-          <Grid
-            model={grid}
-            cellComponent={({ cell }) => (
-              <GridItem data={cell.item} gridCell={cell} />
-            )}
-          />
-        )}
+        {grid && <Grid model={grid} cellComponent={({ cell }) => <GridItem data={cell.item} gridCell={cell} />} />}
       </Outer>
     </Layout>
   )

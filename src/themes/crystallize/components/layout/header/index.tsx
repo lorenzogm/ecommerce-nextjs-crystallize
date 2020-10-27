@@ -54,7 +54,7 @@ export default function Header({ simple, preview }) {
                 </button>
               ) : (
                 <Link href="/login">
-                  <a>{t('customer.login.title')}</a>
+                  <a>{t('Login')}</a>
                 </Link>
               )}
             </>

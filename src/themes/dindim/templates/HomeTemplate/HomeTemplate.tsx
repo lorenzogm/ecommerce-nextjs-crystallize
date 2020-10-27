@@ -10,7 +10,7 @@ export default function HomeTemplate({ grid, preview }) {
   const t = useT()
 
   return (
-    <PageLayout title={t('frontpage.title')} preview={preview}>
+    <PageLayout preview={preview}>
       <Outer>
         {grid && <Grid model={grid} cellComponent={({ cell }) => <GridItem data={cell.item} gridCell={cell} />} />}
       </Outer>

@@ -20,7 +20,7 @@ export default function Footer() {
         </a>
       </Link>
       <NavList>
-        <h5>{t('layout.menu')}</h5>
+        <h5>{t('Menu')}</h5>
         {navigation.map((category) => (
           <li key={category.path}>
             <Link as={category.path} href="/[...catalogue]">
@@ -30,7 +30,7 @@ export default function Footer() {
         ))}
       </NavList>
       <Powered>
-        <p>{t('layout.ecomBy')}</p>
+        <p>{t('eCommerce by')}</p>
         <a href="https://crystallize.com" aria-label="crystallize.com">
           <LogoCrystallize size={10} />
         </a>

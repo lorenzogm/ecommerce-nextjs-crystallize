@@ -6,7 +6,13 @@ const I18NextContext = createContext()
 export const useT = () => {
   const c = useContext(I18NextContext)
 
-  return (val, options) => c.t(val, options)
+  return (val, options) => {
+    const result = c.t(val, options)
+    if (result === '') {
+      throw new Error(`Missing translation "${val}"`)
+    }
+    return result
+  }
 }
 
 export function I18nextProvider({ locale, localeResource, children }) {
@@ -19,9 +25,16 @@ export function I18nextProvider({ locale, localeResource, children }) {
 
   i18n.init({
     resources: {
-      [lng]: localeResource,
+      [lng]: { translation: localeResource },
     },
     lng,
+
+    // allow keys to be phrases having `:`, `.`
+    nsSeparator: false,
+    keySeparator: false,
+
+    // do not load a fallback
+    // fallbackLng: true,
 
     interpolation: {
       escapeValue: false, // react already safe from xss

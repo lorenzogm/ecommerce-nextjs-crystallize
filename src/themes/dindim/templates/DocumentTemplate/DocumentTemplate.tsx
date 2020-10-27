@@ -35,7 +35,7 @@ export default function DocumentTemplate({ document, preview }) {
       {relatedProducts?.content?.items?.length && (
         <Related>
           <H2>
-            {t('product.relatedProduct', {
+            {t('Related product', {
               count: relatedProducts.content.items.length,
             })}
           </H2>

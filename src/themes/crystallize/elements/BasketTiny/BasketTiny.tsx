@@ -1,27 +1,27 @@
-import React from 'react';
+import React from 'react'
 
-import { useT } from 'lib/i18n';
+import { useT } from 'lib/i18n'
 
-import { useBasket } from 'contexts/BasketContext/BasketContext';
-import { Totals } from 'themes/crystallize/elements/BasketTotals/BasketTotals';
-import BasketTinyItem from 'themes/crystallize/elements/BasketTinyItem/BasketTinyItem';
+import { useBasket } from 'contexts/BasketContext/BasketContext'
+import { Totals } from 'themes/crystallize/elements/BasketTotals/BasketTotals'
+import BasketTinyItem from 'themes/crystallize/elements/BasketTinyItem/BasketTinyItem'
 
-import { Outer, Items, ItemOuter, BasketIsEmpty } from './BasketTiny.styles';
+import { Outer, Items, ItemOuter, BasketIsEmpty } from './BasketTiny.styles'
 
 export function TinyBasket() {
-  const t = useT();
-  const { status, cart, actions } = useBasket();
+  const t = useT()
+  const { status, cart, actions } = useBasket()
 
   if (status !== 'ready') {
-    return null;
+    return null
   }
 
   if (!cart?.length) {
     return (
       <Outer>
-        <BasketIsEmpty>{t('basket.empty')}</BasketIsEmpty>
+        <BasketIsEmpty>{t('Your basket is empty')}</BasketIsEmpty>
       </Outer>
-    );
+    )
   }
 
   return (
@@ -36,5 +36,5 @@ export function TinyBasket() {
       <div style={{ height: 15 }} />
       <Totals />
     </Outer>
-  );
+  )
 }

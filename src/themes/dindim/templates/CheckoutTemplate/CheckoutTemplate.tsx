@@ -48,7 +48,7 @@ export default function CheckoutTemplate() {
   }
 
   if (basket.status !== 'ready') {
-    return <Outer center>{t('basket.loading')}</Outer>
+    return <Outer center>{t('Loading...')}</Outer>
   }
 
   if (!basket.cart?.length) {
@@ -56,7 +56,9 @@ export default function CheckoutTemplate() {
       <PageLayout title={t('Checkout')}>
         <PageRow>
           <PageColumn style={{ margin: '0 auto' }} width="50%">
-            <PageSection style={{ textAlign: 'center' }}>{t('basket.empty', { context: 'inCheckout' })}</PageSection>
+            <PageSection style={{ textAlign: 'center' }}>
+              {t('Your basket is empty', { context: 'inCheckout' })}
+            </PageSection>
           </PageColumn>
         </PageRow>
       </PageLayout>
@@ -86,16 +88,18 @@ export default function CheckoutTemplate() {
               <PageSectionHeader>{t('Total')}</PageSectionHeader>
               <DescriptionList>
                 <DescriptionListTerm>{t('Subtotal (VAT included)')}</DescriptionListTerm>
-                <DescriptionListDetails>{t('common.price', { value: basket.total.gross })}</DescriptionListDetails>
+                <DescriptionListDetails>
+                  {t('{{value, currency}}', { value: basket.total.gross })}
+                </DescriptionListDetails>
 
                 <DescriptionListTerm>{t('Delivery')}</DescriptionListTerm>
                 <DescriptionListDetails>
-                  {deliveryPrice === 0 ? t('Free') : t('common.price', { value: deliveryPrice })}
+                  {deliveryPrice === 0 ? t('Free') : t('{{value, currency}}', { value: deliveryPrice })}
                 </DescriptionListDetails>
 
                 <DescriptionListTerm>{t('Total')}</DescriptionListTerm>
                 <DescriptionListDetails>
-                  {t('common.price', { value: basket.total.gross + deliveryPrice })}
+                  {t('{{value, currency}}', { value: basket.total.gross + deliveryPrice })}
                 </DescriptionListDetails>
               </DescriptionList>
             </PageSection>
@@ -110,7 +114,7 @@ export default function CheckoutTemplate() {
 
               <InputRadio
                 name="deliveryMethod"
-                label={t('')}
+                label=""
                 options={[
                   { label: t('Pickup'), value: DeliveryMethod.PICKUP },
                   { label: t('Delivery'), value: DeliveryMethod.DELIVERY },

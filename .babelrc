@@ -1,4 +1,15 @@
 {
   "presets": ["next/babel"],
-  "plugins": [["styled-components", { "ssr": true }]]
+  "plugins": [
+    ["styled-components", { "ssr": true }],
+    [
+      "i18next-extract",
+      {
+        "locales": ["es"],
+        "keySeparator": null,
+        "nsSeparator": null,
+        "outputPath": "src/locales/{{locale}}.json"
+      }
+    ]
+  ]
 }

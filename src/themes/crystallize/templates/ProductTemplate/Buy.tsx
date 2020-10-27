@@ -30,7 +30,7 @@ export default function BuyButton({ product, selectedVariant }) {
         </strong>
       </Price>
       <Button width="200px" onClick={buy}>
-        {t('product.addToBasket')}
+        {t('Add to basket')}
       </Button>
     </ProductFooter>
   )

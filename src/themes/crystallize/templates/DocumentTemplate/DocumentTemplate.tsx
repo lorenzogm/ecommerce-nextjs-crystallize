@@ -14,13 +14,9 @@ export default function DocumentTemplate({ document, preview }) {
   const title = document?.components.find((c) => c.name === 'Title')
   const description = document?.components.find((c) => c.name === 'Intro')
   const images = document?.components.find((c) => c.name === 'Image')
-  const relatedProducts = document?.components?.find(
-    (c) => c.name === 'Products',
-  )
+  const relatedProducts = document?.components?.find((c) => c.name === 'Products')
 
-  const componentsRest = document?.components?.filter(
-    (c) => !['Intro', 'Title', 'Image', 'Products'].includes(c.name),
-  )
+  const componentsRest = document?.components?.filter((c) => !['Intro', 'Title', 'Image', 'Products'].includes(c.name))
 
   return (
     <Layout title={title.content.text || document.name} preview={preview}>
@@ -31,12 +27,7 @@ export default function DocumentTemplate({ document, preview }) {
         </Header>
         <HeroImage>
           {images?.content?.images?.map((img, i) => (
-            <Img
-              key={img.url}
-              {...img}
-              alt={img.altText}
-              sizes={i > 0 ? '40vw' : '80vw'}
-            />
+            <Img key={img.url} {...img} alt={img.altText} sizes={i > 0 ? '40vw' : '80vw'} />
           ))}
         </HeroImage>
         <ShapeComponents components={componentsRest} />
@@ -44,7 +35,7 @@ export default function DocumentTemplate({ document, preview }) {
       {relatedProducts?.content?.items?.length && (
         <Related>
           <H2>
-            {t('product.relatedProduct', {
+            {t('Related product', {
               count: relatedProducts.content.items.length,
             })}
           </H2>

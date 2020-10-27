@@ -24,15 +24,7 @@ const Loader = styled.div`
 
 const VideoPlayer = dynamic(() => import('./player'))
 
-export default function Video({
-  playlists,
-  thumbnails,
-  autoplay,
-  loop,
-  controls,
-  fluid,
-  ...rest
-}) {
+export default function Video({ playlists, thumbnails, autoplay, loop, controls, fluid, ...rest }) {
   const t = useT()
   const ref = useRef()
   const [load, setLoad] = useState(false)
@@ -58,7 +50,7 @@ export default function Video({
           />
         ) : (
           <Loader>
-            <Spinner style={{ margin: 10 }} /> {t('layout.loadingVideo')}
+            <Spinner style={{ margin: 10 }} /> {t('Loading video')}
           </Loader>
         )}
       </Outer>

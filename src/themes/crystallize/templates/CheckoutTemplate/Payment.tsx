@@ -89,7 +89,7 @@ export default function Payment() {
       <form noValidate>
         <Row>
           <InputGroup>
-            <Label htmlFor="firstname">{t('customer.firstName')}</Label>
+            <Label htmlFor="firstname">{t('First Name')}</Label>
             <Input
               name="firstname"
               type="text"
@@ -99,7 +99,7 @@ export default function Payment() {
             />
           </InputGroup>
           <InputGroup>
-            <Label htmlFor="lastname">{t('customer.lastName')}</Label>
+            <Label htmlFor="lastname">{t('Last Name')}</Label>
             <Input
               name="lastname"
               type="text"
@@ -111,7 +111,7 @@ export default function Payment() {
         </Row>
         <Row>
           <InputGroup>
-            <Label htmlFor="email">{t('customer.email')}</Label>
+            <Label htmlFor="email">{t('Email')}</Label>
             <Input
               name="email"
               type="email"
@@ -124,9 +124,9 @@ export default function Payment() {
       </form>
 
       <div>
-        <SectionHeader>{t('checkout.choosePaymentMethod')}</SectionHeader>
+        <SectionHeader>{t('Choose payment method')}</SectionHeader>
         {appConfig.paymentProviders.length === 0 ? (
-          <i>{t('checkout.noPaymentProvidersConfigured')}</i>
+          <i>{t('No payment providers are configured')}</i>
         ) : (
           <PaymentProviders>
             <PaymentSelector>
@@ -135,7 +135,7 @@ export default function Payment() {
                 if (!paymentProvider) {
                   return (
                     <small>
-                      {t('checkout.paymentProviderNotConfigured', {
+                      {t('Payment provider {{name}} is not configured', {
                         name: paymentProviderFromConfig,
                       })}
                     </small>
@@ -152,7 +152,7 @@ export default function Payment() {
                   >
                     <img
                       src={paymentProvider.logo}
-                      alt={t('checkout.paymentProviderLogoAlt', {
+                      alt={t('Logo for {{name}}', {
                         name: paymentProvider.name,
                       })}
                     />
