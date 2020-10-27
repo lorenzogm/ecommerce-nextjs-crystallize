@@ -1,4 +1,4 @@
-const MainNavigationTemplate = [
+const mainNavigation = [
   {
     type: 'folder',
     name: 'Grandes',
@@ -21,4 +21,4 @@ const MainNavigationTemplate = [
   },
 ]
 
-export default MainNavigationTemplate
+export default mainNavigation
