@@ -8,8 +8,10 @@ import { getLocaleFromContext } from 'lib/app-config'
 import { I18nextProvider } from 'lib/i18n'
 
 import localeResourceEs from 'locales/es.json'
+import { useGtagHandlerouteChange } from 'services/gtag'
 
 export default function MyApp({ Component, pageProps }: AppProps) {
+  useGtagHandlerouteChange()
   const locale = getLocaleFromContext()
 
   return (
