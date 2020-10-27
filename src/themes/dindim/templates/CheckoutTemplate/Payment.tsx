@@ -59,14 +59,7 @@ export default function Payment({ state }) {
           <StripeCheckout
             paymentModel={paymentModel}
             onSuccess={(orderId) => {
-              if (locale.urlPrefix) {
-                router.push(
-                  '/[locale]/confirmation/stripe/[orderId]',
-                  `/${locale.urlPrefix}/confirmation/stripe/${orderId}`,
-                )
-              } else {
-                router.push('/confirmation/stripe/[orderId]', `/confirmation/stripe/${orderId}`)
-              }
+              router.push('/confirmation/stripe/[orderId]', `/confirmation/stripe/${orderId}`)
               scrollTo(0, 0)
             }}
           />

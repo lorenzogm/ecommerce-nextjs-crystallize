@@ -2,26 +2,22 @@
  * Locale aware link
  */
 
-import { default as NextLink } from 'next/link';
+import { default as NextLink } from 'next/link'
 
-import { useLocale } from 'lib/app-config';
+import { useLocale } from 'lib/app-config'
 
 export default function Link({ children, ...props }) {
-  const locale = useLocale();
+  const locale = useLocale()
 
   if (!locale.urlPrefix) {
-    return <NextLink {...props}>{children}</NextLink>;
+    return <NextLink {...props}>{children}</NextLink>
   }
 
-  const { href, as, ...restProps } = props;
+  const { href, as, ...restProps } = props
 
   return (
-    <NextLink
-      href={`/[locale]${href === '/' ? '' : href}`}
-      as={`/${locale.urlPrefix}/${as || href}`.replace(/\/{2,}/g, '/')}
-      {...restProps}
-    >
+    <NextLink href={`${href === '/' ? '' : href}`} as={`/${as || href}`.replace(/\/{2,}/g, '/')} {...restProps}>
       {children}
     </NextLink>
-  );
+  )
 }

@@ -56,6 +56,7 @@ export async function getStaticProps({ params, preview }) {
         path: asPath,
       },
     })
+
     const { type } = getItemType.data.catalogue
 
     const renderer = typesMap[type] || typesMap.folder

@@ -74,17 +74,8 @@ export default function Payment() {
           <StripeCheckout
             paymentModel={paymentModel}
             onSuccess={(orderId) => {
-              if (locale.urlPrefix) {
-                router.push(
-                  '/[locale]/confirmation/stripe/[orderId]',
-                  `/${locale.urlPrefix}/confirmation/stripe/${orderId}`,
-                )
-              } else {
-                router.push(
-                  '/confirmation/stripe/[orderId]',
-                  `/confirmation/stripe/${orderId}`,
-                )
-              }
+              router.push('/confirmation/stripe/[orderId]', `/confirmation/stripe/${orderId}`)
+
               scrollTo(0, 0)
             }}
           />
@@ -103,9 +94,7 @@ export default function Payment() {
               name="firstname"
               type="text"
               value={firstName}
-              onChange={(e) =>
-                setState({ ...state, firstName: e.target.value })
-              }
+              onChange={(e) => setState({ ...state, firstName: e.target.value })}
               required
             />
           </InputGroup>
@@ -142,9 +131,7 @@ export default function Payment() {
           <PaymentProviders>
             <PaymentSelector>
               {appConfig.paymentProviders.map((paymentProviderFromConfig) => {
-                const paymentProvider = paymentProviders.find(
-                  (p) => p.name === paymentProviderFromConfig,
-                )
+                const paymentProvider = paymentProviders.find((p) => p.name === paymentProviderFromConfig)
                 if (!paymentProvider) {
                   return (
                     <small>
@@ -161,9 +148,7 @@ export default function Payment() {
                     color={paymentProvider.color}
                     type="button"
                     selected={selectedPaymentProvider === paymentProvider.name}
-                    onClick={() =>
-                      setSelectedPaymentProvider(paymentProvider.name)
-                    }
+                    onClick={() => setSelectedPaymentProvider(paymentProvider.name)}
                   >
                     <img
                       src={paymentProvider.logo}
@@ -176,9 +161,7 @@ export default function Payment() {
               })}
             </PaymentSelector>
 
-            {paymentProviders
-              .find((p) => p.name === selectedPaymentProvider)
-              ?.render()}
+            {paymentProviders.find((p) => p.name === selectedPaymentProvider)?.render()}
           </PaymentProviders>
         )}
       </div>
