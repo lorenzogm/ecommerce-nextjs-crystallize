@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 
 import { useAuth } from 'contexts/auth-context'
-import { useSettings } from 'contexts/settings-context'
+import navigation from 'themes/crystallize/config/navigation'
 import Link from 'themes/crystallize/components/link'
 import { useT } from 'lib/i18n'
 
@@ -13,7 +13,6 @@ import { Outer, Nav, Logo, NavActions, NavList, NavListItem, PreviewBar } from '
 
 export default function Header({ simple, preview }) {
   const t = useT()
-  const { mainNavigation } = useSettings()
   const auth = useAuth()
   const router = useRouter()
 
@@ -36,7 +35,7 @@ export default function Header({ simple, preview }) {
         </Link>
         <Nav open={navOpen}>
           <NavList>
-            {mainNavigation.map((category) => (
+            {navigation.map((category) => (
               <NavListItem key={category.path}>
                 <Link as={category.path} href="/[...catalogue]">
                   <a onClick={() => setNavOpen(false)}>{category.name}</a>
