@@ -133,10 +133,10 @@ export default function CheckoutTemplate() {
                 </PageRow>
                 <PageRow>
                   <PageColumn md="6">
-                    <InputText name="firstName" label={t('First name')} required />
+                    <InputText name="firstName" label={t('First Name')} required />
                   </PageColumn>
                   <PageColumn md="6">
-                    <InputText name="lastName" label={t('Last name')} required />
+                    <InputText name="lastName" label={t('Last Name')} required />
                   </PageColumn>
                 </PageRow>
                 {deliveryMethod === DeliveryMethod.DELIVERY ? (
