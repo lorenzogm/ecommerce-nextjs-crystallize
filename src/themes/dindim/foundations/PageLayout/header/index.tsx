@@ -2,19 +2,18 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 
 import { useAuth } from 'contexts/auth-context'
-import { useSettings } from 'contexts/settings-context'
 import Link from 'themes/crystallize/components/link'
 import { useT } from 'lib/i18n'
 import { isMultilingual } from 'lib/app-config'
+import Navigation from 'themes/dindim/elements/Navigation/Navigation'
 
 import BurgerButton from './burger-button'
 import BasketButton from './basket-button'
 import LocaleSwitcher from './locale-switcher'
-import { Outer, Nav, Logo, NavActions, NavList, NavListItem, PreviewBar } from './styles'
+import { Outer, Logo, NavActions, PreviewBar } from './styles'
 
 export default function Header({ simple, preview }) {
   const t = useT()
-  const { mainNavigation } = useSettings()
   const auth = useAuth()
   const router = useRouter()
 
@@ -35,17 +34,7 @@ export default function Header({ simple, preview }) {
             </Logo>
           </a>
         </Link>
-        <Nav open={navOpen}>
-          <NavList>
-            {mainNavigation.map((category) => (
-              <NavListItem key={category.path}>
-                <Link as={category.path} href="/[...catalogue]">
-                  <a onClick={() => setNavOpen(false)}>{category.name}</a>
-                </Link>
-              </NavListItem>
-            ))}
-          </NavList>
-        </Nav>
+        <Navigation navOpen={navOpen} setNavOpen={setNavOpen} />
         <NavActions open={navOpen}>
           {isMultilingual ? <LocaleSwitcher /> : null}
           {process.env.NEXT_PUBLIC_ENABLE_LOGIN === 'true' ? (
