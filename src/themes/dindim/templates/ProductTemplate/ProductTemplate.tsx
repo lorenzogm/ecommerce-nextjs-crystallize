@@ -6,7 +6,7 @@ import { screen } from 'themes/crystallize/ui'
 import PageLayout from 'themes/dindim/foundations/PageLayout/PageLayout'
 import ShapeComponents from 'themes/crystallize/components/shape/components'
 
-import Topics from 'themes/crystallize/components/topics'
+import Topics from 'themes/dindim/modules/topics'
 import VariantSelector from './VariantSelector'
 import Buy from './Buy'
 
@@ -37,7 +37,7 @@ export default function ProductTemplate({ product, preview }) {
   const componentsRest = product.components?.filter((c) => !['Summary', 'Description', 'Specs'].includes(c.name))
 
   return (
-    <PageLayout title={product.name} preview={preview}>
+    <PageLayout title={product.name} imageUrl={selectedVariant.image.url} preview={preview}>
       <Outer>
         <Sections>
           <Media>
