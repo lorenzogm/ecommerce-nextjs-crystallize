@@ -20,4 +20,5 @@ const MainNavigationTemplate = [
     path: '/accesorios',
   },
 ]
+
 export default MainNavigationTemplate
