@@ -1,4 +1,3 @@
-import { ReactElement } from 'react'
 import Link from 'themes/crystallize/components/link'
 import navigation from 'themes/dindim/config/navigation'
 
