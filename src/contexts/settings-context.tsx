@@ -3,8 +3,8 @@ import React, { useState, useContext } from 'react'
 const mainNavigation = [
   {
     type: 'folder',
-    name: 'Mujer y Hombre',
-    path: '/mujer-y-hombre',
+    name: 'Grandes',
+    path: '/grandes',
   },
   {
     type: 'folder',
@@ -15,6 +15,11 @@ const mainNavigation = [
     type: 'folder',
     name: 'Bebés',
     path: '/bebes',
+  },
+  {
+    type: 'folder',
+    name: 'Accesorios',
+    path: '/accesorios',
   },
 ]
 
