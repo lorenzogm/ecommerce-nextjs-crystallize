@@ -20,7 +20,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         locale={locale}
         localeResource={locale?.displayName === 'en' ? localeResourceEn : localeResourceEs}
       >
-        <SettingsProvider currency={locale?.defaultCurrency} mainNavigation={locale?.mainNavigation}>
+        <SettingsProvider currency={locale?.defaultCurrency}>
           <AuthProvider>
             <BasketProvider>
               <Component {...pageProps} />

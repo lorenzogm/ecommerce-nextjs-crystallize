@@ -35,6 +35,30 @@ const typesMap = {
   },
 }
 
+export default function Catalogue({ type, ...rest }) {
+  const router = useRouter()
+  const renderer = typesMap[type] || typesMap.folder
+  const Component = renderer.component
+
+  if (router.isFallback) {
+    return <Layout loading />
+  }
+
+  // No data was found for route. It's a 404
+  if (Object.keys(rest).length === 0) {
+    return (
+      <>
+        <Head>
+          <meta name="robots" content="noindex" />
+        </Head>
+        <DefaultErrorPage statusCode={404} />
+      </>
+    )
+  }
+
+  return <Component {...rest} />
+}
+
 export async function getStaticProps({ params, preview }) {
   const { catalogue } = params
   const locale = getLocaleFromContext(params)
@@ -56,6 +80,7 @@ export async function getStaticProps({ params, preview }) {
         path: asPath,
       },
     })
+
     const { type } = getItemType.data.catalogue
 
     const renderer = typesMap[type] || typesMap.folder
@@ -96,7 +121,7 @@ export async function getStaticPaths() {
   async function handleLocale(locale) {
     function handleItem({ path, name, children }) {
       if (path !== '/index' && !name?.startsWith('_')) {
-        paths.push(`/${locale.urlPrefix}${path}`)
+        paths.push(path)
       }
 
       children?.forEach(handleItem)
@@ -152,28 +177,4 @@ export async function getStaticPaths() {
     paths,
     fallback: true,
   }
-}
-
-export default function GenericCatalogueItem({ type, ...rest }) {
-  const router = useRouter()
-  const renderer = typesMap[type] || typesMap.folder
-  const Component = renderer.component
-
-  if (router.isFallback) {
-    return <Layout loading />
-  }
-
-  // No data was found for route. It's a 404
-  if (Object.keys(rest).length === 0) {
-    return (
-      <>
-        <Head>
-          <meta name="robots" content="noindex" />
-        </Head>
-        <DefaultErrorPage statusCode={404} />
-      </>
-    )
-  }
-
-  return <Component {...rest} />
 }
