@@ -31,12 +31,11 @@ export default function ProductTemplate({ product, preview }) {
     setSelectedVariant(variant)
   }
 
-  const summaryComponent = product.components.find((c) => c.name === 'Summary')
-  const descriptionComponent = product.components.find((c) => c.name === 'Description')
-  const specs = product.components.find((c) => c.name === 'Specs')
-  const componentsRest = product.components?.filter((c) => !['Summary', 'Description', 'Specs'].includes(c.name))
-
-  console.log(componentsRest)
+  const summaryComponent = product.components && product.components.find((c) => c.name === 'Summary')
+  const descriptionComponent = product.components && product.components.find((c) => c.name === 'Description')
+  const specs = product.components && product.components.find((c) => c.name === 'Specs')
+  const componentsRest =
+    product.components && product.components?.filter((c) => !['Summary', 'Description', 'Specs'].includes(c.name))
 
   return (
     <PageLayout title={product.name} imageUrl={selectedVariant.image.url} preview={preview}>
