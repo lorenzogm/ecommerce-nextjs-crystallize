@@ -6,7 +6,7 @@ import { screen } from 'themes/crystallize/ui'
 import PageLayout from 'themes/dindim/foundations/PageLayout/PageLayout'
 import ShapeComponents from 'themes/crystallize/components/shape/components'
 
-import Topics from 'themes/dindim/modules/topics'
+import Topics from 'themes/dindim/crystallize/topics'
 import VariantSelector from './VariantSelector'
 import Buy from './Buy'
 

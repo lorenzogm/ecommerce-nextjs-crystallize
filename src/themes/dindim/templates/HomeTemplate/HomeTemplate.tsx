@@ -1,7 +1,7 @@
 import React from 'react'
 
 import PageLayout from 'themes/dindim/foundations/PageLayout/PageLayout'
-import Grid, { GridItem } from 'themes/crystallize/components/grid'
+import Grid, { GridItem } from 'themes/dindim/crystallize/grid'
 import { useT } from 'lib/i18n'
 
 import { Outer } from './HomeTemplate.styles'

@@ -4,7 +4,7 @@ import { Outer, Header, H1 } from 'themes/crystallize/ui'
 import PageLayout from 'themes/dindim/foundations/PageLayout/PageLayout'
 import Grid, { GridItem } from 'themes/crystallize/components/grid'
 import ShapeComponents from 'themes/crystallize/components/shape/components'
-import ItemMicroformat from 'themes/dindim/elements/item-microformat'
+import ItemMicroformat from 'themes/dindim/crystallize/item-microformat'
 
 import { List } from './FolderTemplate.styles'
 

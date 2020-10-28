@@ -1,4 +1,4 @@
-import ItemMicroformat from 'themes/dindim/elements/item-microformat'
+import ItemMicroformat from 'themes/dindim/crystallize/item-microformat'
 
 import { TopicMap, List } from './styles'
 
