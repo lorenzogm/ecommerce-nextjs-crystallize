@@ -1,6 +1,8 @@
 import React from 'react'
 import dynamic from 'next/dynamic'
 import { simplyFetchFromGraph } from 'lib/graph'
+import appConfig from 'app.config.json'
+
 import query from './query'
 
 export async function getData({ asPath, language, preview = null }) {
@@ -13,7 +15,7 @@ export async function getData({ asPath, language, preview = null }) {
     },
   })
 
-  const theme = process.env.THEME || 'crystallize'
+  const theme = process.env.THEME || appConfig.theme.default
   return { ...data, preview, theme }
 }
 
