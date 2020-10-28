@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Img from '@crystallize/react-image'
-import ContentTransformer from 'themes/crystallize/ui/content-transformer'
+import ContentTransformer from 'themes/dindim/elements/content-transformer'
 
 import { screen } from 'themes/crystallize/ui'
 import PageLayout from 'themes/dindim/foundations/PageLayout/PageLayout'
@@ -35,6 +35,8 @@ export default function ProductTemplate({ product, preview }) {
   const descriptionComponent = product.components.find((c) => c.name === 'Description')
   const specs = product.components.find((c) => c.name === 'Specs')
   const componentsRest = product.components?.filter((c) => !['Summary', 'Description', 'Specs'].includes(c.name))
+
+  console.log(componentsRest)
 
   return (
     <PageLayout title={product.name} imageUrl={selectedVariant.image.url} preview={preview}>
@@ -77,9 +79,9 @@ export default function ProductTemplate({ product, preview }) {
           )}
         </Content>
 
-        {product?.topics?.length && <Topics topicMaps={product.topics} />}
-
         <ShapeComponents components={componentsRest} />
+
+        {product?.topics?.length && <Topics topicMaps={product.topics} />}
       </Outer>
     </PageLayout>
   )

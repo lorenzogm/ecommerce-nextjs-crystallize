@@ -1,5 +1,5 @@
 import React from 'react'
-import ContentTransformer from 'themes/crystallize/ui/content-transformer'
+import ContentTransformer from 'themes/dindim/elements/content-transformer'
 
 import { H1, Header, Outer } from 'themes/crystallize/ui'
 import PageLayout from 'themes/dindim/foundations/PageLayout/PageLayout'
