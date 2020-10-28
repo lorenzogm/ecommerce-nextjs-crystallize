@@ -130,6 +130,7 @@ export default `
       ... on Product {
         variants {
           price
+          sku
           isDefault
           name
           image {
@@ -168,6 +169,7 @@ export default `
             ... on Product {
               defaultVariant {
                 price
+                sku
                 isDefault
                 name
                 image {
@@ -202,4 +204,4 @@ export default `
   fragment dateTimeContent on DatetimeContent {
     datetime
   }
-`;
+`

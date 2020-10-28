@@ -1,9 +1,12 @@
 import GridRenderer from '@crystallize/grid-renderer'
 import styled from 'styled-components'
+import dynamic from 'next/dynamic'
 
 import { responsive } from 'themes/crystallize/ui'
 
-export { default as GridItem } from './grid-item'
+export const GridItem = dynamic(
+  () => import(`themes/${process.env.NEXT_PUBLIC_THEME || 'crystallize'}/components/grid/grid-item`),
+)
 
 const StyledGrid = styled(GridRenderer)`
   grid-gap: 20px;
