@@ -2,12 +2,15 @@ import { sendMagicLink } from 'lib/rest-api'
 import { useAuth } from 'contexts/auth-context'
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
+import { GetStaticProps } from 'next'
 
-const LoginTemplate = dynamic(
-  () => import(`themes/${process.env.NEXT_PUBLIC_THEME || 'crystallize'}/templates/LoginTemplate/LoginTemplate`),
-)
+import appConfig from 'app.config.json'
 
-export default function LoginPage() {
+type LoginPageProps = {
+  theme: string
+}
+
+export default function LoginPage({ theme }: LoginPageProps) {
   const auth = useAuth()
   const [userData, setUserData] = useState({
     loading: false,
@@ -43,5 +46,15 @@ export default function LoginPage() {
     }
   }
 
+  const LoginTemplate = dynamic(() => import(`themes/${theme}/templates/LoginTemplate/LoginTemplate`))
+
   return <LoginTemplate auth={auth} handleSubmit={handleSubmit} userData={userData} setUserData={setUserData} />
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+  const theme = process.env.THEME || appConfig.theme.default
+
+  return {
+    props: { theme },
+  }
 }

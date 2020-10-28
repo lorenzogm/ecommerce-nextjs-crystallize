@@ -5,15 +5,6 @@ import { simplyFetchFromGraph } from 'lib/graph'
 
 import query from './query'
 
-const FolderTemplate = dynamic(
-  () =>
-    import(
-      `themes/${
-        process.env.NEXT_PUBLIC_THEME || 'crystallize'
-      }/templates/FolderTemplate/FolderTemplate`
-    ),
-)
-
 export async function getData({ asPath, language, preview = null }) {
   const { data } = await simplyFetchFromGraph({
     query,
@@ -24,9 +15,12 @@ export async function getData({ asPath, language, preview = null }) {
     },
   })
 
-  return { ...data, preview }
+  const theme = process.env.THEME || 'crystallize'
+  return { ...data, preview, theme }
 }
 
-export default function FolderPage({ folder, preview }) {
+export default function FolderPage({ folder, preview, theme }) {
+  const FolderTemplate = dynamic(() => import(`themes/${theme}/templates/FolderTemplate/FolderTemplate`))
+
   return <FolderTemplate folder={folder} preview={preview} />
 }

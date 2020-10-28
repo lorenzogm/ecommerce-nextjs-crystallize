@@ -1,4 +1,7 @@
 {
+  "theme": {
+    "default": "crystallize"
+  },
   "locales": [
     {
       "isDefault": true,

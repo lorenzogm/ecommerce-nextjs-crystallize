@@ -3,15 +3,6 @@ import dynamic from 'next/dynamic'
 import { simplyFetchFromGraph } from 'lib/graph'
 import query from './query'
 
-const DocumentTemplate = dynamic(
-  () =>
-    import(
-      `themes/${
-        process.env.NEXT_PUBLIC_THEME || 'crystallize'
-      }/templates/DocumentTemplate/DocumentTemplate`
-    ),
-)
-
 export async function getData({ asPath, language, preview = null }) {
   const { data } = await simplyFetchFromGraph({
     query,
@@ -21,9 +12,13 @@ export async function getData({ asPath, language, preview = null }) {
       version: preview ? 'draft' : 'published',
     },
   })
-  return { ...data, preview }
+
+  const theme = process.env.THEME || 'crystallize'
+  return { ...data, preview, theme }
 }
 
-export default function DocumentPage({ document, preview }) {
+export default function DocumentPage({ document, preview, theme }) {
+  const DocumentTemplate = dynamic(() => import(`themes/${theme}/templates/DocumentTemplate/DocumentTemplate`))
+
   return <DocumentTemplate document={document} preview={preview} />
 }
