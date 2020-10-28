@@ -72,38 +72,10 @@ export default function CheckoutTemplate() {
       simple
     >
       <PageRow>
-        <PageColumn md="6">
+        <PageColumn md="8">
           <PreOrderSystemSummary />
 
-          <PageSection>
-            <PageSectionHeader>{t('Your bag')}</PageSectionHeader>
-            <OrderItems cart={basket.cart} />
-            {/* <Payment /> */}
-          </PageSection>
-        </PageColumn>
-
-        <PageColumn md="6">
           <Form useFormMethods={useFormMethods} onSubmit={onSubmit}>
-            <PageSection>
-              <PageSectionHeader>{t('Total')}</PageSectionHeader>
-              <DescriptionList>
-                <DescriptionListTerm>{t('Subtotal (VAT included)')}</DescriptionListTerm>
-                <DescriptionListDetails>
-                  {t('{{value, currency}}', { value: basket.total.gross })}
-                </DescriptionListDetails>
-
-                <DescriptionListTerm>{t('Delivery')}</DescriptionListTerm>
-                <DescriptionListDetails>
-                  {deliveryPrice === 0 ? t('Free') : t('{{value, currency}}', { value: deliveryPrice })}
-                </DescriptionListDetails>
-
-                <DescriptionListTerm>{t('Total')}</DescriptionListTerm>
-                <DescriptionListDetails>
-                  {t('{{value, currency}}', { value: basket.total.gross + deliveryPrice })}
-                </DescriptionListDetails>
-              </DescriptionList>
-            </PageSection>
-
             <PageSection>
               <PageSectionHeader>{t('Delivery')}</PageSectionHeader>
               <p>
@@ -165,6 +137,31 @@ export default function CheckoutTemplate() {
               </PageSection>
             ) : null}
           </Form>
+        </PageColumn>
+
+        <PageColumn md="4">
+          <PageSection>
+            <PageSectionHeader>{t('Total')}</PageSectionHeader>
+            <DescriptionList>
+              <DescriptionListTerm>{t('Subtotal (VAT included)')}</DescriptionListTerm>
+              <DescriptionListDetails>{t('{{value, currency}}', { value: basket.total.gross })}</DescriptionListDetails>
+
+              <DescriptionListTerm>{t('Delivery')}</DescriptionListTerm>
+              <DescriptionListDetails>
+                {deliveryPrice === 0 ? t('Free') : t('{{value, currency}}', { value: deliveryPrice })}
+              </DescriptionListDetails>
+
+              <DescriptionListTerm>{t('Total')}</DescriptionListTerm>
+              <DescriptionListDetails>
+                {t('{{value, currency}}', { value: basket.total.gross + deliveryPrice })}
+              </DescriptionListDetails>
+            </DescriptionList>
+          </PageSection>
+
+          <PageSection>
+            <PageSectionHeader>{t('Your bag')}</PageSectionHeader>
+            <OrderItems cart={basket.cart} />
+          </PageSection>
         </PageColumn>
       </PageRow>
     </PageLayout>

@@ -5,7 +5,7 @@ import PageSection from 'themes/dindim/foundations/PageSection/PageSection'
 import PageSectionHeader from 'themes/dindim/foundations/PageSectionHeader/PageSectionHeader'
 
 export const ListOrderer = styled.ol`
-  margin-left: 16px;
+  margin: 0 0 12px 16px;
 `
 
 export default function PreOrderSystemSummary() {
