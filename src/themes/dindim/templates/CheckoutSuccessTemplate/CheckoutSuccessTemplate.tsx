@@ -21,7 +21,7 @@ export default function CheckoutSuccessTemplate() {
         <PageColumn style={{ margin: '0 auto' }} width="50%">
           <PageSection style={{ textAlign: 'center' }}>
             <h1>{t('Thank you for your order!')}</h1>
-            <p>{t("We've received your order and we are going to send you an email with further information.")}</p>
+            <p>{t("We've received your order. You'll receive an email with further information. Check your inbox!")}</p>
 
             <p>
               {t('You can close this page or you can')}
