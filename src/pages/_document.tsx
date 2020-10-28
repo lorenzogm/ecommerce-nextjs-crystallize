@@ -1,16 +1,40 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document'
+import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document'
+import { ReactElement } from 'react'
+
+import { GA_TRACKING_ID } from 'services/gtag'
 
 export default class MyDocument extends Document {
-  render() {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  static async getInitialProps(ctx: DocumentContext) {
+    const initialProps = await Document.getInitialProps(ctx)
+    return { ...initialProps }
+  }
+
+  render(): ReactElement {
     return (
-      <Html lang="es">
+      <Html>
         <Head>
-          <link rel="icon" href="/static/favicon.svg" />
+          <link rel="icon" href="/static/favicon.png" />
           <link rel="mask-icon" href="/static/mask-icon.svg" color="#5bbad5" />
           <link rel="apple-touch-icon" href="/static/apple-touch-icon.png" />
           <link rel="manifest" href="/static/manifest.json" />
 
-          {/* {this.props.styleTags} */}
+          {/* Global Site Tag (gtag.js) - Google Analytics */}
+          <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`} />
+          <script
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{
+              __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', '${GA_TRACKING_ID}', {
+              page_path: window.location.pathname,
+            });
+          `,
+            }}
+          />
         </Head>
         <body>
           <Main />

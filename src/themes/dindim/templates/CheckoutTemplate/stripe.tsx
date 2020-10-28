@@ -76,7 +76,7 @@ function Form({ clientSecret, paymentModel, onSuccess }) {
       <CardElement />
       <div style={{ marginTop: 25 }}>
         <Button type="submit" state={status === 'confirming' ? 'loading' : null} disabled={status === 'confirming'}>
-          {t('checkout.payNow')}
+          {t('Pay now')}
         </Button>
       </div>
     </form>

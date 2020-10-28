@@ -7,19 +7,17 @@ import { BasketProvider } from 'contexts/BasketContext/BasketContext'
 import { getLocaleFromContext } from 'lib/app-config'
 import { I18nextProvider } from 'lib/i18n'
 
-import localeResourceEn from 'locales/en-US'
-import localeResourceEs from 'locales/es-ES'
+import localeResourceEs from 'locales/es.json'
+import { useGtagHandlerouteChange } from 'services/gtag'
 
 export default function MyApp({ Component, pageProps }: AppProps) {
+  useGtagHandlerouteChange()
   const locale = getLocaleFromContext()
 
   return (
     <>
       <MetaTags />
-      <I18nextProvider
-        locale={locale}
-        localeResource={locale?.displayName === 'en' ? localeResourceEn : localeResourceEs}
-      >
+      <I18nextProvider locale={locale} localeResource={localeResourceEs}>
         <SettingsProvider currency={locale?.defaultCurrency}>
           <AuthProvider>
             <BasketProvider>

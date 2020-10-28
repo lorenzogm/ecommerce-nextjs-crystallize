@@ -1,18 +1,11 @@
 import React from 'react'
 
 import { screen, H3 } from 'themes/crystallize/ui'
-import ContentTransformer from 'themes/crystallize/ui/content-transformer'
+import ContentTransformer from 'themes/dindim/elements/content-transformer'
 import Link from 'themes/crystallize/components/link'
 import VideoPlayer from 'themes/crystallize/components/video-player'
 
-import {
-  Outer,
-  Text,
-  MediaWrapper,
-  MediaInner,
-  Img,
-  Description,
-} from './styles'
+import { Outer, Text, MediaWrapper, MediaInner, Img, Description } from './styles'
 
 export default function DocumentItem({ data, colSpan = '4' }) {
   if (!data) {
@@ -30,22 +23,9 @@ export default function DocumentItem({ data, colSpan = '4' }) {
   let media
 
   if (video?.content?.videos?.length) {
-    media = (
-      <VideoPlayer
-        {...video.content.videos[0]}
-        autoplay
-        loop
-        controls={false}
-      />
-    )
+    media = <VideoPlayer {...video.content.videos[0]} autoplay loop controls={false} />
   } else if (image) {
-    media = (
-      <Img
-        {...image}
-        alt={name}
-        sizes={`(min-width ${screen.md}px) 33vw, 100vw`}
-      />
-    )
+    media = <Img {...image} alt={name} sizes={`(min-width ${screen.md}px) 33vw, 100vw`} />
   } else {
     return (
       <Link as={path} href="/[...catalogue]" passHref>

@@ -1,45 +1,45 @@
-import React from 'react';
+import React from 'react'
 
-import { useT } from 'lib/i18n';
-import { useBasket } from 'contexts/BasketContext/BasketContext';
+import { useT } from 'lib/i18n'
+import { useBasket } from 'contexts/BasketContext/BasketContext'
 
-import { Outer, Row, Rows } from './BasketTotals.styles';
+import { Outer, Row, Rows } from './BasketTotals.styles'
 
 export const Totals = () => {
-  const t = useT();
-  const { total } = useBasket();
+  const t = useT()
+  const { total } = useBasket()
 
   return (
     <Outer>
       <Rows>
         <Row modifier="total-price">
-          <span>{t('basket.totalPrice')}:</span>
-          <span>{t('common.price', { value: total.net })}</span>
+          <span>{t('Total price')}:</span>
+          <span>{t('{{value, currency}}', { value: total.net })}</span>
         </Row>
         {/* {discount && (
           <>
             <Row modifier="discount">
-              <span>{t('basket.discount')}:</span>
-              <span>{t('common.price', { value: discount })}</span>
+              <span>{t('Discount')}:</span>
+              <span>{t('{{value, currency}}', { value: discount })}</span>
             </Row>
             <Row modifier="total-after-discount">
               <span>{t('common.totalPriceAfterDiscount')}:</span>
               <span>
-                {t('common.price', { value: totalPriceMinusDiscount })}
+                {t('{{value, currency}}', { value: totalPriceMinusDiscount })}
               </span>
             </Row>
           </>
         )} */}
 
         <Row modifier="total-vat">
-          <span>{t('basket.vat')}:</span>
-          <span>{t('common.price', { value: total.vat })}</span>
+          <span>{t('VAT')}:</span>
+          <span>{t('{{value, currency}}', { value: total.vat })}</span>
         </Row>
         <Row modifier="to-pay">
-          <span>{t('basket.totalToPay')}:</span>
-          <span>{t('common.price', { value: total.gross })}</span>
+          <span>{t('To pay')}:</span>
+          <span>{t('{{value, currency}}', { value: total.gross })}</span>
         </Row>
       </Rows>
     </Outer>
-  );
-};
+  )
+}

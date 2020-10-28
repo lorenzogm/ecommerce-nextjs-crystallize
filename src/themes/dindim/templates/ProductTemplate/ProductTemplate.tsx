@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import Img from '@crystallize/react-image'
-import ContentTransformer from 'themes/crystallize/ui/content-transformer'
+import ContentTransformer from 'themes/dindim/elements/content-transformer'
 
 import { screen } from 'themes/crystallize/ui'
 import PageLayout from 'themes/dindim/foundations/PageLayout/PageLayout'
 import ShapeComponents from 'themes/crystallize/components/shape/components'
 
-import Topics from 'themes/crystallize/components/topics'
+import Topics from 'themes/dindim/modules/topics'
 import VariantSelector from './VariantSelector'
 import Buy from './Buy'
 
@@ -31,13 +31,14 @@ export default function ProductTemplate({ product, preview }) {
     setSelectedVariant(variant)
   }
 
-  const summaryComponent = product.components.find((c) => c.name === 'Summary')
-  const descriptionComponent = product.components.find((c) => c.name === 'Description')
-  const specs = product.components.find((c) => c.name === 'Specs')
-  const componentsRest = product.components?.filter((c) => !['Summary', 'Description', 'Specs'].includes(c.name))
+  const summaryComponent = product.components && product.components.find((c) => c.name === 'Summary')
+  const descriptionComponent = product.components && product.components.find((c) => c.name === 'Description')
+  const specs = product.components && product.components.find((c) => c.name === 'Specs')
+  const componentsRest =
+    product.components && product.components?.filter((c) => !['Summary', 'Description', 'Specs'].includes(c.name))
 
   return (
-    <PageLayout title={product.name} preview={preview}>
+    <PageLayout title={product.name} imageUrl={selectedVariant.image.url} preview={preview}>
       <Outer>
         <Sections>
           <Media>
@@ -77,9 +78,9 @@ export default function ProductTemplate({ product, preview }) {
           )}
         </Content>
 
-        {product?.topics?.length && <Topics topicMaps={product.topics} />}
-
         <ShapeComponents components={componentsRest} />
+
+        {product?.topics?.length && <Topics topicMaps={product.topics} />}
       </Outer>
     </PageLayout>
   )

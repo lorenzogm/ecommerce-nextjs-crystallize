@@ -72,12 +72,12 @@ export default function Confirmation({ order: orderData }) {
   const { total } = order
 
   return (
-    <Layout title={t('checkout.confirmation.title')}>
+    <Layout title={t('Order confirmation')}>
       <Outer>
         <CustomHeader>
-          <H1>{t('checkout.confirmation.title')}</H1>
+          <H1>{t('Order confirmation')}</H1>
           <p>
-            {t('checkout.confirmation.shortStatus', {
+            {t('Your order has been confirmed.', {
               context: email ? 'withEmail' : null,
               email,
             })}
@@ -85,14 +85,14 @@ export default function Confirmation({ order: orderData }) {
           <Line />
           <BillingDetails order={order} />
           <Line />
-          <H3>{t('order.item', { count: cart.length })}</H3>
+          <H3>{t('Order item', { count: cart.length })}</H3>
           <OrderItems cart={cart} />
           <Totals>
             <TotalLine bold>
-              {t('order.total')}: <CurrencyValue value={total.gross} />
+              {t('Total')}: <CurrencyValue value={total.gross} />
             </TotalLine>
             <TotalLine>
-              {t('common.vat', {
+              {t('VAT: {{value, currency}}', {
                 value: total.gross - total.net,
               })}
             </TotalLine>

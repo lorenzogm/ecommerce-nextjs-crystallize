@@ -30,10 +30,7 @@ export default function TinyBasketItem({ actions, item }) {
   useEffect(() => {
     setDrawAttention(true)
 
-    const timeout = setTimeout(
-      () => setDrawAttention(false),
-      drawAttentionDuration,
-    )
+    const timeout = setTimeout(() => setDrawAttention(false), drawAttentionDuration)
     return () => clearTimeout(timeout)
   }, [addItemTime])
 
@@ -66,17 +63,13 @@ export default function TinyBasketItem({ actions, item }) {
           </PriceWrap>
 
           <PriceVat>
-            <span>{t('common.vat', { value: item.price?.vat })}</span>
+            <span>{t('VAT: {{value, currency}}', { value: item.price?.vat })}</span>
           </PriceVat>
         </PriceWrapper>
       </ItemInfo>
       <div>
         <ItemQuantityChanger>
-          <button
-            onClick={decrement}
-            type="button"
-            disabled={item.quantity === 1}
-          >
+          <button onClick={decrement} type="button" disabled={item.quantity === 1}>
             -
           </button>
           <ItemQuantity>{item.quantity}</ItemQuantity>
@@ -85,7 +78,7 @@ export default function TinyBasketItem({ actions, item }) {
           </button>
         </ItemQuantityChanger>
       </div>
-      <ItemDelete onClick={remove}>{t('basket.removeItem', item)}</ItemDelete>
+      <ItemDelete onClick={remove}>{t('Remove {{name}} from basket', item)}</ItemDelete>
     </Item>
   )
 }

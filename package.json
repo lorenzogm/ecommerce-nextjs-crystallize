@@ -20,7 +20,8 @@
     "lint": "eslint ./src",
     "validate": "lint-staged",
     "repo:cleanup-payment-providers": "node ./_repo-utils/cleanup-payment-providers.js",
-    "postinstall": "node ./_repo-utils/postinstall.js"
+    "postinstall": "node ./_repo-utils/postinstall.js",
+    "translations": "npx babel -f .babelrc 'src/**/*.{js,jsx,ts,tsx}'"
   },
   "husky": {
     "hooks": {
@@ -51,12 +52,12 @@
     "@videojs/vhs-utils": "^2.2.1",
     "accept-language": "^3.0.18",
     "dashjs": "^3.1.1",
-    "i18next": "^19.8.2",
+    "i18next": "^19.8.3",
     "immer": "^7.0.8",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "mjml": "^4.4.1",
-    "next": "^9.5.3",
+    "next": "^10.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -70,12 +71,15 @@
     "videojs-contrib-dash": "^2.11.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.6",
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@types/gtag.js": "^0.0.3",
     "@types/react": "^16.9.51",
     "@typescript-eslint/eslint-plugin": "^4.1.1",
     "@typescript-eslint/parser": "^4.1.1",
     "@valtech-ch/eslint-config-react": "0.0.9",
     "babel-eslint": "^10.1.0",
+    "babel-plugin-i18next-extract": "^0.8.0",
     "babel-plugin-styled-components": "^1.10.7",
     "eslint": "^7.1.0",
     "eslint-config-airbnb-typescript": "^10.0.0",

@@ -1,5 +1,5 @@
 import React from 'react'
-import ContentTransformer from 'themes/crystallize/ui/content-transformer'
+import ContentTransformer from 'themes/dindim/elements/content-transformer'
 
 import { H1, Header, Outer } from 'themes/crystallize/ui'
 import PageLayout from 'themes/dindim/foundations/PageLayout/PageLayout'
@@ -35,7 +35,7 @@ export default function DocumentTemplate({ document, preview }) {
       {relatedProducts?.content?.items?.length && (
         <Related>
           <H2>
-            {t('product.relatedProduct', {
+            {t('Related product', {
               count: relatedProducts.content.items.length,
             })}
           </H2>

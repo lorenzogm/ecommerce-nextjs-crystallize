@@ -33,16 +33,16 @@ export default function BillingDetails({ order }) {
       <Inner>
         <H3>Billing Details</H3>
         <p>
-          {t('customer.name')}:{' '}
+          {t('Name')}:{' '}
           <strong>
             {order.customer.firstName} {order.customer.lastName}
           </strong>
         </p>
         <p>
-          {t('customer.email')}: <strong>{email}</strong>
+          {t('Email')}: <strong>{email}</strong>
         </p>
         <p>
-          {t('order.total')}:{' '}
+          {t('Total')}:{' '}
           <strong>
             <CurrencyValue value={order.total.gross} />
           </strong>

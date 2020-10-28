@@ -19,6 +19,11 @@ const navigation = [
     name: 'Accesorios',
     path: '/accesorios',
   },
+  {
+    type: 'document',
+    name: 'Quiénes Somos',
+    path: '/quienes-somos',
+  },
 ]
 
 export default navigation

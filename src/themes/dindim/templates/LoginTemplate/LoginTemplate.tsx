@@ -10,33 +10,33 @@ export default function LoginTemplate({ auth, handleSubmit, userData, setUserDat
   const t = useT()
 
   return (
-    <PageLayout title={t('customer.login.title')}>
+    <PageLayout title={t('Login')}>
       <Outer>
         {auth.isLoggedIn ? (
           <div>
-            <H1>{t('customer.login.loggedIn')}</H1>
+            <H1>{t('You are logged in')}</H1>
           </div>
         ) : (
           <LoginStyle>
-            <H1>{t('customer.login.title')}</H1>
+            <H1>{t('Login')}</H1>
 
             <form onSubmit={handleSubmit} action="/api/loging" method="post">
-              <h4>{t('customer.login.instructions')}</h4>
+              <h4>{t('Enter your email address and we’ll send a magic login link to your inbox.')}</h4>
               <Fields>
                 <input
                   type="email"
                   name="email"
-                  placeholder={t('customer.email')}
+                  placeholder={t('Email')}
                   required
                   onChange={(event) => setUserData({ ...userData, email: event.target.value })}
                 />
                 <Button state={userData.loading ? 'loading' : null} type="submit" value="Submit">
-                  {t('customer.login.sendMagicLink')}
+                  {t('Send me a magic link')}
                 </Button>
               </Fields>
             </form>
             {userData.message ? <p>{userData.message}</p> : ''}
-            {userData.error ? <p>{t('customer.login.emailAddressInvalid')}</p> : ''}
+            {userData.error ? <p>{t('Please enter a valid email address')}</p> : ''}
           </LoginStyle>
         )}
       </Outer>

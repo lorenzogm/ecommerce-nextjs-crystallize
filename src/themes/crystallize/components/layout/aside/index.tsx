@@ -45,22 +45,17 @@ export default function Aside() {
   }
 
   if (basket.status !== 'ready') {
-    return t('basket.loading')
+    return t('Loading...')
   }
 
   return (
     <Basket>
-      <Header>{t('basket.title')}</Header>
+      <Header>{t('Basket')}</Header>
       <TinyBasket />
       <Footer>
         <Link href="/checkout" passHref>
-          <CheckoutBtn
-            as="a"
-            state={going ? 'loading' : null}
-            disabled={!basket.cart.length}
-            onClick={onCheckoutClick}
-          >
-            {t('basket.goToCheckout')}
+          <CheckoutBtn as="a" state={going ? 'loading' : null} disabled={!basket.cart.length} onClick={onCheckoutClick}>
+            {t('Go to checkout')}
           </CheckoutBtn>
         </Link>
       </Footer>
