@@ -16,7 +16,7 @@ export async function getServerSideProps({ query }) {
 
   return {
     props: {
-      theme
+      theme,
       order,
     },
   }
