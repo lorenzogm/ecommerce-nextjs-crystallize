@@ -1,11 +1,10 @@
-import jwt from 'jsonwebtoken';
-import mjml2html from '@nerdenough/mjml-ncc-bundle';
-import sgMail from '@sendgrid/mail';
+import jwt from 'jsonwebtoken'
+import mjml2html from '@nerdenough/mjml-ncc-bundle'
+import sgMail from '@sendgrid/mail'
 
-import getHost from 'lib-api/util/get-host';
+import getHost from 'lib-api/util/get-host'
 
-const secret = process.env.JWT_SECRET;
-const sendGridApiKey = process.env.SENDGRID_API_KEY;
+const { JWT_SECRET, SENDGRID_API_KEY, SENDGRID_EMAIL_FROM } = process.env
 
 function getEmailHtml(loginLink) {
   const { html } = mjml2html(
@@ -22,24 +21,24 @@ function getEmailHtml(loginLink) {
     </mj-body>
   </mjml>
 `,
-    {}
-  );
+    {},
+  )
 
-  return html;
+  return html
 }
 
 export default async (req, res) => {
-  const { email } = req.query;
+  const { email } = req.query
 
   if (!email) {
-    return res.status(400).json({ message: 'No email provided' });
+    return res.status(400).json({ message: 'No email provided' })
   }
 
-  const token = jwt.sign({ email }, secret, {
-    expiresIn: '36000s'
-  });
+  const token = jwt.sign({ email }, JWT_SECRET, {
+    expiresIn: '36000s',
+  })
 
-  const magicLink = `${getHost(req)}/api/user/verify?token=${token}`;
+  const magicLink = `${getHost(req)}/api/user/verify?token=${token}`
 
   // Here we would want to check whether a user already exists with the email
   // provided. This boilerplate does not have a datastore connected to it yet
@@ -49,33 +48,33 @@ export default async (req, res) => {
   // The token should also be saved somewhere so that we can verify that it
   // is a valid token in `./verify.js`.
 
-  const html = getEmailHtml(magicLink);
+  const html = getEmailHtml(magicLink)
 
   // Now that we have an email formatted to contain the magic link we want to
   // send it. If configured to use SendGrid, an email will be sent with the
   // login link. If not, the link will be logged to console.
-  if (sendGridApiKey) {
-    sgMail.setApiKey(sendGridApiKey);
+  if (SENDGRID_API_KEY && SENDGRID_EMAIL_FROM) {
+    sgMail.setApiKey(SENDGRID_API_KEY)
     try {
       await sgMail.send({
         to: email,
-        from: 'example@crystallize.com',
-        subject: 'Magic Link',
-        html
-      });
+        from: SENDGRID_EMAIL_FROM,
+        subject: 'Login | Dindim',
+        html,
+      })
     } catch (e) {
       return res.json({
-        message: 'Email NOT sent'
-      });
+        message: 'Email NOT sent',
+      })
     }
   } else {
     return res.json({
       message: 'Email sent! The verification link will expire in 1 hour',
-      magicLink
-    });
+      magicLink,
+    })
   }
 
   return res.json({
-    message: 'Email sent! The verification link will expire in 1 hour'
-  });
-};
+    message: 'Email sent! The verification link will expire in 1 hour',
+  })
+}
