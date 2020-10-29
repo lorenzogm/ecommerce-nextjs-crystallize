@@ -15,8 +15,12 @@ export default function Link({ children, ...props }) {
 
   const { href, as, ...restProps } = props
 
-  return (
-    <NextLink href={`${href === '/' ? '' : href}`} as={`/${as || href}`.replace(/\/{2,}/g, '/')} {...restProps}>
+  return href === '/' ? (
+    <NextLink href={href} {...restProps}>
+      {children}
+    </NextLink>
+  ) : (
+    <NextLink href={href} as={`/${as || href}`.replace(/\/{2,}/g, '/')} {...restProps}>
       {children}
     </NextLink>
   )
