@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 import { useFormContext } from 'react-hook-form'
 import styled from 'styled-components'
 
@@ -20,6 +20,7 @@ type InputRadioProps = {
   label: string
   options: InputRadioOptions[]
   required?: boolean
+  onChange: (e: string) => void
 }
 
 type InputRadioOptions = {
@@ -27,7 +28,7 @@ type InputRadioOptions = {
   value: string
 }
 
-export default function InputRadio({ name, label, options, required = false, ...rest }: InputRadioProps) {
+export default function InputRadio({ name, label, options, required = false, onChange, ...rest }: InputRadioProps) {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { register, setValue, getValues, watch } = useFormContext()
 
@@ -50,7 +51,10 @@ export default function InputRadio({ name, label, options, required = false, ...
             </Label>
             <Button
               variant={watch(name) === option.value ? 'primary' : undefined}
-              onClick={() => setValue(name, option.value)}
+              onClick={() => {
+                setValue(name, option.value)
+                onChange(option.value)
+              }}
             >
               {option.value}
             </Button>

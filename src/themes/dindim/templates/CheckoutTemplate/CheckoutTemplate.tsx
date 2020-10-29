@@ -40,7 +40,7 @@ export default function CheckoutTemplate() {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { getValues } = useFormMethods
   const { deliveryMethod } = getValues()
-  const deliveryPrice = deliveryMethod === DeliveryMethod.DELIVERY ? 9 : 0
+  const deliveryPrice = deliveryMethod === DeliveryMethod.DELIVERY ? 6.5 : 0
   const { onSubmit } = useOnSubmit({ deliveryPrice })
 
   if (process.env.NEXT_PUBLIC_ENABLE_CHECKOUT !== 'true') {
@@ -91,6 +91,19 @@ export default function CheckoutTemplate() {
                   { label: t('Pickup'), value: DeliveryMethod.PICKUP },
                   { label: t('Delivery'), value: DeliveryMethod.DELIVERY },
                 ]}
+                onChange={(value) => {
+                  if (value === DeliveryMethod.PICKUP) {
+                    basket.actions.removeItem({
+                      sku: 'gastos-de-envio',
+                      path: '/gastos-de-envio',
+                    })
+                  } else {
+                    basket.actions.addItem({
+                      sku: 'gastos-de-envio',
+                      path: '/gastos-de-envio',
+                    })
+                  }
+                }}
               />
             </PageSection>
 
@@ -144,7 +157,9 @@ export default function CheckoutTemplate() {
             <PageSectionHeader>{t('Total')}</PageSectionHeader>
             <DescriptionList>
               <DescriptionListTerm>{t('Subtotal (VAT included)')}</DescriptionListTerm>
-              <DescriptionListDetails>{t('{{value, currency}}', { value: basket.total.gross })}</DescriptionListDetails>
+              <DescriptionListDetails>
+                {t('{{value, currency}}', { value: basket.total.gross - deliveryPrice })}
+              </DescriptionListDetails>
 
               <DescriptionListTerm>{t('Delivery')}</DescriptionListTerm>
               <DescriptionListDetails>
@@ -152,9 +167,7 @@ export default function CheckoutTemplate() {
               </DescriptionListDetails>
 
               <DescriptionListTerm>{t('Total')}</DescriptionListTerm>
-              <DescriptionListDetails>
-                {t('{{value, currency}}', { value: basket.total.gross + deliveryPrice })}
-              </DescriptionListDetails>
+              <DescriptionListDetails>{t('{{value, currency}}', { value: basket.total.gross })}</DescriptionListDetails>
             </DescriptionList>
           </PageSection>
 
