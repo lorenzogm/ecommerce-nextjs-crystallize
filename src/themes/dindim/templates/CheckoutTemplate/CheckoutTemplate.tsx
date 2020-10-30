@@ -25,6 +25,8 @@ export default function CheckoutTemplate() {
   const basket = useBasket()
   const t = useT()
 
+  const isDeliveryInTheCart = basket.cart.find((item) => item.sku === 'gastos-de-envio') !== undefined
+
   const defaultValues = {
     email: '',
     firstName: '',
@@ -33,13 +35,13 @@ export default function CheckoutTemplate() {
     zip: '',
     city: '',
     country: '',
-    deliveryMethod: undefined,
+    deliveryMethod: isDeliveryInTheCart ? DeliveryMethod.DELIVERY : DeliveryMethod.PICKUP,
   }
 
   const useFormMethods = useForm({ defaultValues })
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { getValues } = useFormMethods
-  const { deliveryMethod } = getValues()
+  const { watch } = useFormMethods
+  const { deliveryMethod } = watch()
   const deliveryPrice = deliveryMethod === DeliveryMethod.DELIVERY ? 6.5 : 0
   const { onSubmit } = useOnSubmit({ deliveryPrice })
 
@@ -97,7 +99,7 @@ export default function CheckoutTemplate() {
                       sku: 'gastos-de-envio',
                       path: '/gastos-de-envio',
                     })
-                  } else {
+                  } else if (!isDeliveryInTheCart) {
                     basket.actions.addItem({
                       sku: 'gastos-de-envio',
                       path: '/gastos-de-envio',

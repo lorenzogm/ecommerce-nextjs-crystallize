@@ -1,17 +1,9 @@
 import mjml2html from '@nerdenough/mjml-ncc-bundle'
 import nodemailer from 'nodemailer'
 
-import { callOrdersApi } from 'lib-api/crystallize'
-import QUERY_ORDER_BY_ID from 'lib-api/crystallize/graph/queries/order-by-id'
 import { formatCurrency } from 'lib/currency'
 
-import { sendEmail } from './utils'
-
-async function main({ to, html }) {
-  // Generate test SMTP service account from ethereal.email
-  // Only needed if you don't have a real mail account for testing
-  let testAccount = await nodemailer.createTestAccount()
-
+async function main({ to, html, customer }) {
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
@@ -33,25 +25,32 @@ async function main({ to, html }) {
   // })
 
   // send mail with defined transport object
-  let info = await transporter.sendMail({
+  await transporter.sendMail({
     from: '"Dindim" <dindim.ethicalbrand@gmail.com>', // sender address
     to, // list of receivers
     subject: 'Gracias por tu pedido! | Dindim', // Subject line
     text: html.replace(/<[^>]*>/g, ''), // plain text body
     html, // html body
   })
+
+  await transporter.sendMail({
+    from: '"Dindim" <dindim.ethicalbrand@gmail.com>', // sender address
+    to: 'info@dindim.es', // list of receivers
+    subject: `Nuevo pedido de ${customer.firstName} ${customer.lastName} | Dindim`, // Subject line
+    text: html.replace(/<[^>]*>/g, ''), // plain text body
+    html, // html body
+  })
 }
 
-export default async function sendOrderConfirmation(orderId: string) {
+export default async function sendOrderConfirmation({ orderId, order }) {
   try {
-    const response = await callOrdersApi({
-      query: QUERY_ORDER_BY_ID,
-      variables: {
-        id: orderId,
-      },
-      operationName: 'getOrder',
-    })
-    const order = response.data.orders.get
+    // const response = await callOrdersApi({
+    //   query: QUERY_ORDER_BY_ID,
+    //   variables: {
+    //     id: orderId,
+    //   },
+    //   operationName: 'getOrder',
+    // })
     const { email } = order.customer.addresses[0]
 
     if (!email) {
@@ -65,15 +64,17 @@ export default async function sendOrderConfirmation(orderId: string) {
         <mj-section>
           <mj-column>
             <mj-text>
-              <h1>Order Summary</h1>
-              <p>Thanks for your order! This email contains a copy of your order for your reference.</p>
+              <h1>¡Gracias por tu pedido!</h1>
+              <p>Este email es la confirmación del pedido que has realizado en Dindim.</p>
+              <p>Para finalizar el proceso, por favor realizar un pago por transferencia bancaría a la siguiente cuenta:</p>
+              <p>IBAN: ${process.env.IBAN}</p>
               <p>
-                Order Number: <strong>#${order.id}</strong>
+                Pedido número: <strong>#${orderId}</strong>
               </p>
               <p>
-                First name: <strong>${order.customer.firstName}</strong><br />
-                Last name: <strong>${order.customer.lastName}</strong><br />
-                Email address: <strong>${email}</strong>
+                Nombre: <strong>${order.customer.firstName}</strong><br />
+                Apellidos: <strong>${order.customer.lastName}</strong><br />
+                Email: <strong>${email}</strong>
               </p>
               <p>
                 Total: <strong>${formatCurrency({
@@ -84,13 +85,13 @@ export default async function sendOrderConfirmation(orderId: string) {
             </mj-text>
             <mj-table>
               <tr style="border-bottom:1px solid #ecedee;text-align:left;">
-                <th style="padding: 0 15px 0 0;">Name</th>
-                <th style="padding: 0 15px;">Quantity</th>
+                <th style="padding: 0 15px 0 0;">Artículo</th>
+                <th style="padding: 0 15px;">Cantidad</th>
                 <th style="padding: 0 0 0 15px;">Total</th>
               </tr>
               ${order.cart.map(
                 (item) => `<tr>
-                  <td style="padding: 0 15px 0 0;">${item.name} (${item.sku})</td>
+                  <td style="padding: 0 15px 0 0;"><p>${item.name}</p></td>
                   <td style="padding: 0 15px;">${item.quantity}</td>
                   <td style="padding: 0 0 0 15px;">${formatCurrency({
                     amount: item.price.gross * item.quantity,
@@ -112,7 +113,7 @@ export default async function sendOrderConfirmation(orderId: string) {
     //   html,
     // })
 
-    await main({ to: email, html })
+    await main({ to: email, html, customer: order.customer })
   } catch (error) {
     console.log({ error })
     Promise.resolve(error.stack)

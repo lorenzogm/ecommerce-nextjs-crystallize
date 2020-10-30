@@ -6,7 +6,7 @@ export default async (req, res) => {
     const { order } = req.body
     const createCrystallizeOrderResponse = await createCrystallizeOrder(order)
 
-    await emailOrderConfirmation(createCrystallizeOrderResponse.data.orders.create.id)
+    await emailOrderConfirmation({ orderId: createCrystallizeOrderResponse.data.orders.create.id, order })
 
     return res.status(200).send({
       success: true,

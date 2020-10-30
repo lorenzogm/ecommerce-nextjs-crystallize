@@ -29,7 +29,7 @@ export default function useOnSubmit({ deliveryPrice }: UseOnSubmit) {
         },
       })),
       total: {
-        gross: basket.total.gross + deliveryPrice,
+        gross: basket.total.gross,
         currency: 'EUR',
       },
       customer: {
