@@ -17,7 +17,7 @@ async function main({ to, html, customer }) {
       pass: process.env.EMAIL_PASSWORD, // generated ethereal password
     },
   })
-  console.log(process.env.EMAIL_USER, process.env.EMAIL_PASSWORD)
+
   // let transporter = nodemailer.createTransport({
   //   host: 'smtp.ionos.es',
   //   port: 587,
