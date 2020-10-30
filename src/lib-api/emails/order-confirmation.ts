@@ -4,6 +4,7 @@ import nodemailer from 'nodemailer'
 import { formatCurrency } from 'lib/currency'
 import { DeliveryMethod } from 'types/deliveryTypes'
 import { DELIVERY_PRICE } from 'themes/dindim/config/constants'
+import { sendEmail } from './utils'
 
 async function main({ to, html, customer }) {
   // create reusable transporter object using the default SMTP transport
@@ -16,6 +17,7 @@ async function main({ to, html, customer }) {
       pass: process.env.EMAIL_PASSWORD, // generated ethereal password
     },
   })
+  console.log(process.env.EMAIL_USER, process.env.EMAIL_PASSWORD)
   // let transporter = nodemailer.createTransport({
   //   host: 'smtp.ionos.es',
   //   port: 587,
@@ -135,9 +137,18 @@ export default async function sendOrderConfirmation({ orderId, order, deliveryMe
     `)
 
     // await sendEmail({
-    //   to: 'test-m39bz3978@srv1.mail-tester.com',
+    //   to: 'test-3s3ai2rfp@srv1.mail-tester.com',
     //   from: process.env.SENDGRID_EMAIL_FROM,
-    //   subject: 'Gracias por tu pedido! | Dindim',
+    //   subject: '¡Gracias por tu pedido! | Dindim',
+    //   text: html.replace(/<[^>]*>/g, ''), // plain text body
+    //   html,
+    // })
+
+    // await sendEmail({
+    //   to: 'info@dindim.es',
+    //   from: process.env.SENDGRID_EMAIL_FROM,
+    //   subject: `Nuevo pedido de ${order.customer.firstName} ${order.customer.lastName} | Dindim`, // Subject line
+    //   text: html.replace(/<[^>]*>/g, ''), // plain text body
     //   html,
     // })
 
