@@ -17,8 +17,10 @@ import DescriptionListTerm from 'themes/dindim/foundations/DescriptionListTerm/D
 import DescriptionListDetails from 'themes/dindim/foundations/DescriptionListDetails/DescriptionListDetails'
 import InputRadio from 'themes/dindim/foundations/InputRadio/InputRadio'
 import PreOrderSystemSummary from 'themes/dindim/elements/PreOrderSystemSummary/PreOrderSystemSummary'
+import { DELIVERY_PRICE } from 'themes/dindim/config/constants'
+import { DeliveryMethod } from 'types/deliveryTypes'
 
-import { Outer, Row } from './CheckoutTemplate.styles'
+import { Outer } from './CheckoutTemplate.styles'
 import useOnSubmit from './useOnSubmit'
 
 export default function CheckoutTemplate() {
@@ -34,7 +36,7 @@ export default function CheckoutTemplate() {
     street: '',
     zip: '',
     city: '',
-    country: '',
+    country: 'España',
     deliveryMethod: isDeliveryInTheCart ? DeliveryMethod.DELIVERY : DeliveryMethod.PICKUP,
   }
 
@@ -42,7 +44,7 @@ export default function CheckoutTemplate() {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { watch } = useFormMethods
   const { deliveryMethod } = watch()
-  const deliveryPrice = deliveryMethod === DeliveryMethod.DELIVERY ? 6.5 : 0
+  const deliveryPrice = deliveryMethod === DeliveryMethod.DELIVERY ? DELIVERY_PRICE : 0
   const { onSubmit } = useOnSubmit({ deliveryPrice })
 
   if (process.env.NEXT_PUBLIC_ENABLE_CHECKOUT !== 'true') {
@@ -93,19 +95,6 @@ export default function CheckoutTemplate() {
                   { label: t('Pickup'), value: DeliveryMethod.PICKUP },
                   { label: t('Delivery'), value: DeliveryMethod.DELIVERY },
                 ]}
-                onChange={(value) => {
-                  if (value === DeliveryMethod.PICKUP) {
-                    basket.actions.removeItem({
-                      sku: 'gastos-de-envio',
-                      path: '/gastos-de-envio',
-                    })
-                  } else if (!isDeliveryInTheCart) {
-                    basket.actions.addItem({
-                      sku: 'gastos-de-envio',
-                      path: '/gastos-de-envio',
-                    })
-                  }
-                }}
               />
             </PageSection>
 
@@ -141,7 +130,7 @@ export default function CheckoutTemplate() {
                     </PageRow>
                     <PageRow>
                       <PageColumn>
-                        <InputText name="country" label={t('Country')} required />
+                        <InputText name="country" label={t('Country')} required disabled />
                       </PageColumn>
                     </PageRow>
                   </>
@@ -159,9 +148,7 @@ export default function CheckoutTemplate() {
             <PageSectionHeader>{t('Total')}</PageSectionHeader>
             <DescriptionList>
               <DescriptionListTerm>{t('Subtotal (VAT included)')}</DescriptionListTerm>
-              <DescriptionListDetails>
-                {t('{{value, currency}}', { value: basket.total.gross - deliveryPrice })}
-              </DescriptionListDetails>
+              <DescriptionListDetails>{t('{{value, currency}}', { value: basket.total.gross })}</DescriptionListDetails>
 
               <DescriptionListTerm>{t('Delivery')}</DescriptionListTerm>
               <DescriptionListDetails>
@@ -169,7 +156,9 @@ export default function CheckoutTemplate() {
               </DescriptionListDetails>
 
               <DescriptionListTerm>{t('Total')}</DescriptionListTerm>
-              <DescriptionListDetails>{t('{{value, currency}}', { value: basket.total.gross })}</DescriptionListDetails>
+              <DescriptionListDetails>
+                {t('{{value, currency}}', { value: basket.total.gross + deliveryPrice })}
+              </DescriptionListDetails>
             </DescriptionList>
           </PageSection>
 
@@ -181,9 +170,4 @@ export default function CheckoutTemplate() {
       </PageRow>
     </PageLayout>
   )
-}
-
-enum DeliveryMethod {
-  PICKUP = 'PICKUP',
-  DELIVERY = 'DELIVERY',
 }

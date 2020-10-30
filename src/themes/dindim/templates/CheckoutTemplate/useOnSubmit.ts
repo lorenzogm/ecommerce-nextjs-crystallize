@@ -3,6 +3,7 @@ import { useCallback } from 'react'
 import { useBasket } from 'contexts/BasketContext/BasketContext'
 import { doPost } from 'lib/rest-api/helpers'
 import { useRouter } from 'next/router'
+import { DELIVERY_TAX } from 'themes/dindim/config/constants'
 
 type UseOnSubmit = {
   deliveryPrice: number
@@ -23,9 +24,9 @@ export default function useOnSubmit({ deliveryPrice }: UseOnSubmit) {
         quantity: product.quantity,
         price: {
           currency: product.price.currency,
-          tax: product.vatType,
-          net: product.price.net,
-          gross: product.price.gross,
+          tax: product.vatType + deliveryPrice * DELIVERY_TAX,
+          net: product.price.net + deliveryPrice * (1 - DELIVERY_TAX),
+          gross: product.price.gross + deliveryPrice,
         },
       })),
       total: {
@@ -62,6 +63,7 @@ export default function useOnSubmit({ deliveryPrice }: UseOnSubmit) {
       doPost('/api/crystallize-create-order', {
         body: JSON.stringify({
           order,
+          deliveryMethod: values.deliveryMethod,
         }),
       }).then(() => {
         basket.actions.empty()

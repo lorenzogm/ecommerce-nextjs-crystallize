@@ -20,7 +20,7 @@ type InputRadioProps = {
   label: string
   options: InputRadioOptions[]
   required?: boolean
-  onChange: (e: string) => void
+  onChange?: (e: string) => void
 }
 
 type InputRadioOptions = {
@@ -53,7 +53,9 @@ export default function InputRadio({ name, label, options, required = false, onC
               variant={watch(name) === option.value ? 'primary' : undefined}
               onClick={() => {
                 setValue(name, option.value)
-                onChange(option.value)
+                if (onChange) {
+                  onChange(option.value)
+                }
               }}
             >
               {option.value}

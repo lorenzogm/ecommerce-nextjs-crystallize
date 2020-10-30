@@ -2,6 +2,8 @@ import mjml2html from '@nerdenough/mjml-ncc-bundle'
 import nodemailer from 'nodemailer'
 
 import { formatCurrency } from 'lib/currency'
+import { DeliveryMethod } from 'types/deliveryTypes'
+import { DELIVERY_PRICE } from 'themes/dindim/config/constants'
 
 async function main({ to, html, customer }) {
   // create reusable transporter object using the default SMTP transport
@@ -42,7 +44,7 @@ async function main({ to, html, customer }) {
   })
 }
 
-export default async function sendOrderConfirmation({ orderId, order }) {
+export default async function sendOrderConfirmation({ orderId, order, deliveryMethod }) {
   try {
     // const response = await callOrdersApi({
     //   query: QUERY_ORDER_BY_ID,
@@ -58,6 +60,8 @@ export default async function sendOrderConfirmation({ orderId, order }) {
       return
     }
 
+    const deliveryPrice = deliveryMethod === DeliveryMethod.PICKUP ? 0 : DELIVERY_PRICE
+
     const { html } = mjml2html(`
       <mjml>
         <mj-body>
@@ -69,18 +73,18 @@ export default async function sendOrderConfirmation({ orderId, order }) {
               <p>Para finalizar el proceso, por favor realizar un pago por transferencia bancaría a la siguiente cuenta:</p>
               <p>IBAN: ${process.env.IBAN}</p>
               <p>
+                Total: <strong>${formatCurrency({
+                  amount: order.total.gross + deliveryPrice,
+                  currency: order.total.currency,
+                })}</strong>
+              </p>
+              <p>
                 Pedido número: <strong>#${orderId}</strong>
               </p>
               <p>
                 Nombre: <strong>${order.customer.firstName}</strong><br />
                 Apellidos: <strong>${order.customer.lastName}</strong><br />
                 Email: <strong>${email}</strong>
-              </p>
-              <p>
-                Total: <strong>${formatCurrency({
-                  amount: order.total.gross,
-                  currency: order.total.currency,
-                })}</strong>
               </p>
             </mj-text>
             <mj-table>
@@ -95,10 +99,34 @@ export default async function sendOrderConfirmation({ orderId, order }) {
                   <td style="padding: 0 15px;">${item.quantity}</td>
                   <td style="padding: 0 0 0 15px;">${formatCurrency({
                     amount: item.price.gross * item.quantity,
-                    currency: item.price.currency,
+                    currency: order.total.currency,
                   })}</td>
                 </tr>`,
               )}
+              <tr>
+                <td style="padding: 0 15px 0 0;"></td>
+                <td style="padding: 0 15px;">Subtotal</td>
+                <td style="padding: 0 0 0 15px;">${formatCurrency({
+                  amount: order.total.gross,
+                  currency: order.total.currency,
+                })}</td>
+              </tr>
+              <tr>
+                <td style="padding: 0 15px 0 0;"></td>
+                <td style="padding: 0 15px;">Gastos de envío</td>
+                <td style="padding: 0 0 0 15px;">${formatCurrency({
+                  amount: deliveryPrice,
+                  currency: order.total.currency,
+                })}</td>
+              </tr>
+              <tr>
+                <td style="padding: 0 15px 0 0;"></td>
+                <td style="padding: 0 15px;">Total</td>
+                <td style="padding: 0 0 0 15px;">${formatCurrency({
+                  amount: order.total.gross + deliveryPrice,
+                  currency: order.total.currency,
+                })}</td>
+              </tr>
             </mj-table>
           </mj-column>
         </mj-section>
