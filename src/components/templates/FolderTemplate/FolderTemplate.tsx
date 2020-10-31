@@ -16,7 +16,9 @@ export default function FolderTemplate({ folder, preview }) {
     ?.reduce((acc, g) => [...acc, ...(g?.content?.grids || [])], [])
   const metaTitle = folder.components.find((c) => c.name === 'Meta Title')
   const metaDescription = folder.components.find((c) => c.name === 'Meta Description')
-  const rest = folder.components?.filter((c) => c.type !== 'gridRelations')
+  const rest = folder.components?.filter(
+    (c) => c.type !== 'gridRelations' && c.name !== 'Meta Title' && c.name !== 'Meta Description',
+  )
 
   return (
     <PageLayout title={metaTitle.content.text} description={metaDescription.content.text} preview={preview}>
