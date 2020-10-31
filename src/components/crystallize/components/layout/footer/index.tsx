@@ -3,7 +3,7 @@ import React from 'react'
 import Link from 'components/crystallize/components/link'
 import LogoCrystallize from 'components/crystallize/ui/icons/logo-crystallize'
 import { useT } from 'lib/i18n'
-import navigation from 'components/crystallize/config/navigation'
+import navigation from 'config/navigation'
 
 import { Outer, Logo, NavList, Powered } from './styles'
 

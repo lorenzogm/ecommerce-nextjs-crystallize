@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 
 import { useAuth } from 'contexts/auth-context'
-import navigation from 'components/crystallize/config/navigation'
+import navigation from 'config/navigation'
 import Link from 'components/crystallize/components/link'
 import { useT } from 'lib/i18n'
 
