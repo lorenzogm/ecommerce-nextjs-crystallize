@@ -41,24 +41,30 @@ export default function PageLayout({
   return (
     <>
       <Head>
-        <title key="title">{titleFinal}</title>
-        <meta key="description" name="description" content={descriptionFinal} />
+        {/* <!-- HTML Meta Tags --> */}
+        <title>{titleFinal}</title>
+        <meta name="description" content={descriptionFinal} />
         <link rel="canonical" href={url} />
 
-        <link rel="shortcut icon" href="/stripe-logo.png" type="image/png" />
+        {/* Google / Search Engine Tags */}
+        <meta key="name" content={titleFinal} />
+        <meta key="description" content={descriptionFinal} />
+        <meta key="image" content={imageFinal} />
 
-        <meta property="og:site_name" content={SITE_NAME} />
+        {/* <!-- Facebook Meta Tags --> */}
         <meta property="og:url" content={url} />
-        <meta property="og:title" content={titleFinal} />
         <meta property="og:type" content="website" />
+        <meta property="og:title" content={titleFinal} />
         <meta property="og:description" content={descriptionFinal} />
-
         <meta property="og:image" content={imageFinal} />
         <meta property="og:image:secure_url" content={imageFinal} />
+        <meta property="og:site_name" content={SITE_NAME} />
 
+        {/* Twitter Meta Tags */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={titleFinal} />
         <meta name="twitter:description" content={descriptionFinal} />
+        <meta name="twitter:image" content={imageFinal} />
       </Head>
       <GlobalStyle />
 
