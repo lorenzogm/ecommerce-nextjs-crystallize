@@ -34,7 +34,8 @@ export default function PageLayout({
   const router = useRouter()
 
   const titleFinal = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} | Ropa de comercio justo y ecológica`
-  const descriptionFinal = description || 'Ropa de comercio justo hecha en España con algogón 100% Orgánico'
+  const descriptionFinal =
+    description || 'Ropa de comercio justo y ecológica, hecha en España con 100% algogón orgánico'
   const imageFinal = imageUrl || '/static/logo-square.png'
   const url = `${SITE_URL}/${router.asPath}`
 
