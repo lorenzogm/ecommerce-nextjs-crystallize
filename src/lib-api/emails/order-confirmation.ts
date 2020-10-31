@@ -3,8 +3,7 @@ import nodemailer from 'nodemailer'
 
 import { formatCurrency } from 'lib/currency'
 import { DeliveryMethod } from 'types/deliveryTypes'
-import { DELIVERY_PRICE } from 'themes/dindim/config/constants'
-import { sendEmail } from './utils'
+import { DELIVERY_PRICE, NAME } from 'themes/dindim/config/constants'
 
 async function main({ to, html, customer }) {
   // create reusable transporter object using the default SMTP transport
@@ -30,17 +29,17 @@ async function main({ to, html, customer }) {
 
   // send mail with defined transport object
   await transporter.sendMail({
-    from: '"Dindim" <dindim.ethicalbrand@gmail.com>', // sender address
+    from: `"${NAME}" <${process.env.EMAIL_USER}>`, // sender address
     to, // list of receivers
-    subject: 'Gracias por tu pedido! | Dindim', // Subject line
+    subject: `Gracias por tu pedido! | ${NAME}`, // Subject line
     text: html.replace(/<[^>]*>/g, ''), // plain text body
     html, // html body
   })
 
   await transporter.sendMail({
-    from: '"Dindim" <dindim.ethicalbrand@gmail.com>', // sender address
-    to: 'info@dindim.es', // list of receivers
-    subject: `Nuevo pedido de ${customer.firstName} ${customer.lastName} | Dindim`, // Subject line
+    from: `"${NAME}" <${process.env.EMAIL_USER}>`, // sender address
+    to: process.env.EMAIL_USER, // list of receivers
+    subject: `Nuevo pedido de ${customer.firstName} ${customer.lastName} | ${NAME}`, // Subject line
     text: html.replace(/<[^>]*>/g, ''), // plain text body
     html, // html body
   })

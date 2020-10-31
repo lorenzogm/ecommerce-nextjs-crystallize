@@ -24,9 +24,9 @@ export default function useOnSubmit({ deliveryPrice }: UseOnSubmit) {
         quantity: product.quantity,
         price: {
           currency: product.price.currency,
-          tax: product.vatType + deliveryPrice * DELIVERY_TAX,
-          net: product.price.net + deliveryPrice * (1 - DELIVERY_TAX),
-          gross: product.price.gross + deliveryPrice,
+          tax: product.vatType,
+          net: product.price.net,
+          gross: product.price.gross,
         },
       })),
       total: {
