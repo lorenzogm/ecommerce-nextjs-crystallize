@@ -3,7 +3,7 @@ import nodemailer from 'nodemailer'
 
 import { formatCurrency } from 'lib/currency'
 import { DeliveryMethod } from 'types/deliveryTypes'
-import { DELIVERY_PRICE, NAME } from 'config/constants'
+import { DELIVERY_PRICE, SITE_NAME } from 'config/constants'
 
 async function main({ to, html, customer }) {
   // create reusable transporter object using the default SMTP transport
@@ -29,17 +29,17 @@ async function main({ to, html, customer }) {
 
   // send mail with defined transport object
   await transporter.sendMail({
-    from: `"${NAME}" <${process.env.EMAIL_USER}>`, // sender address
+    from: `"${SITE_NAME}" <${process.env.EMAIL_USER}>`, // sender address
     to, // list of receivers
-    subject: `Gracias por tu pedido! | ${NAME}`, // Subject line
+    subject: `Gracias por tu pedido! | ${SITE_NAME}`, // Subject line
     text: html.replace(/<[^>]*>/g, ''), // plain text body
     html, // html body
   })
 
   await transporter.sendMail({
-    from: `"${NAME}" <${process.env.EMAIL_USER}>`, // sender address
+    from: `"${SITE_NAME}" <${process.env.EMAIL_USER}>`, // sender address
     to: process.env.EMAIL_USER, // list of receivers
-    subject: `Nuevo pedido de ${customer.firstName} ${customer.lastName} | ${NAME}`, // Subject line
+    subject: `Nuevo pedido de ${customer.firstName} ${customer.lastName} | ${SITE_NAME}`, // Subject line
     text: html.replace(/<[^>]*>/g, ''), // plain text body
     html, // html body
   })
@@ -90,40 +90,49 @@ export default async function sendOrderConfirmation({ orderId, order, deliveryMe
             </mj-text>
             <mj-table>
               <tr style="border-bottom:1px solid #ecedee;text-align:left;">
-                <th style="padding: 0 15px 0 0;">Artículo</th>
-                <th style="padding: 0 15px;">Cantidad</th>
-                <th style="padding: 0 0 0 15px;">Total</th>
+                <th style="padding-right: 4px;">Artículo</th>
+                <th style="padding-right: 4px;"></th>
+                <th style="padding-right: 4px;">Cantidad</th>
+                <th style="min-width: 60px;">Total</th>
               </tr>
               ${order.cart.map(
                 (item) => `<tr>
-                  <td style="padding: 0 15px 0 0;"><p>${item.name}</p></td>
-                  <td style="padding: 0 15px;">${item.quantity}</td>
-                  <td style="padding: 0 0 0 15px;">${formatCurrency({
+                  <td style="padding-right: 4px;">
+                    <img src="${item.imageUrl}" alt="${item.name}" width="50px" />
+                  </td>
+                  <td style="padding-right: 4px;">
+                    <p>${item.name}</p>
+                  </td>
+                  <td style="padding-right: 4px;">${item.quantity}</td>
+                  <td style="min-width: 60px;">${formatCurrency({
                     amount: item.price.gross * item.quantity,
                     currency: order.total.currency,
                   })}</td>
                 </tr>`,
               )}
               <tr>
-                <td style="padding: 0 15px 0 0;"></td>
-                <td style="padding: 0 15px;">Subtotal</td>
-                <td style="padding: 0 0 0 15px;">${formatCurrency({
+                <td></td>
+                <td></td>
+                <td style="padding-right: 4px;">Subtotal</td>
+                <td style="min-width: 60px;">${formatCurrency({
                   amount: order.total.gross,
                   currency: order.total.currency,
                 })}</td>
               </tr>
               <tr>
-                <td style="padding: 0 15px 0 0;"></td>
-                <td style="padding: 0 15px;">Gastos de envío</td>
-                <td style="padding: 0 0 0 15px;">${formatCurrency({
+                <td></td>
+                <td></td>
+                <td style="padding-right: 4px;">Gastos de envío</td>
+                <td style="min-width: 60px;">${formatCurrency({
                   amount: deliveryPrice,
                   currency: order.total.currency,
                 })}</td>
               </tr>
               <tr>
-                <td style="padding: 0 15px 0 0;"></td>
-                <td style="padding: 0 15px;">Total</td>
-                <td style="padding: 0 0 0 15px;">${formatCurrency({
+                <td></td>
+                <td></td>
+                <td style="padding-right: 4px;">Total</td>
+                <td style="min-width: 60px;">${formatCurrency({
                   amount: order.total.gross + deliveryPrice,
                   currency: order.total.currency,
                 })}</td>

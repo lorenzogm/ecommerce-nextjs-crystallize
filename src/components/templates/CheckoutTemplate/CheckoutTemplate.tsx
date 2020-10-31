@@ -27,8 +27,6 @@ export default function CheckoutTemplate() {
   const basket = useBasket()
   const t = useT()
 
-  const isDeliveryInTheCart = basket.cart.find((item) => item.sku === 'gastos-de-envio') !== undefined
-
   const defaultValues = {
     email: '',
     firstName: '',
@@ -37,7 +35,7 @@ export default function CheckoutTemplate() {
     zip: '',
     city: '',
     country: 'España',
-    deliveryMethod: isDeliveryInTheCart ? DeliveryMethod.DELIVERY : DeliveryMethod.PICKUP,
+    deliveryMethod: undefined,
   }
 
   const useFormMethods = useForm({ defaultValues })

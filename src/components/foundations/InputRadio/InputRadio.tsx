@@ -31,7 +31,7 @@ type InputRadioOptions = {
 
 export default function InputRadio({ name, label, options, required = false, onChange, ...rest }: InputRadioProps) {
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { register, setValue, getValues, watch } = useFormContext()
+  const { register, setValue, watch } = useFormContext()
 
   return (
     <Wrapper>
@@ -59,7 +59,7 @@ export default function InputRadio({ name, label, options, required = false, onC
                 }
               }}
             >
-              {option.value}
+              {option.label}
             </Button>
           </React.Fragment>
         )
