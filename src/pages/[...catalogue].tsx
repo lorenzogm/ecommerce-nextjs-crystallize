@@ -14,7 +14,7 @@ import DefaultErrorPage from 'next/error'
 
 import { simplyFetchFromGraph } from 'lib/graph'
 import appConfig, { getLocaleFromContext, isMultilingual, defaultLocale } from 'lib/app-config'
-import Layout from 'themes/crystallize/components/layout'
+import Layout from 'components/crystallize/components/layout'
 
 import DocPage, { getData as getDataDoc } from 'components/pages/DocumentPage/DocumentPage'
 import FolderPage, { getData as getDataFolder } from 'components/pages/FolderPage/FolderPage'

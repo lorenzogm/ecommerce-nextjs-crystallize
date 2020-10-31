@@ -1,8 +1,7 @@
 import React from 'react'
-import dynamic from 'next/dynamic'
 
 import { simplyFetchFromGraph } from 'lib/graph'
-import appConfig from 'app.config.json'
+import FolderTemplate from 'components/templates/FolderTemplate/FolderTemplate'
 
 import query from './query'
 
@@ -16,12 +15,9 @@ export async function getData({ asPath, language, preview = null }) {
     },
   })
 
-  const theme = process.env.THEME || appConfig.theme.default
-  return { ...data, preview, theme }
+  return { ...data, preview }
 }
 
-export default function FolderPage({ folder, preview, theme }) {
-  const FolderTemplate = dynamic(() => import(`themes/${theme}/templates/FolderTemplate/FolderTemplate`))
-
+export default function FolderPage({ folder, preview }) {
   return <FolderTemplate folder={folder} preview={preview} />
 }

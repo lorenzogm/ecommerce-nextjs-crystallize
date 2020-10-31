@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { responsive, H1 } from 'themes/crystallize/ui'
+import { responsive, H1 } from 'components/crystallize/ui'
 
 export const Outer = styled.div`
   max-width: 1600px;

@@ -1,7 +1,6 @@
 import React from 'react'
-import dynamic from 'next/dynamic'
 import { simplyFetchFromGraph } from 'lib/graph'
-import appConfig from 'app.config.json'
+import DocumentTemplate from 'components/templates/DocumentTemplate/DocumentTemplate'
 
 import query from './query'
 
@@ -15,12 +14,9 @@ export async function getData({ asPath, language, preview = null }) {
     },
   })
 
-  const theme = process.env.THEME || appConfig.theme.default
-  return { ...data, preview, theme }
+  return { ...data, preview }
 }
 
-export default function DocumentPage({ document, preview, theme }) {
-  const DocumentTemplate = dynamic(() => import(`themes/${theme}/templates/DocumentTemplate/DocumentTemplate`))
-
+export default function DocumentPage({ document, preview }) {
   return <DocumentTemplate document={document} preview={preview} />
 }

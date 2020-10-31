@@ -3,7 +3,7 @@ import nodemailer from 'nodemailer'
 
 import { formatCurrency } from 'lib/currency'
 import { DeliveryMethod } from 'types/deliveryTypes'
-import { DELIVERY_PRICE, NAME } from 'themes/dindim/config/constants'
+import { DELIVERY_PRICE, NAME } from 'config/constants'
 
 async function main({ to, html, customer }) {
   // create reusable transporter object using the default SMTP transport

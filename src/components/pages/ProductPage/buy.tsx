@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import { LayoutContext } from '@crystallize/react-layout'
 
-import { Button } from 'themes/crystallize/ui'
-import { CurrencyValue } from 'themes/crystallize/components/currency-value'
+import Button from 'components/foundations/Button/Button'
+import { CurrencyValue } from 'components/crystallize/components/currency-value'
 import { useBasket } from 'contexts/BasketContext/BasketContext'
 import { useT } from 'lib/i18n'
 

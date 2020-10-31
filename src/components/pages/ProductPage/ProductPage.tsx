@@ -1,8 +1,7 @@
 import React from 'react'
-import dynamic from 'next/dynamic'
 
 import { simplyFetchFromGraph } from 'lib/graph'
-import appConfig from 'app.config.json'
+import ProductTemplate from 'components/templates/ProductTemplate/ProductTemplate'
 
 import query from './query'
 
@@ -16,12 +15,9 @@ export async function getData({ asPath, language, preview = null }) {
     },
   })
 
-  const theme = process.env.THEME || appConfig.theme.default
-  return { ...data, preview, theme }
+  return { ...data, preview }
 }
 
-export default function ProductPage({ product, preview, theme }) {
-  const ProductTemplate = dynamic(() => import(`themes/${theme}/templates/ProductTemplate/ProductTemplate`))
-
+export default function ProductPage({ product, preview }) {
   return <ProductTemplate product={product} preview={preview} />
 }
