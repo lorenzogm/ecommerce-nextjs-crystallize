@@ -1,9 +1,11 @@
 import React, { ReactElement, ReactNode } from 'react'
 import Head from 'next/head'
 import CrystallizeLayout from '@crystallize/react-layout'
+import { useRouter } from 'next/router'
 
 import { Spinner } from 'components/crystallize/ui'
 import GlobalStyle from 'components/crystallize/ui/global'
+import { SITE_URL, SITE_NAME } from 'config/constants'
 
 import Aside from './aside'
 import Header from './header'
@@ -29,22 +31,23 @@ export default function PageLayout({
   loading,
   preview,
 }: PageLayoutProps) {
-  const name = 'Dindim'
-  const titleFinal = title ? `${title} | ${name}` : `${name} | We make goods for a better future`
-  const descriptionFinal = description || 'Tu tienda online de comercio justo para comprar ropa sostenible.'
+  const router = useRouter()
+
+  const titleFinal = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} | Ropa de comercio justo y ecológica`
+  const descriptionFinal = description || 'Ropa de comercio justo hecha en España con algogón 100% Orgánico'
   const imageFinal = imageUrl || '/static/logo-square.png'
-  const url = 'https://dindim.es/'
+  const url = `${SITE_URL}/${router.asPath}`
 
   return (
     <>
       <Head>
         <title key="title">{titleFinal}</title>
         <meta key="description" name="description" content={descriptionFinal} />
-        {/* <link rel="canonical" href="https://twothirds.com/" /> */}
+        <link rel="canonical" href={url} />
 
         <link rel="shortcut icon" href="/stripe-logo.png" type="image/png" />
 
-        <meta property="og:site_name" content={name} />
+        <meta property="og:site_name" content={SITE_NAME} />
         <meta property="og:url" content={url} />
         <meta property="og:title" content={titleFinal} />
         <meta property="og:type" content="website" />

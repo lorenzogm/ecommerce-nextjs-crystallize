@@ -14,10 +14,12 @@ export default function FolderTemplate({ folder, preview }) {
   const gridRelations = folder.components
     ?.filter((c) => c.type === 'gridRelations')
     ?.reduce((acc, g) => [...acc, ...(g?.content?.grids || [])], [])
+  const metaTitle = folder.components.find((c) => c.name === 'Meta Title')
+  const metaDescription = folder.components.find((c) => c.name === 'Meta Description')
   const rest = folder.components?.filter((c) => c.type !== 'gridRelations')
 
   return (
-    <PageLayout title={folder.name} preview={preview}>
+    <PageLayout title={metaTitle.content.text} description={metaDescription.content.text} preview={preview}>
       <Outer>
         <Header centerContent>
           <H1>{folder.name}</H1>
