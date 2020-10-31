@@ -90,40 +90,49 @@ export default async function sendOrderConfirmation({ orderId, order, deliveryMe
             </mj-text>
             <mj-table>
               <tr style="border-bottom:1px solid #ecedee;text-align:left;">
-                <th style="padding: 0 15px 0 0;">Artículo</th>
-                <th style="padding: 0 15px;">Cantidad</th>
-                <th style="padding: 0 0 0 15px;">Total</th>
+                <th style="padding-right: 4px;">Artículo</th>
+                <th style="padding-right: 4px;"></th>
+                <th style="padding-right: 4px;">Cantidad</th>
+                <th style="min-width: 60px;">Total</th>
               </tr>
               ${order.cart.map(
                 (item) => `<tr>
-                  <td style="padding: 0 15px 0 0;"><p>${item.name}</p></td>
-                  <td style="padding: 0 15px;">${item.quantity}</td>
-                  <td style="padding: 0 0 0 15px;">${formatCurrency({
+                  <td style="padding-right: 4px;">
+                    <img src="${item.imageUrl}" alt="${item.name}" width="50px" />
+                  </td>
+                  <td style="padding-right: 4px;">
+                    <p>${item.name}</p>
+                  </td>
+                  <td style="padding-right: 4px;">${item.quantity}</td>
+                  <td style="min-width: 60px;">${formatCurrency({
                     amount: item.price.gross * item.quantity,
                     currency: order.total.currency,
                   })}</td>
                 </tr>`,
               )}
               <tr>
-                <td style="padding: 0 15px 0 0;"></td>
-                <td style="padding: 0 15px;">Subtotal</td>
-                <td style="padding: 0 0 0 15px;">${formatCurrency({
+                <td></td>
+                <td></td>
+                <td style="padding-right: 4px;">Subtotal</td>
+                <td style="min-width: 60px;">${formatCurrency({
                   amount: order.total.gross,
                   currency: order.total.currency,
                 })}</td>
               </tr>
               <tr>
-                <td style="padding: 0 15px 0 0;"></td>
-                <td style="padding: 0 15px;">Gastos de envío</td>
-                <td style="padding: 0 0 0 15px;">${formatCurrency({
+                <td></td>
+                <td></td>
+                <td style="padding-right: 4px;">Gastos de envío</td>
+                <td style="min-width: 60px;">${formatCurrency({
                   amount: deliveryPrice,
                   currency: order.total.currency,
                 })}</td>
               </tr>
               <tr>
-                <td style="padding: 0 15px 0 0;"></td>
-                <td style="padding: 0 15px;">Total</td>
-                <td style="padding: 0 0 0 15px;">${formatCurrency({
+                <td></td>
+                <td></td>
+                <td style="padding-right: 4px;">Total</td>
+                <td style="min-width: 60px;">${formatCurrency({
                   amount: order.total.gross + deliveryPrice,
                   currency: order.total.currency,
                 })}</td>
