@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 
-import appConfigRaw from '../../app.config.json'
+import appConfigRaw from 'app.config.json'
 
 // Validate locales
 if (!appConfigRaw.locales) {

@@ -1,4 +1,4 @@
-import isEqual from 'lodash/isEqual';
+import isEqual from 'lodash/isEqual'
 
 import {
   Outer,
@@ -7,43 +7,36 @@ import {
   AttributeButton,
   Variant,
   Values,
-  Button
-} from './styles';
+  Button,
+} from './styles'
 
 function reduceAttributes(variants) {
   return variants.reduce((acc, variant) => {
-    const attrs = acc;
+    const attrs = acc
 
     variant.attributes.forEach(({ attribute, value }) => {
-      const currentAttribute = attrs[attribute];
+      const currentAttribute = attrs[attribute]
       if (!currentAttribute) {
-        attrs[attribute] = [value];
-        return;
+        attrs[attribute] = [value]
+        return
       }
 
-      const valueExists = currentAttribute.find((str) => str === value);
+      const valueExists = currentAttribute.find((str) => str === value)
       if (!valueExists) {
-        attrs[attribute].push(value);
+        attrs[attribute].push(value)
       }
-    });
+    })
 
-    return attrs;
-  }, {});
+    return attrs
+  }, {})
 }
 
 function attributesToObject({ attributes }) {
-  return Object.assign(
-    {},
-    ...attributes.map(({ attribute, value }) => ({ [attribute]: value }))
-  );
+  return Object.assign({}, ...attributes.map(({ attribute, value }) => ({ [attribute]: value })))
 }
 
-export default function VariantSelector({
-  variants,
-  selectedVariant,
-  onVariantChange
-}) {
-  const attributes = reduceAttributes(variants);
+export default function VariantSelector({ variants, selectedVariant, onVariantChange }) {
+  const attributes = reduceAttributes(variants)
 
   if (!Object.keys(attributes).length) {
     return (
@@ -62,20 +55,20 @@ export default function VariantSelector({
           </Variant>
         ))}
       </Outer>
-    );
+    )
   }
 
   function onAttributeSelect({ attribute, value }) {
-    const selectedAttributes = attributesToObject(selectedVariant);
-    selectedAttributes[attribute] = value;
+    const selectedAttributes = attributesToObject(selectedVariant)
+    selectedAttributes[attribute] = value
 
     // Get the most suitable variant
     let variant = variants.find((variant) => {
       if (isEqual(selectedAttributes, attributesToObject(variant))) {
-        return true;
+        return true
       }
-      return false;
-    });
+      return false
+    })
 
     /**
      * No variant matches all attributes. Let's select the first one
@@ -83,27 +76,23 @@ export default function VariantSelector({
      */
     if (!variant) {
       variant = variants.find((variant) =>
-        variant.attributes.some(
-          (a) => a.attribute === attribute && a.value === value
-        )
-      );
+        variant.attributes.some((a) => a.attribute === attribute && a.value === value),
+      )
     }
 
     if (variant) {
-      onVariantChange(variant);
+      onVariantChange(variant)
     }
   }
 
   return (
     <Outer>
       {Object.keys(attributes).map((attribute) => {
-        const attr = attributes[attribute];
-        const selectedAttr = selectedVariant.attributes.find(
-          (a) => a.attribute === attribute
-        );
+        const attr = attributes[attribute]
+        const selectedAttr = selectedVariant.attributes.find((a) => a.attribute === attribute)
 
         if (!selectedAttr) {
-          return null;
+          return null
         }
 
         return (
@@ -115,7 +104,7 @@ export default function VariantSelector({
                   onClick={() =>
                     onAttributeSelect({
                       attribute,
-                      value
+                      value,
                     })
                   }
                   type="button"
@@ -126,8 +115,8 @@ export default function VariantSelector({
               ))}
             </AttributeSelector>
           </div>
-        );
+        )
       })}
     </Outer>
-  );
+  )
 }

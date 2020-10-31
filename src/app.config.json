@@ -1,0 +1,16 @@
+{
+  "theme": {
+    "default": "crystallize"
+  },
+  "locales": [
+    {
+      "isDefault": true,
+      "displayName": "es",
+      "urlPrefix": "es",
+      "appLanguage": "es",
+      "crystallizeCatalogueLanguage": "es",
+      "defaultCurrency": "EUR"
+    }
+  ],
+  "paymentProviders": []
+}

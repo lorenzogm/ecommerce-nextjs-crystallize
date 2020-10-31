@@ -1,13 +1,14 @@
 import React from 'react'
-import dynamic from 'next/dynamic'
 
 import { simplyFetchFromGraph } from 'lib/graph'
 import fragments from 'lib/graph/fragments'
+import HomeTemplate from 'components/templates/HomeTemplate/HomeTemplate'
 
-export default function IndexPage({ catalogue, preview, theme }) {
+type IndexPageProps = {
+  preview: boolean
+}
+export default function IndexPage({ catalogue, preview }: IndexPageProps) {
   const [grid] = catalogue?.components?.find((c) => c.type === 'gridRelations')?.content?.grids || []
-
-  const HomeTemplate = dynamic(() => import(`themes/${theme}/templates/HomeTemplate/HomeTemplate`))
 
   return <HomeTemplate grid={grid} preview={preview} />
 }
@@ -31,11 +32,8 @@ export async function getStaticProps({ preview = false }) {
     },
   })
 
-  const theme = process.env.THEME || 'crystallize'
-
   return {
     props: {
-      theme,
       catalogue: data.catalogue,
       preview,
     },

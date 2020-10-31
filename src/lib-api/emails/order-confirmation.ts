@@ -1,27 +1,67 @@
-import mjml2html from '@nerdenough/mjml-ncc-bundle';
+import mjml2html from '@nerdenough/mjml-ncc-bundle'
+import nodemailer from 'nodemailer'
 
-import { callOrdersApi } from 'lib-api/crystallize';
-import QUERY_ORDER_BY_ID from 'lib-api/crystallize/graph/queries/order-by-id';
-import { formatCurrency } from 'lib/currency';
+import { formatCurrency } from 'lib/currency'
+import { DeliveryMethod } from 'types/deliveryTypes'
+import { DELIVERY_PRICE, NAME } from 'config/constants'
 
-import { sendEmail } from './utils';
+async function main({ to, html, customer }) {
+  // create reusable transporter object using the default SMTP transport
+  let transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true, // true for 465, false for other ports
+    auth: {
+      user: process.env.EMAIL_USER, // generated ethereal user
+      pass: process.env.EMAIL_PASSWORD, // generated ethereal password
+    },
+  })
 
-export default async function sendOrderConfirmation(orderId) {
+  // let transporter = nodemailer.createTransport({
+  //   host: 'smtp.ionos.es',
+  //   port: 587,
+  //   secure: false, // true for 465, false for other ports
+  //   auth: {
+  //     user: process.env.EMAIL_USER, // generated ethereal user
+  //     pass: process.env.EMAIL_PASSWORD, // generated ethereal password
+  //   },
+  // })
+
+  // send mail with defined transport object
+  await transporter.sendMail({
+    from: `"${NAME}" <${process.env.EMAIL_USER}>`, // sender address
+    to, // list of receivers
+    subject: `Gracias por tu pedido! | ${NAME}`, // Subject line
+    text: html.replace(/<[^>]*>/g, ''), // plain text body
+    html, // html body
+  })
+
+  await transporter.sendMail({
+    from: `"${NAME}" <${process.env.EMAIL_USER}>`, // sender address
+    to: process.env.EMAIL_USER, // list of receivers
+    subject: `Nuevo pedido de ${customer.firstName} ${customer.lastName} | ${NAME}`, // Subject line
+    text: html.replace(/<[^>]*>/g, ''), // plain text body
+    html, // html body
+  })
+}
+
+export default async function sendOrderConfirmation({ orderId, order, deliveryMethod }) {
   try {
-    const response = await callOrdersApi({
-      query: QUERY_ORDER_BY_ID,
-      variables: {
-        id: orderId
-      },
-      operationName: 'getOrder'
-    });
-    const order = response.data.orders.get;
-    const { email } = order.customer.addresses[0];
+    // const response = await callOrdersApi({
+    //   query: QUERY_ORDER_BY_ID,
+    //   variables: {
+    //     id: orderId,
+    //   },
+    //   operationName: 'getOrder',
+    // })
+    const { email } = order.customer.addresses[0]
 
     if (!email) {
       // Ideally an email address will always be provided, but if not...
-      return;
+      return
     }
+
+    const deliveryPrice = deliveryMethod === DeliveryMethod.PICKUP ? 0 : DELIVERY_PRICE
 
     const { html } = mjml2html(`
       <mjml>
@@ -29,55 +69,91 @@ export default async function sendOrderConfirmation(orderId) {
         <mj-section>
           <mj-column>
             <mj-text>
-              <h1>Order Summary</h1>
-              <p>Thanks for your order! This email contains a copy of your order for your reference.</p>
-              <p>
-                Order Number: <strong>#${order.id}</strong>
-              </p>
-              <p>
-                First name: <strong>${order.customer.firstName}</strong><br />
-                Last name: <strong>${order.customer.lastName}</strong><br />
-                Email address: <strong>${email}</strong>
-              </p>
+              <h1>¡Gracias por tu pedido!</h1>
+              <p>Este email es la confirmación del pedido que has realizado en Dindim.</p>
+              <p>Para finalizar el proceso, por favor realizar un pago por transferencia bancaría a la siguiente cuenta:</p>
+              <p>IBAN: ${process.env.IBAN}</p>
               <p>
                 Total: <strong>${formatCurrency({
-                  amount: order.total.gross,
-                  currency: order.total.currency
+                  amount: order.total.gross + deliveryPrice,
+                  currency: order.total.currency,
                 })}</strong>
+              </p>
+              <p>
+                Pedido número: <strong>#${orderId}</strong>
+              </p>
+              <p>
+                Nombre: <strong>${order.customer.firstName}</strong><br />
+                Apellidos: <strong>${order.customer.lastName}</strong><br />
+                Email: <strong>${email}</strong>
               </p>
             </mj-text>
             <mj-table>
               <tr style="border-bottom:1px solid #ecedee;text-align:left;">
-                <th style="padding: 0 15px 0 0;">Name</th>
-                <th style="padding: 0 15px;">Quantity</th>
+                <th style="padding: 0 15px 0 0;">Artículo</th>
+                <th style="padding: 0 15px;">Cantidad</th>
                 <th style="padding: 0 0 0 15px;">Total</th>
               </tr>
               ${order.cart.map(
                 (item) => `<tr>
-                  <td style="padding: 0 15px 0 0;">${item.name} (${
-                  item.sku
-                })</td>
+                  <td style="padding: 0 15px 0 0;"><p>${item.name}</p></td>
                   <td style="padding: 0 15px;">${item.quantity}</td>
                   <td style="padding: 0 0 0 15px;">${formatCurrency({
                     amount: item.price.gross * item.quantity,
-                    currency: item.price.currency
+                    currency: order.total.currency,
                   })}</td>
-                </tr>`
+                </tr>`,
               )}
+              <tr>
+                <td style="padding: 0 15px 0 0;"></td>
+                <td style="padding: 0 15px;">Subtotal</td>
+                <td style="padding: 0 0 0 15px;">${formatCurrency({
+                  amount: order.total.gross,
+                  currency: order.total.currency,
+                })}</td>
+              </tr>
+              <tr>
+                <td style="padding: 0 15px 0 0;"></td>
+                <td style="padding: 0 15px;">Gastos de envío</td>
+                <td style="padding: 0 0 0 15px;">${formatCurrency({
+                  amount: deliveryPrice,
+                  currency: order.total.currency,
+                })}</td>
+              </tr>
+              <tr>
+                <td style="padding: 0 15px 0 0;"></td>
+                <td style="padding: 0 15px;">Total</td>
+                <td style="padding: 0 0 0 15px;">${formatCurrency({
+                  amount: order.total.gross + deliveryPrice,
+                  currency: order.total.currency,
+                })}</td>
+              </tr>
             </mj-table>
           </mj-column>
         </mj-section>
         </mj-body>
       </mjml>
-    `);
+    `)
 
-    await sendEmail({
-      to: email,
-      from: 'example@crystallize.com',
-      subject: 'Order Summary',
-      html
-    });
+    // await sendEmail({
+    //   to: 'test-3s3ai2rfp@srv1.mail-tester.com',
+    //   from: process.env.SENDGRID_EMAIL_FROM,
+    //   subject: '¡Gracias por tu pedido! | Dindim',
+    //   text: html.replace(/<[^>]*>/g, ''), // plain text body
+    //   html,
+    // })
+
+    // await sendEmail({
+    //   to: 'info@dindim.es',
+    //   from: process.env.SENDGRID_EMAIL_FROM,
+    //   subject: `Nuevo pedido de ${order.customer.firstName} ${order.customer.lastName} | Dindim`, // Subject line
+    //   text: html.replace(/<[^>]*>/g, ''), // plain text body
+    //   html,
+    // })
+
+    await main({ to: email, html, customer: order.customer })
   } catch (error) {
-    Promise.resolve(error.stack);
+    console.log({ error })
+    Promise.resolve(error.stack)
   }
 }
