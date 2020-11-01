@@ -1,5 +1,4 @@
 import styled, { keyframes, css } from 'styled-components'
-import CrystallizeImage from '@crystallize/react-image'
 
 export const drawAttentionDuration = 400
 
@@ -67,20 +66,6 @@ export const ItemInfo = styled.span`
 `
 
 export const ItemInfoText = styled.div``
-
-export const ItemImage = styled(CrystallizeImage).attrs(() => ({
-  sizes: '50px',
-}))`
-  width: 50px;
-  position: relative;
-
-  img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-`
 
 export const ItemName = styled.div`
   text-transform: uppercase;

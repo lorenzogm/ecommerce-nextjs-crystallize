@@ -2,8 +2,9 @@ import React from 'react'
 
 import Link from 'components/foundations/Link/Link'
 import { screen, H3 } from 'components/crystallize/ui'
+import Image from 'components/foundations/Image/Image'
 
-import { Outer, Text, ImageWrapper, Img } from './styles'
+import { Outer, Text, ImageWrapper } from './styles'
 
 export default function FolderItem({ data, gridCell }) {
   if (!data) {
@@ -22,7 +23,7 @@ export default function FolderItem({ data, gridCell }) {
     <Link as={path} href="/[...catalogue]" passHref>
       <Outer>
         <ImageWrapper>
-          {image && <Img {...image} alt={name} sizes={`(min-width ${screen.md}px) ${imageMdWidth}px, 100vw`} />}
+          {image && <Image src={image.url} alt={name} width={imageMdWidth} height={imageMdWidth} />}
         </ImageWrapper>
         <Text>
           <H3>{name}</H3>

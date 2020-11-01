@@ -6,8 +6,9 @@ import PageLayout from 'components/foundations/PageLayout/PageLayout'
 import ShapeComponents from 'components/crystallize/components/shape/components'
 import ItemMicroformat from 'components/crystallize/item-microformat'
 import { useT } from 'lib/i18n'
+import Image from 'components/foundations/Image/Image'
 
-import { HeroImage, Img, List, H2, Related } from './DocumentTemplate.styles'
+import { HeroImage, List, H2, Related } from './DocumentTemplate.styles'
 
 export default function DocumentTemplate({ document, preview }) {
   const t = useT()
@@ -20,18 +21,17 @@ export default function DocumentTemplate({ document, preview }) {
 
   return (
     <PageLayout title={title?.content?.text || document.name} preview={preview}>
-      <Outer>
-        <Header centerContent>
-          <H1>{title.content.text}</H1>
-          <ContentTransformer {...description?.content?.json} />
-        </Header>
-        <HeroImage>
-          {images?.content?.images?.map((img, i) => (
-            <Img key={img.url} {...img} alt={img.altText} sizes={i > 0 ? '40vw' : '80vw'} />
-          ))}
-        </HeroImage>
-        <ShapeComponents components={componentsRest} />
-      </Outer>
+      <Header centerContent>
+        <H1>{title.content.text}</H1>
+        <ContentTransformer {...description?.content?.json} />
+      </Header>
+      <HeroImage>
+        {images?.content?.images?.map((img, i) => (
+          <Image key={img.url} src={img.url} alt={img.altText} unsized />
+        ))}
+      </HeroImage>
+      <ShapeComponents components={componentsRest} />
+
       {relatedProducts?.content?.items?.length && (
         <Related>
           <H2>

@@ -1,31 +1,11 @@
 import styled from 'styled-components'
-import Image from '@crystallize/react-image'
 
 import { H2 as H, responsive } from 'components/crystallize/ui'
 
 export const HeroImage = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  margin-bottom: 100px;
+  grid-template-columns: repeat(1, 1fr);
   grid-gap: 5px;
-`
-
-export const Img = styled(Image)`
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  &:first-child {
-    grid-column-end: span 2;
-  }
-
-  > img {
-    display: block;
-    object-fit: cover;
-    object-position: center;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
 `
 
 export const List = styled.div`
