@@ -2,8 +2,6 @@ import React from 'react'
 
 import PageLayout from 'components/foundations/PageLayout/PageLayout'
 import PageSection from 'components/foundations/PageSection/PageSection'
-import PageRow from 'components/foundations/PageRow/PageRow'
-import PageColumn from 'components/foundations/PageColumn/PageColumn'
 import { useT } from 'lib/i18n'
 import PreOrderSystemSummary from 'components/elements/PreOrderSystemSummary/PreOrderSystemSummary'
 import Link from 'components/crystallize/components/link'
@@ -17,8 +15,8 @@ export default function CheckoutSuccessTemplate() {
       description={t('Review your products, provide your details and place your order.')}
       simple
     >
-      <PageRow>
-        <PageColumn style={{ margin: '0 auto' }} width="50%">
+      <div className="flex flex-row">
+        <div className="mx-auto w-full md:w-3/4">
           <PageSection style={{ textAlign: 'center' }}>
             <h1>{t('Thank you for your order!')}</h1>
             <p>{t("We've received your order. You'll receive an email with further information. Check your inbox!")}</p>
@@ -34,8 +32,8 @@ export default function CheckoutSuccessTemplate() {
           </PageSection>
 
           <PreOrderSystemSummary />
-        </PageColumn>
-      </PageRow>
+        </div>
+      </div>
     </PageLayout>
   )
 }
