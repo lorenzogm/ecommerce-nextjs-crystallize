@@ -39,7 +39,7 @@ export default function Images({ images }) {
   if (images.length === 1) {
     return (
       <Outer>
-        <Image src={images[0].url} alt={images[0].altText} width={300} height={300} />
+        <Image src={images[0].url} alt={images[0].altText} unsized />
       </Outer>
     )
   }
@@ -48,7 +48,7 @@ export default function Images({ images }) {
     <Outer>
       <List>
         {images.map((image, index) => (
-          <Image key={index} src={image.url} alt={image.altText} width={300} height={300} />
+          <Image key={index} src={image.url} alt={image.altText} unsized />
         ))}
       </List>
     </Outer>
