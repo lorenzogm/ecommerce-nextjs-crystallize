@@ -8,6 +8,9 @@ module.exports = {
       },
     ]
   },
+  images: {
+    domains: ['media.crystallize.com'],
+  },
   typescript: {
     // !! WARN !!
     // Dangerously allow production builds to successfully complete even if
