@@ -7,6 +7,7 @@
  * If we get nothing back from Crystallize, it's a 404
  */
 
+import fs from 'fs'
 import React from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
@@ -85,6 +86,7 @@ export async function getStaticProps({ params, preview }) {
     const renderer = typesMap[type] || typesMap.folder
 
     const data = await renderer.getData({
+      fs,
       asPath,
       language: locale.crystallizeCatalogueLanguage,
       preview,
@@ -98,7 +100,7 @@ export async function getStaticProps({ params, preview }) {
       revalidate: 1,
     }
   } catch (error) {
-    console.log(error)
+    console.error(error)
     console.warn(`Could not get data for ${asPath}`)
   }
 
@@ -168,7 +170,7 @@ export async function getStaticPaths() {
       allCatalogueItems.data.catalogue.children.forEach(handleItem)
     } catch (error) {
       console.error('Could not get all catalogue items for ', JSON.stringify(locale, null, 3))
-      console.log(error)
+      console.error(error)
     }
   }
 

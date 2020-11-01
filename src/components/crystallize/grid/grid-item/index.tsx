@@ -20,18 +20,19 @@ export default function GridItem({ data, gridCell }) {
   const cellSize = `cell-${gridCell?.layout?.rowspan}x${gridCell?.layout?.colspan}`
   let image
   let text
+  let variant
 
   if (type === 'folder' || type === 'document') {
     const images = data.components.find((c) => c.type === 'images')
     image = images?.content?.images?.[0]
     text = <Title>{name}</Title>
   } else {
-    const { price, image: i } = variants ? variants.find((variant) => variant.isDefault) : defaultVariant
+    variant = variants ? variants.find((variant) => variant.isDefault) : defaultVariant
 
-    image = i
+    image = variant.image
     text = (
       <>
-        <Price>{t('{{value, currency}}', { value: price })}</Price>
+        <Price>{t('{{value, currency}}', { value: variant.price })}</Price>
         <Title>{name}</Title>
         <Button>{t('Buy')}</Button>
       </>

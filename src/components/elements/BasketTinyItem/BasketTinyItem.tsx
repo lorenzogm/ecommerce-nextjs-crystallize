@@ -4,6 +4,7 @@ import AttributeList from 'components/crystallize/components/attribute-list'
 import { CurrencyValue } from 'components/crystallize/components/currency-value'
 import { useT } from 'lib/i18n'
 import Image from 'components/foundations/Image/Image'
+import getImageSource from 'utils/getImageSource'
 
 import {
   Item,
@@ -48,7 +49,7 @@ export default function TinyBasketItem({ actions, item }) {
 
   return (
     <Item animate={drawAttention}>
-      <Image src={item.images?.[0].url} alt={item.name} unsized />
+      <Image src={getImageSource({ path: item.path, fileName: item.sku })} alt={item.name} unsized />
       <ItemInfo>
         <Row>
           <ItemName>{item.name}</ItemName>
