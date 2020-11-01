@@ -15,13 +15,6 @@ export const Outer = styled.a`
   }
 `
 
-export const ImageWrapper = styled.div`
-  position: relative;
-  z-index: 1;
-  overflow: hidden;
-  height: 100%;
-`
-
 export const Text = styled.div`
   z-index: 2;
   bottom: 0;

@@ -5,7 +5,7 @@ import { useT } from 'lib/i18n'
 import { H3 } from 'components/crystallize/ui'
 import Image from 'components/foundations/Image/Image'
 
-import { Outer, Text, ImageWrapper, Price, Inner } from './styles'
+import { Outer, Text, Price, Inner } from './styles'
 
 export default function ProductItem({ data }) {
   const t = useT()
@@ -20,7 +20,11 @@ export default function ProductItem({ data }) {
     <Link as={path} href="/[...catalogue]" passHref>
       <Outer type={type}>
         <Inner>
-          <ImageWrapper>{image && <Image src={image.url} alt={name} width={250} height={250} />}</ImageWrapper>
+          {image && (
+            <div className="flex justify-center">
+              <Image src={image.url} alt={name} width={250} height={250} />
+            </div>
+          )}
 
           <Text>
             <Price>{t('{{value, currency}}', { value: price })}</Price>

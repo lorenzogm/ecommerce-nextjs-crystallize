@@ -23,14 +23,6 @@ export const Inner = styled.div`
   flex-direction: column;
 `
 
-export const ImageWrapper = styled.div`
-  position: relative;
-  z-index: 1;
-  overflow: hidden;
-  width: 100%;
-  height: 250px;
-`
-
 export const Text = styled.div`
   z-index: 2;
   width: 100%;
