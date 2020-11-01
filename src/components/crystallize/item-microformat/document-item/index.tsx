@@ -1,11 +1,12 @@
 import React from 'react'
 
-import { screen, H3 } from 'components/crystallize/ui'
+import { H3 } from 'components/crystallize/ui'
 import ContentTransformer from 'components/elements/content-transformer'
 import Link from 'components/foundations/Link/Link'
 import VideoPlayer from 'components/crystallize/components/video-player'
+import Image from 'components/foundations/Image/Image'
 
-import { Outer, Text, MediaWrapper, MediaInner, Img, Description } from './styles'
+import { Outer, Text, MediaWrapper, MediaInner, Description } from './styles'
 
 export default function DocumentItem({ data, colSpan = '4' }) {
   if (!data) {
@@ -25,7 +26,7 @@ export default function DocumentItem({ data, colSpan = '4' }) {
   if (video?.content?.videos?.length) {
     media = <VideoPlayer {...video.content.videos[0]} autoplay loop controls={false} />
   } else if (image) {
-    media = <Img {...image} alt={name} sizes={`(min-width ${screen.md}px) 33vw, 100vw`} />
+    media = <Image src={image.url} alt={name} unsized />
   } else {
     return (
       <Link as={path} href="/[...catalogue]" passHref>

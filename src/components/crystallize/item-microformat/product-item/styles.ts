@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import Image from '@crystallize/react-image'
 
 import { responsive } from 'components/crystallize/ui'
 
@@ -22,29 +21,6 @@ export const Inner = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-`
-
-export const ImageWrapper = styled.div`
-  position: relative;
-  z-index: 1;
-  overflow: hidden;
-  width: 100%;
-  height: 250px;
-`
-
-export const Img = styled(Image)`
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-
-  > img {
-    display: block;
-    object-fit: cover;
-    object-position: center;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
 `
 
 export const Text = styled.div`

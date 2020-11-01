@@ -3,13 +3,13 @@ import React, { useEffect, useState } from 'react'
 import AttributeList from 'components/crystallize/components/attribute-list'
 import { CurrencyValue } from 'components/crystallize/components/currency-value'
 import { useT } from 'lib/i18n'
+import Image from 'components/foundations/Image/Image'
 
 import {
   Item,
   Row,
   ItemInfo,
   PriceWrapper,
-  ItemImage,
   ItemName,
   ItemQuantityChanger,
   ItemQuantity,
@@ -48,7 +48,7 @@ export default function TinyBasketItem({ actions, item }) {
 
   return (
     <Item animate={drawAttention}>
-      <ItemImage {...item.images?.[0]} />
+      <Image src={item.images?.[0].url} alt={item.name} unsized />
       <ItemInfo>
         <Row>
           <ItemName>{item.name}</ItemName>

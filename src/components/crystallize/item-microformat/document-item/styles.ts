@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import Image from '@crystallize/react-image'
 
 import { responsive } from 'components/crystallize/ui'
 import WidescreenRatio from 'components/crystallize/ui/widescreen-ratio'
@@ -22,21 +21,6 @@ export const MediaWrapper = styled(WidescreenRatio)`
 
 export const MediaInner = styled.div`
   flex: 1 1 100%;
-`
-
-export const Img = styled(Image)`
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-
-  > img {
-    display: block;
-    object-fit: cover;
-    object-position: center;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
 `
 
 export const Text = styled.div`
