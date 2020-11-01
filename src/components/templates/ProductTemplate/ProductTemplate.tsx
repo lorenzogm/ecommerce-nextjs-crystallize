@@ -1,27 +1,15 @@
 import React, { useState } from 'react'
-import Img from '@crystallize/react-image'
-import ContentTransformer from 'components/elements/content-transformer'
 
-import { screen } from 'components/crystallize/ui'
+import ContentTransformer from 'components/elements/content-transformer'
+import Image from 'components/foundations/Image/Image'
 import PageLayout from 'components/foundations/PageLayout/PageLayout'
 import ShapeComponents from 'components/crystallize/components/shape/components'
-
 import Topics from 'components/crystallize/topics'
+
 import VariantSelector from './VariantSelector'
 import Buy from './Buy'
 
-import {
-  Outer,
-  Sections,
-  Media,
-  MediaInner,
-  Name,
-  Info,
-  Summary,
-  Content,
-  Specs,
-  Description,
-} from './ProductTemplate.styles'
+import { Name, Info, Summary, Content, Specs, Description } from './ProductTemplate.styles'
 
 export default function ProductTemplate({ product, preview }) {
   // Set the selected variant to the default
@@ -39,13 +27,8 @@ export default function ProductTemplate({ product, preview }) {
 
   return (
     <PageLayout title={product.name} imageUrl={selectedVariant.image.url} preview={preview}>
-      <Outer>
-        <Sections>
-          <Media>
-            <MediaInner>
-              <Img {...selectedVariant.image} sizes={`(max-width: ${screen.sm}px) 400px, 60vw`} alt={product.name} />
-            </MediaInner>
-          </Media>
+      <div className="flex flex-col-reverse md:flex-row">
+        <div className=" w-full md:w-1/2">
           <Info>
             <Name>{product.name}</Name>
             {summaryComponent && (
@@ -64,24 +47,27 @@ export default function ProductTemplate({ product, preview }) {
 
             <Buy product={product} selectedVariant={selectedVariant} />
           </Info>
-        </Sections>
-        <Content>
-          {descriptionComponent && (
-            <Description>
-              <ShapeComponents className="description" components={[descriptionComponent]} />
-            </Description>
-          )}
-          {specs && (
-            <Specs>
-              <ShapeComponents components={[specs]} />
-            </Specs>
-          )}
-        </Content>
+        </div>
+        <div className=" w-full md:w-1/2">
+          <Image src={selectedVariant.image.url} alt={product.name} width={500} height={500} />
+        </div>
+      </div>
+      <Content>
+        {descriptionComponent && (
+          <Description>
+            <ShapeComponents className="description" components={[descriptionComponent]} />
+          </Description>
+        )}
+        {specs && (
+          <Specs>
+            <ShapeComponents components={[specs]} />
+          </Specs>
+        )}
+      </Content>
 
-        <ShapeComponents components={componentsRest} />
+      <ShapeComponents components={componentsRest} />
 
-        {product?.topics?.length && <Topics topicMaps={product.topics} />}
-      </Outer>
+      {product?.topics?.length && <Topics topicMaps={product.topics} />}
     </PageLayout>
   )
 }
