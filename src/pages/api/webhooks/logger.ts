@@ -1,6 +1,6 @@
 export default (req, res) => {
-  console.log('webhook received', new Date());
-  console.log(JSON.stringify(req.body, null, 3));
+  console.info('webhook received', new Date())
+  console.info(JSON.stringify(req.body, null, 3))
 
-  res.send('received');
-};
+  res.send('received')
+}

@@ -1,27 +1,28 @@
-import React, { useRef, useEffect } from 'react';
-import styled from 'styled-components';
-import videojs from 'video.js';
-import 'dashjs';
-import 'videojs-contrib-dash';
+import React, { useRef, useEffect } from 'react'
+import styled from 'styled-components'
+import videojs from 'video.js'
+import 'dashjs'
+import 'videojs-contrib-dash'
 
-import playerCss from './player-css';
+import playerCss from './player-css'
 
-const HLS_EXTENSION = /\.(m3u8)($|\?)/i;
-const DASH_EXTENSION = /\.(mpd)($|\?)/i;
-const MOV_EXTENSION = /\.(mov)($|\?)/i;
+const HLS_EXTENSION = /\.(m3u8)($|\?)/i
+const DASH_EXTENSION = /\.(mpd)($|\?)/i
+const MOV_EXTENSION = /\.(mov)($|\?)/i
 
 function getVideoType(url) {
   if (HLS_EXTENSION.test(url)) {
-    return 'application/x-mpegURL';
-  } if (DASH_EXTENSION.test(url)) {
-    return 'application/dash+xml';
-  } if (MOV_EXTENSION.test(url)) {
-    return 'video/mp4';
-  } 
-    return `video/mp4`;
-  
+    return 'application/x-mpegURL'
+  }
+  if (DASH_EXTENSION.test(url)) {
+    return 'application/dash+xml'
+  }
+  if (MOV_EXTENSION.test(url)) {
+    return 'video/mp4'
+  }
+  return `video/mp4`
 }
-const playSize = 100;
+const playSize = 100
 
 const Outer = styled.div`
   ${playerCss}
@@ -43,7 +44,7 @@ const Outer = styled.div`
       opacity: 0;
     }
   }
-`;
+`
 
 const Overlay = styled.div`
   background: rgba(0, 0, 0, 0.1);
@@ -72,7 +73,7 @@ const Overlay = styled.div`
   .vjs-has-started + & {
     display: none;
   }
-`;
+`
 
 export default function VideoPlayer({
   playlists,
@@ -82,52 +83,52 @@ export default function VideoPlayer({
   fluid = true,
   ...rest
 }) {
-  const ref = useRef();
-  const playerRef = useRef();
+  const ref = useRef()
+  const playerRef = useRef()
 
   const sources =
     playlists?.map((playlist) => ({
       type: getVideoType(playlist),
-      src: playlist
-    })) || [];
+      src: playlist,
+    })) || []
 
   useEffect(() => {
     if (ref.current) {
-      const videoElement = document.createElement('video');
-      videoElement.setAttribute('playsinline', true);
-      videoElement.classList.add('video-js');
-      ref.current.insertBefore(videoElement, ref.current.children[0]);
+      const videoElement = document.createElement('video')
+      videoElement.setAttribute('playsinline', true)
+      videoElement.classList.add('video-js')
+      ref.current.insertBefore(videoElement, ref.current.children[0])
 
       playerRef.current = videojs(videoElement, {
         sources,
         autoplay,
         loop,
         controls,
-        fluid
-      });
+        fluid,
+      })
 
       // Video.js does not always autoplay for some reason
       if (autoplay) {
-        setTimeout(() => playerRef.current?.play(), 0);
+        setTimeout(() => playerRef.current?.play(), 0)
       }
 
       return () => {
         try {
-          playerRef.current?.dispose();
+          playerRef.current?.dispose()
         } catch (e) {
-          console.log(e);
+          console.error(e)
         }
-      };
+      }
     }
-  }, [sources, autoplay, controls, loop, fluid]);
+  }, [sources, autoplay, controls, loop, fluid])
 
   if (!sources || sources.length === 0) {
-    return null;
+    return null
   }
 
   return (
     <Outer {...rest} ref={ref}>
       {controls && <Overlay onClick={() => playerRef.current?.play()} />}
     </Outer>
-  );
+  )
 }

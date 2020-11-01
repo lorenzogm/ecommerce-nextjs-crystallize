@@ -10,6 +10,6 @@ export async function sendEmail(args = {}) {
     sgMail.setApiKey(SENDGRID_API_KEY)
     await sgMail.send(args)
   } else {
-    console.log('Sendgrid API key not defined. Email not sent to', args.to)
+    console.info('Sendgrid API key not defined. Email not sent to', args.to)
   }
 }

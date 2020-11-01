@@ -19,8 +19,7 @@ export function AuthProvider({ children }) {
         setIsLoggedIn(loggedIn)
         window.isLoggedIn = loggedIn
       } catch (error) {
-        // eslint-disable-next-line no-console
-        console.log(error)
+        console.error(error)
       }
     }
 

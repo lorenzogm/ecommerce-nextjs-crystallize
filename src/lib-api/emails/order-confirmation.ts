@@ -162,7 +162,7 @@ export default async function sendOrderConfirmation({ orderId, order, deliveryMe
 
     await main({ to: email, html, customer: order.customer })
   } catch (error) {
-    console.log({ error })
+    console.error({ error })
     Promise.resolve(error.stack)
   }
 }
