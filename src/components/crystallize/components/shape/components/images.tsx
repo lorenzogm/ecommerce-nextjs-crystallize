@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import Image from '@crystallize/react-image'
+import Image from 'components/foundations/Image/Image'
 
 import { responsive } from 'components/crystallize/ui'
 
@@ -39,7 +39,7 @@ export default function Images({ images }) {
   if (images.length === 1) {
     return (
       <Outer>
-        <Image {...images[0]} sizes="80vw" />
+        <Image src={images[0].url} alt={images[0].altText} width={300} height={300} />
       </Outer>
     )
   }
@@ -48,7 +48,7 @@ export default function Images({ images }) {
     <Outer>
       <List>
         {images.map((image, index) => (
-          <Image key={index} {...image} sizes="80vw" />
+          <Image key={index} src={image.url} alt={image.altText} width={300} height={300} />
         ))}
       </List>
     </Outer>
