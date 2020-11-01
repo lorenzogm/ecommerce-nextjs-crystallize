@@ -14,7 +14,6 @@ import DefaultErrorPage from 'next/error'
 
 import { simplyFetchFromGraph } from 'lib/graph'
 import appConfig, { getLocaleFromContext, isMultilingual, defaultLocale } from 'lib/app-config'
-import Layout from 'components/crystallize/components/layout'
 
 import DocPage, { getData as getDataDoc } from 'components/pages/DocumentPage/DocumentPage'
 import FolderPage, { getData as getDataFolder } from 'components/pages/FolderPage/FolderPage'
@@ -41,7 +40,7 @@ export default function Catalogue({ type, ...rest }) {
   const Component = renderer.component
 
   if (router.isFallback) {
-    return <Layout loading />
+    return null
   }
 
   // No data was found for route. It's a 404
