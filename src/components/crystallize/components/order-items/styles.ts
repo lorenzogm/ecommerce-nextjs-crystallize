@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import Image from '@crystallize/react-image'
 
 import { responsive } from 'components/crystallize/ui'
 
@@ -27,23 +26,9 @@ export const ItemAmount = styled.div`
   text-align: right;
 `
 
-export const ItemImage = styled(Image).attrs(() => ({
-  sizes: '80px',
-}))`
-  display: flex;
-  flex: 0 0 auto;
-  width: 60px;
-  justify-content: center;
-  align-items: center;
-  margin: 0 25px 0 0;
-
-  img {
-    max-height: 100px;
-  }
-`
-
 export const ItemInfo = styled.div`
   flex-grow: 1;
+  margin-left: 8px;
 `
 
 export const ItemName = styled.p`
