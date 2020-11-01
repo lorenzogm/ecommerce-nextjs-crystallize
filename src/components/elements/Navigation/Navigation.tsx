@@ -1,4 +1,4 @@
-import Link from 'components/crystallize/components/link'
+import Link from 'components/foundations/Link/Link'
 import navigation from 'config/navigation'
 
 import { Nav, NavList, NavListItem } from './Navigation.styles'

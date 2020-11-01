@@ -4,7 +4,7 @@ import PageLayout from 'components/foundations/PageLayout/PageLayout'
 import PageSection from 'components/foundations/PageSection/PageSection'
 import { useT } from 'lib/i18n'
 import PreOrderSystemSummary from 'components/elements/PreOrderSystemSummary/PreOrderSystemSummary'
-import Link from 'components/crystallize/components/link'
+import Link from 'components/foundations/Link/Link'
 
 export default function CheckoutSuccessTemplate() {
   const t = useT()

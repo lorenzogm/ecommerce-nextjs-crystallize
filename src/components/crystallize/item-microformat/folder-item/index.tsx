@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Link from 'components/crystallize/components/link'
+import Link from 'components/foundations/Link/Link'
 import { screen, H3 } from 'components/crystallize/ui'
 
 import { Outer, Text, ImageWrapper, Img } from './styles'

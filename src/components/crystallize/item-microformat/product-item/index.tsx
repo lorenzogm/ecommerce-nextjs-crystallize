@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Link from 'components/crystallize/components/link'
+import Link from 'components/foundations/Link/Link'
 import { useT } from 'lib/i18n'
 import { H3 } from 'components/crystallize/ui'
 

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Link from 'components/crystallize/components/link'
+import Link from 'components/foundations/Link/Link'
 import { useT } from 'lib/i18n'
 import navigation from 'config/navigation'
 import LogoWithName from 'components/foundations/LogoWithName/LogoWithName'
