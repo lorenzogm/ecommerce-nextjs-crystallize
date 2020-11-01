@@ -27,7 +27,11 @@ export default function ProductTemplate({ product, preview }) {
     product.components && product.components?.filter((c) => !['Summary', 'Description', 'Specs'].includes(c.name))
 
   return (
-    <PageLayout title={product.name} imageUrl={selectedVariant.image.url} preview={preview}>
+    <PageLayout
+      title={product.name}
+      imageUrl={getImageSource({ path: product.path, fileName: selectedVariant.sku })}
+      preview={preview}
+    >
       <div className="flex flex-col-reverse md:flex-row">
         <div className="w-full md:w-1/2">
           <Info>
@@ -50,7 +54,7 @@ export default function ProductTemplate({ product, preview }) {
           </Info>
         </div>
         <div className=" w-full md:w-1/2">
-          <Image
+          <img
             src={getImageSource({ path: product.path, fileName: selectedVariant.sku })}
             alt={product.name}
             width={500}
