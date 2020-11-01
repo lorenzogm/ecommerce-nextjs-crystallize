@@ -10,8 +10,6 @@ import InputText from 'components/foundations/InputText/InputText'
 import PageSection from 'components/foundations/PageSection/PageSection'
 import PageSectionHeader from 'components/foundations/PageSectionHeader/PageSectionHeader'
 import Form from 'components/foundations/Form/Form'
-import PageRow from 'components/foundations/PageRow/PageRow'
-import PageColumn from 'components/foundations/PageColumn/PageColumn'
 import DescriptionList from 'components/foundations/DescriptionList/DescriptionList'
 import DescriptionListTerm from 'components/foundations/DescriptionListTerm/DescriptionListTerm'
 import DescriptionListDetails from 'components/foundations/DescriptionListDetails/DescriptionListDetails'
@@ -56,13 +54,13 @@ export default function CheckoutTemplate() {
   if (!basket.cart?.length) {
     return (
       <PageLayout title={t('Checkout')}>
-        <PageRow>
-          <PageColumn style={{ margin: '0 auto' }} width="50%">
+        <div className="flex flex-row">
+          <div className="mx-auto w-full md:w-1/2">
             <PageSection style={{ textAlign: 'center' }}>
               {t('Your basket is empty', { context: 'inCheckout' })}
             </PageSection>
-          </PageColumn>
-        </PageRow>
+          </div>
+        </div>
       </PageLayout>
     )
   }
@@ -73,8 +71,8 @@ export default function CheckoutTemplate() {
       description={t('Review your products, provide your details and place your order.')}
       simple
     >
-      <PageRow>
-        <PageColumn md="8">
+      <div className="flex flex-col-reverse md:flex-row">
+        <div className="w-full md:w-1/2">
           <PreOrderSystemSummary />
 
           <Form useFormMethods={useFormMethods} onSubmit={onSubmit}>
@@ -100,46 +98,39 @@ export default function CheckoutTemplate() {
               <PageSection>
                 <PageSectionHeader>{t('Contact Details')}</PageSectionHeader>
 
-                <PageRow>
-                  <PageColumn>
-                    <InputText type="email" name="email" label={t('Email')} required />
-                  </PageColumn>
-                </PageRow>
-                <PageRow>
-                  <PageColumn md="6">
+                <InputText type="email" name="email" label={t('Email')} required />
+
+                <div className="flex flex-row">
+                  <div className="w-1/2">
                     <InputText name="firstName" label={t('First Name')} required />
-                  </PageColumn>
-                  <PageColumn md="6">
+                  </div>
+                  <div className="w-1/2">
                     <InputText name="lastName" label={t('Last Name')} required />
-                  </PageColumn>
-                </PageRow>
+                  </div>
+                </div>
+
                 {deliveryMethod === DeliveryMethod.DELIVERY ? (
                   <>
-                    <PageRow>
-                      <InputText name="street" label={t('Street')} required />
-                    </PageRow>
-                    <PageRow>
-                      <PageColumn md="6">
+                    <InputText name="street" label={t('Street')} required />
+
+                    <div className="flex flex-row">
+                      <div className="w-1/2">
                         <InputText name="postalCode" label={t('Postal Code')} required />
-                      </PageColumn>
-                      <PageColumn md="6">
+                      </div>
+                      <div className="w-1/2">
                         <InputText name="city" label={t('City')} required />
-                      </PageColumn>
-                    </PageRow>
-                    <PageRow>
-                      <PageColumn>
-                        <InputText name="country" label={t('Country')} required disabled />
-                      </PageColumn>
-                    </PageRow>
+                      </div>
+                    </div>
+                    <InputText name="country" label={t('Country')} required disabled />
                   </>
                 ) : null}
                 <Button type="submit">{t('Place Order')}</Button>
               </PageSection>
             ) : null}
           </Form>
-        </PageColumn>
+        </div>
 
-        <PageColumn md="4">
+        <div className="w-full md:w-1/2">
           <PageSection>
             <PageSectionHeader>{t('Total')}</PageSectionHeader>
             <DescriptionList>
@@ -162,8 +153,8 @@ export default function CheckoutTemplate() {
             <PageSectionHeader>{t('Your bag')}</PageSectionHeader>
             <OrderItems cart={basket.cart} />
           </PageSection>
-        </PageColumn>
-      </PageRow>
+        </div>
+      </div>
     </PageLayout>
   )
 }

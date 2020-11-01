@@ -1,11 +1,6 @@
 import styled from 'styled-components'
 import { responsive, H1 } from 'components/crystallize/ui'
 
-export const Outer = styled.div`
-  max-width: 1600px;
-  margin: 0 auto;
-`
-
 export const ShapeContent = styled.div`
   max-width: 800px;
   margin: 0 auto;
@@ -66,34 +61,6 @@ export const Description = styled.div`
 
     li {
       margin-bottom: 0.5rem;
-    }
-  }
-`
-
-export const Media = styled.div`
-  flex: 0 0 65%;
-  position: relative;
-  padding: 3rem;
-  ${responsive.mdAndLess} {
-    display: block;
-    padding: 0;
-    margin-bottom: 2em;
-  }
-`
-
-export const MediaInner = styled.div`
-  ${responsive.mdAndLess} {
-    margin: 2em;
-  }
-
-  img {
-    object-fit: contain;
-    max-height: 80vh;
-    width: 100%;
-    height: 100%;
-
-    ${responsive.mdAndLess} {
-      max-height: 40vh;
     }
   }
 `

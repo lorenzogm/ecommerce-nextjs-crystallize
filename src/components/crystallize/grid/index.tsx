@@ -7,7 +7,6 @@ export { default as GridItem } from './grid-item'
 
 const StyledGrid = styled(GridRenderer)`
   grid-gap: 20px;
-  grid-template-rows: 700px;
 
   ${responsive.xs} {
     display: block !important;

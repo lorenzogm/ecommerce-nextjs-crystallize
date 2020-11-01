@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
-import Link from 'components/crystallize/components/link'
+import Link from 'components/foundations/Link/Link'
 import { useBasket, TinyBasket } from 'contexts/BasketContext/BasketContext'
 import Button from 'components/foundations/Button/Button'
 import { useT } from 'lib/i18n'

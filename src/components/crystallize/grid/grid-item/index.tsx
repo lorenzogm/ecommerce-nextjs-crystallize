@@ -1,12 +1,12 @@
 import React from 'react'
 
-import Link from 'components/crystallize/components/link'
+import Link from 'components/foundations/Link/Link'
 import DocumentItem from 'components/crystallize/item-microformat/document-item'
-import { screen } from 'components/crystallize/ui'
+import Image from 'components/foundations/Image/Image'
 import Button from 'components/foundations/Button/Button'
 import { useT } from 'lib/i18n'
 
-import { Outer, Text, ImageWrapper, Img, Price, Title } from './styles'
+import { Text, Price, Title } from './styles'
 
 export default function GridItem({ data, gridCell }) {
   const t = useT()
@@ -30,11 +30,11 @@ export default function GridItem({ data, gridCell }) {
 
     image = i
     text = (
-      <div>
+      <>
         <Price>{t('{{value, currency}}', { value: price })}</Price>
         <Title>{name}</Title>
         <Button>{t('Buy')}</Button>
-      </div>
+      </>
     )
   }
 
@@ -44,12 +44,14 @@ export default function GridItem({ data, gridCell }) {
 
   return (
     <Link as={path} href="/[...catalogue]" passHref>
-      <Outer className={cellSize} type={type}>
+      <a>
+        {image && (
+          <div className="flex justify-center">
+            <Image src={image.url} alt={name} width={300} height={300} />
+          </div>
+        )}
         <Text>{text}</Text>
-        <ImageWrapper>
-          {image && <Img {...image} alt={name} sizes={`(min-width ${screen.md}px) ${imageMdWidth}px, 100vw`} />}
-        </ImageWrapper>
-      </Outer>
+      </a>
     </Link>
   )
 }

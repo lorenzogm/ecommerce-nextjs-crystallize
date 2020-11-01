@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 
 import { useAuth } from 'contexts/auth-context'
-import Link from 'components/crystallize/components/link'
+import Link from 'components/foundations/Link/Link'
 import { useT } from 'lib/i18n'
 import { isMultilingual } from 'lib/app-config'
 import Navigation from 'components/elements/Navigation/Navigation'

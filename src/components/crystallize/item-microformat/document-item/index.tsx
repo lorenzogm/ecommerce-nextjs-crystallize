@@ -2,7 +2,7 @@ import React from 'react'
 
 import { screen, H3 } from 'components/crystallize/ui'
 import ContentTransformer from 'components/elements/content-transformer'
-import Link from 'components/crystallize/components/link'
+import Link from 'components/foundations/Link/Link'
 import VideoPlayer from 'components/crystallize/components/video-player'
 
 import { Outer, Text, MediaWrapper, MediaInner, Img, Description } from './styles'

@@ -1,8 +1,9 @@
 import React from 'react'
 import AttributeList from 'components/crystallize/components/attribute-list'
 import { CurrencyValue } from 'components/crystallize/components/currency-value'
+import Image from 'components/foundations/Image/Image'
 
-import { Item, ItemAmount, ItemImage, ItemInfo, ItemName, Items, ItemQuantity, ItemPrice } from './styles'
+import { Item, ItemAmount, ItemInfo, ItemName, Items, ItemQuantity, ItemPrice } from './styles'
 
 const OrderItems = ({ cart }) => (
   <Items>
@@ -11,7 +12,7 @@ const OrderItems = ({ cart }) => (
         item &&
         item.price && (
           <Item key={item.sku}>
-            {item.images && <ItemImage {...item.images[0]} alt={item.name} sizes="50vw" />}
+            {item.images && <Image src={item.images[0].url} alt={item.name} width={75} height={75} />}
             <ItemInfo>
               <ItemName>{item.name}</ItemName>
               {item.attributes ? <AttributeList attributes={item.attributes} /> : <p>{item.sku}</p>}
