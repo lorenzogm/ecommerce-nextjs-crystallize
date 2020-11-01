@@ -5,6 +5,7 @@ import Image from 'components/foundations/Image/Image'
 import PageLayout from 'components/foundations/PageLayout/PageLayout'
 import ShapeComponents from 'components/crystallize/components/shape/components'
 import Topics from 'components/crystallize/topics'
+import getImageSource from 'utils/getImageSource'
 
 import VariantSelector from './VariantSelector'
 import Buy from './Buy'
@@ -26,9 +27,13 @@ export default function ProductTemplate({ product, preview }) {
     product.components && product.components?.filter((c) => !['Summary', 'Description', 'Specs'].includes(c.name))
 
   return (
-    <PageLayout title={product.name} imageUrl={selectedVariant.image.url} preview={preview}>
+    <PageLayout
+      title={product.name}
+      imageUrl={getImageSource({ path: product.path, fileName: selectedVariant.sku })}
+      preview={preview}
+    >
       <div className="flex flex-col-reverse md:flex-row">
-        <div className=" w-full md:w-1/2">
+        <div className="w-full md:w-1/2">
           <Info>
             <Name>{product.name}</Name>
             {summaryComponent && (
@@ -49,7 +54,12 @@ export default function ProductTemplate({ product, preview }) {
           </Info>
         </div>
         <div className=" w-full md:w-1/2">
-          <Image src={selectedVariant.image.url} alt={product.name} width={500} height={500} />
+          <img
+            src={getImageSource({ path: product.path, fileName: selectedVariant.sku })}
+            alt={product.name}
+            width={500}
+            height={500}
+          />
         </div>
       </div>
       <Content>

@@ -107,7 +107,7 @@ const ShapeComponents = ({ components, overrides }) => {
           }
 
           if (process.env.NODE_ENV !== 'production') {
-            console.log(`Render for ${type} not implemented`)
+            console.info(`Render for ${type} not implemented`)
           }
 
           return <span key={key} />

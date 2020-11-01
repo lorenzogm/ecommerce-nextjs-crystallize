@@ -4,12 +4,13 @@ import styled from 'styled-components'
 type ImageProps = {
   src: string
   alt: string
-  width: number
-  height: number
+  width?: number
+  height?: number
+  unsized?: boolean
 }
 
-export default function Image({ src, alt, width, height }: ImageProps) {
-  return <ImageStyled src={src} alt={alt} width={width} height={height} />
+export default function Image({ src, alt, width, height, unsized }: ImageProps) {
+  return <ImageStyled src={src} alt={alt} width={width} height={height} unsized={unsized} />
 }
 
 const ImageStyled = styled(ImageNext)`
