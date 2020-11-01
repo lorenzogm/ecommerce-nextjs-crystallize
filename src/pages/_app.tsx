@@ -9,6 +9,7 @@ import { I18nextProvider } from 'lib/i18n'
 
 import localeResourceEs from 'locales/es.json'
 import { useGtagHandlerouteChange } from 'services/gtag'
+import 'styles/tailwind.css'
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   useGtagHandlerouteChange()

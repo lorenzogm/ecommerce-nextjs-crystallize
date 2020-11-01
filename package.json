@@ -72,6 +72,7 @@
   "devDependencies": {
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
+    "@fullhuman/postcss-purgecss": "^3.0.0",
     "@types/gtag.js": "^0.0.3",
     "@types/nodemailer": "^6.4.0",
     "@types/react": "^16.9.51",
@@ -98,7 +99,9 @@
     "handlebars": "^4.7.6",
     "husky": "^4.2.1",
     "lint-staged": "^10.2.2",
+    "postcss-preset-env": "^6.7.0",
     "prettier": "^2.0.5",
+    "tailwindcss": "^1.9.6",
     "typescript": "^3.9.5"
   },
   "private": true
