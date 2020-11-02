@@ -170,6 +170,7 @@ export default `
                 price
                 isDefault
                 name
+                sku
                 image {
                   ...image
                 }
@@ -202,4 +203,4 @@ export default `
   fragment dateTimeContent on DatetimeContent {
     datetime
   }
-`;
+`
