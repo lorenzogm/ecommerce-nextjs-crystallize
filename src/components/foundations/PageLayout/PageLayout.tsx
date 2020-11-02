@@ -14,7 +14,7 @@ import { Main, LoadingWrapper, SpinnerWrapper, LoadingTextWrapper } from './Page
 
 type PageLayoutProps = {
   children: ReactNode
-  title: string
+  title?: string
   description?: string
   imageUrl?: string
   simple?: boolean
