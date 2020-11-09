@@ -5,10 +5,11 @@ import DocumentItem from 'components/crystallize/item-microformat/document-item'
 import Image from 'components/foundations/Image/Image'
 import Button from 'components/foundations/Button/Button'
 import { useT } from 'lib/i18n'
+import getImageSource from 'utils/getImageSource'
 
 import { Text, Price, Title } from './styles'
 
-export default function GridItem({ data, gridCell }) {
+export default function GridItem({ data }) {
   const t = useT()
 
   if (!data) {
@@ -16,8 +17,6 @@ export default function GridItem({ data, gridCell }) {
   }
 
   const { name, path, type, variants, defaultVariant = {} } = data
-  const imageMdWidth = 100 / (gridCell?.layout?.colspan ?? 1)
-  const cellSize = `cell-${gridCell?.layout?.rowspan}x${gridCell?.layout?.colspan}`
   let image
   let text
   let variant
@@ -28,8 +27,10 @@ export default function GridItem({ data, gridCell }) {
     text = <Title>{name}</Title>
   } else {
     variant = variants ? variants.find((variant) => variant.isDefault) : defaultVariant
-
-    image = variant.image
+    image = getImageSource({
+      path,
+      fileName: variant.sku,
+    })
     text = (
       <>
         <Price>{t('{{value, currency}}', { value: variant.price })}</Price>
@@ -48,7 +49,7 @@ export default function GridItem({ data, gridCell }) {
       <a>
         {image && (
           <div className="flex justify-center">
-            <Image src={image.url} alt={name} width={300} height={300} />
+            <Image src={image} alt={name} width={300} height={300} />
           </div>
         )}
         <Text>{text}</Text>
